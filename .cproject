@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+	<storageModule moduleId="org.eclipse.cdt.core.settings">
+		<cconfiguration id="com.windriver.cdt.diab.configuration.exe.debug.1931027875">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.windriver.cdt.diab.configuration.exe.debug.1931027875" moduleId="org.eclipse.cdt.core.settings" name="Debug">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.windriver.cdt.build.diab.core.dldErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.windriver.cdt.build.diab.core.dccErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactExtension="elf" artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="com.windriver.cdt.diab.configuration.exe.debug.1931027875" name="Debug" parent="com.windriver.cdt.diab.configuration.exe.debug" postbuildStep="ddump -R -o SPC5775B_ETHERNET.s19 SPC5775B_ETHERNET_Z7_0.elf">
+					<folderInfo id="com.windriver.cdt.diab.configuration.exe.debug.1931027875." name="/" resourcePath="">
+						<toolChain id="com.windriver.cdt.diab.toolChain.exe.debug.814342400" name="Wind River Diab" superClass="com.windriver.cdt.diab.toolChain.exe.debug">
+							<option id="com.windriver.cdt.diab.option.version.1538752983" name="Version" superClass="com.windriver.cdt.diab.option.version" useByScannerDiscovery="false" value="diab-5.9.4.8" valueType="string"/>
+							<option id="com.windriver.cdt.diab.option.target.1026959220" name="Target" superClass="com.windriver.cdt.diab.option.target" useByScannerDiscovery="false" value="PPCE200Z759N3VES" valueType="string"/>
+							<targetPlatform binaryParser="org.eclipse.cdt.core.ELF" id="com.windriver.cdt.diab.targetPlatform.743550108" isAbstract="false" superClass="com.windriver.cdt.diab.targetPlatform"/>
+							<builder buildPath="${workspace_loc:/SPC5775B_ETHERNET_Z7_0}/Debug" id="com.windriver.cdt.diab.builder.790977191" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="com.windriver.cdt.diab.builder"/>
+							<tool id="com.windriver.cdt.diab.tool.assembler.1378904052" name="Diab Assembler" superClass="com.windriver.cdt.diab.tool.assembler">
+								<option defaultValue="true" id="com.windriver.cdt.diab.option.assembler.debug.1523993359" name="Generate debug information (-g)" superClass="com.windriver.cdt.diab.option.assembler.debug" useByScannerDiscovery="false" valueType="boolean"/>
+								<option id="com.windriver.cdt.diab.option.assembler.defines.440232311" name="Defines (-D)" superClass="com.windriver.cdt.diab.option.assembler.defines" useByScannerDiscovery="false" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="START_FROM_FLASH"/>
+									<listOptionValue builtIn="false" value="MPC5777C"/>
+									<listOptionValue builtIn="false" value="DISABLE_SWTA"/>
+								</option>
+								<inputType id="com.windriver.cdt.diab.inputType.assembler.s.92086233" superClass="com.windriver.cdt.diab.inputType.assembler.s"/>
+							</tool>
+							<tool id="com.windriver.cdt.diab.tool.compiler.c.352336386" name="Diab C Compiler" superClass="com.windriver.cdt.diab.tool.compiler.c">
+								<option defaultValue="com.windriver.cdt.diab.enumValue.compiler.debugSymbols.g3" id="com.windriver.cdt.diab.option.compiler.debugSymbols.42258143" name="Generate Symbolic Debugger Information" superClass="com.windriver.cdt.diab.option.compiler.debugSymbols" useByScannerDiscovery="false" valueType="enumerated"/>
+								<option id="com.windriver.cdt.diab.option.compiler.includePath.438931822" name="Include Path (-I)" superClass="com.windriver.cdt.diab.option.compiler.includePath" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/include/Base&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/src/MCAL/Gen/Inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/src/MCAL/Module/Mcu/Inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/src/MCAL/Module/Rte/Inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/src/MCAL/Module/Gpt/Inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/src/MCAL/Module/Mcl/Inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/src/MCAL/Module/Dem/Inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/src/MCAL/Module/Det/Inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/src/MCAL/Module/Dio/Inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/src/MCAL/Module/Port/Inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/include/Users&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/src/MCAL/Module/MCan/Inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/src/MCAL/Module/CanIf/Inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/src/MCAL/Module/Eth/Inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/src/MCAL/Module/EthIf/Inc&quot;"/>
+								</option>
+								<option id="com.windriver.cdt.diab.option.compiler.defines.891496264" name="Defines (-D)" superClass="com.windriver.cdt.diab.option.compiler.defines" useByScannerDiscovery="false" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="START_FROM_FLASH"/>
+									<listOptionValue builtIn="false" value="MPC5777C"/>
+									<listOptionValue builtIn="false" value="AUTOSAR_OS_NOT_USED"/>
+									<listOptionValue builtIn="false" value="__DCC__"/>
+								</option>
+								<inputType id="com.windriver.cdt.diab.inputType.compiler.c.1989269333" superClass="com.windriver.cdt.diab.inputType.compiler.c"/>
+							</tool>
+							<tool id="com.windriver.cdt.diab.tool.linker.c.690863101" name="Diab C Linker" superClass="com.windriver.cdt.diab.tool.linker.c">
+								<option id="com.windriver.cdt.diab.option.linker.other.1846306715" name="Other options and flags" superClass="com.windriver.cdt.diab.option.linker.other" useByScannerDiscovery="false" valueType="stringList">
+									<listOptionValue builtIn="false" value="-m6 &gt; ${ProjName}.map"/>
+									<listOptionValue builtIn="false" value="../Project_Settings/Linker_Files/57xx_flash.dld"/>
+								</option>
+								<inputType id="com.windriver.cdt.diab.inputType.linker.o.713289841" superClass="com.windriver.cdt.diab.inputType.linker.o">
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="com.windriver.cdt.diab.tool.compiler.cxx.568686278" name="Diab C++ Compiler" superClass="com.windriver.cdt.diab.tool.compiler.cxx">
+								<option defaultValue="com.windriver.cdt.diab.enumValue.compiler.debugSymbols.g3" id="com.windriver.cdt.diab.option.compiler.debugSymbols.1391109507" name="Generate Symbolic Debugger Information" superClass="com.windriver.cdt.diab.option.compiler.debugSymbols" valueType="enumerated"/>
+								<option id="com.windriver.cdt.diab.option.compiler.includePath.890224823" name="Include Path (-I)" superClass="com.windriver.cdt.diab.option.compiler.includePath" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/include&quot;"/>
+								</option>
+								<option id="com.windriver.cdt.diab.option.compiler.defines.1364975129" name="Defines (-D)" superClass="com.windriver.cdt.diab.option.compiler.defines" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="START_FROM_FLASH"/>
+									<listOptionValue builtIn="false" value="MPC5777C"/>
+								</option>
+							</tool>
+							<tool id="com.windriver.cdt.diab.tool.linker.cxx.454349839" name="Diab C++ Linker" superClass="com.windriver.cdt.diab.tool.linker.cxx">
+								<option id="com.windriver.cdt.diab.option.linker.other.1732343939" name="Other options and flags" superClass="com.windriver.cdt.diab.option.linker.other" valueType="stringList">
+									<listOptionValue builtIn="false" value="-m6 &gt; ${ProjName}.map"/>
+									<listOptionValue builtIn="false" value="../Project_Settings/Linker_Files/57xx_flash.dld"/>
+								</option>
+							</tool>
+							<tool id="com.windriver.cdt.diab.tool.archiver.864749197" name="Diab Archiver" superClass="com.windriver.cdt.diab.tool.archiver"/>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="include"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry excluding="Linker_Files/57xx_ram.dld|Debugger/SPC5775B_ETHERNET_Z7_0_Debug_RAM.launch" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Project_Settings"/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+		<cconfiguration id="com.freescale.s32ds.cross.gnu.e200.exe.Debug_RAM">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.freescale.s32ds.cross.gnu.e200.exe.Debug_RAM" moduleId="org.eclipse.cdt.core.settings" name="Debug_RAM">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.windriver.cdt.build.diab.core.dldErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.windriver.cdt.build.diab.core.dccErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactExtension="elf" artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="com.freescale.s32ds.cross.gnu.e200.exe.Debug_RAM" name="Debug_RAM" parent="com.windriver.cdt.diab.configuration.exe.debug">
+					<folderInfo id="com.freescale.s32ds.cross.gnu.e200.exe.Debug_RAM." name="/" resourcePath="">
+						<toolChain id="com.windriver.cdt.diab.toolChain.exe.debug.204617200" name="Wind River Diab" superClass="com.windriver.cdt.diab.toolChain.exe.debug">
+							<option id="com.windriver.cdt.diab.option.version.194796456" name="Version" superClass="com.windriver.cdt.diab.option.version" value="diab-5.9.4.8" valueType="string"/>
+							<option id="com.windriver.cdt.diab.option.target.481608989" name="Target" superClass="com.windriver.cdt.diab.option.target" value="PPCE200Z759N3VES" valueType="string"/>
+							<targetPlatform binaryParser="org.eclipse.cdt.core.ELF" id="com.windriver.cdt.diab.targetPlatform.11351807" isAbstract="false" superClass="com.windriver.cdt.diab.targetPlatform"/>
+							<builder buildPath="${workspace_loc:/SPC5775B_ETHERNET_Z7_0}/Debug" id="com.windriver.cdt.diab.builder.690034572" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="com.windriver.cdt.diab.builder"/>
+							<tool id="com.windriver.cdt.diab.tool.assembler.1340993468" name="Diab Assembler" superClass="com.windriver.cdt.diab.tool.assembler">
+								<option defaultValue="true" id="com.windriver.cdt.diab.option.assembler.debug.665749281" name="Generate debug information (-g)" superClass="com.windriver.cdt.diab.option.assembler.debug" valueType="boolean"/>
+								<option id="com.windriver.cdt.diab.option.assembler.defines.69473762" name="Defines (-D)" superClass="com.windriver.cdt.diab.option.assembler.defines" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="MPC5777C"/>
+									<listOptionValue builtIn="false" value="DISABLE_SWTA"/>
+								</option>
+								<inputType id="com.windriver.cdt.diab.inputType.assembler.s.494313552" superClass="com.windriver.cdt.diab.inputType.assembler.s"/>
+							</tool>
+							<tool id="com.windriver.cdt.diab.tool.compiler.c.290869133" name="Diab C Compiler" superClass="com.windriver.cdt.diab.tool.compiler.c">
+								<option defaultValue="com.windriver.cdt.diab.enumValue.compiler.debugSymbols.g3" id="com.windriver.cdt.diab.option.compiler.debugSymbols.1502460328" name="Generate Symbolic Debugger Information" superClass="com.windriver.cdt.diab.option.compiler.debugSymbols" valueType="enumerated"/>
+								<option id="com.windriver.cdt.diab.option.compiler.includePath.2146697460" name="Include Path (-I)" superClass="com.windriver.cdt.diab.option.compiler.includePath" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/include&quot;"/>
+								</option>
+								<option id="com.windriver.cdt.diab.option.compiler.defines.438445857" name="Defines (-D)" superClass="com.windriver.cdt.diab.option.compiler.defines" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="MPC5777C"/>
+								</option>
+								<inputType id="com.windriver.cdt.diab.inputType.compiler.c.526213985" superClass="com.windriver.cdt.diab.inputType.compiler.c"/>
+							</tool>
+							<tool id="com.windriver.cdt.diab.tool.linker.c.1337486516" name="Diab C Linker" superClass="com.windriver.cdt.diab.tool.linker.c">
+								<option id="com.windriver.cdt.diab.option.linker.other.572160618" name="Other options and flags" superClass="com.windriver.cdt.diab.option.linker.other" valueType="stringList">
+									<listOptionValue builtIn="false" value="-m6 &gt; ${ProjName}.map"/>
+									<listOptionValue builtIn="false" value="../Project_Settings/Linker_Files/57xx_ram.dld"/>
+								</option>
+								<inputType id="com.windriver.cdt.diab.inputType.linker.o.1070466579" superClass="com.windriver.cdt.diab.inputType.linker.o">
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="com.windriver.cdt.diab.tool.compiler.cxx.1891521313" name="Diab C++ Compiler" superClass="com.windriver.cdt.diab.tool.compiler.cxx">
+								<option defaultValue="com.windriver.cdt.diab.enumValue.compiler.debugSymbols.g3" id="com.windriver.cdt.diab.option.compiler.debugSymbols.705587347" name="Generate Symbolic Debugger Information" superClass="com.windriver.cdt.diab.option.compiler.debugSymbols" valueType="enumerated"/>
+								<option id="com.windriver.cdt.diab.option.compiler.includePath.1412336788" name="Include Path (-I)" superClass="com.windriver.cdt.diab.option.compiler.includePath" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/include&quot;"/>
+								</option>
+								<option id="com.windriver.cdt.diab.option.compiler.defines.2129799247" name="Defines (-D)" superClass="com.windriver.cdt.diab.option.compiler.defines" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="MPC5777C"/>
+								</option>
+							</tool>
+							<tool id="com.windriver.cdt.diab.tool.linker.cxx.632717593" name="Diab C++ Linker" superClass="com.windriver.cdt.diab.tool.linker.cxx">
+								<option id="com.windriver.cdt.diab.option.linker.other.2091638826" name="Other options and flags" superClass="com.windriver.cdt.diab.option.linker.other" valueType="stringList">
+									<listOptionValue builtIn="false" value="-m6 &gt; ${ProjName}.map"/>
+									<listOptionValue builtIn="false" value="../Project_Settings/Linker_Files/57xx_ram.dld"/>
+								</option>
+							</tool>
+							<tool id="com.windriver.cdt.diab.tool.archiver.929516629" name="Diab Archiver" superClass="com.windriver.cdt.diab.tool.archiver"/>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="include"/>
+						<entry excluding="Linker_Files/57xx_flash.dld|Debugger/SPC5775B_ETHERNET_Z7_0_Debug.launch" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Project_Settings"/>
+						<entry excluding="flashrchw.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+	</storageModule>
+	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+		<project id="SPC5775B_ETHERNET_Z7_0.com.windriver.cdt.diab.projectType.exe.1148667678" name="Executable" projectType="com.windriver.cdt.diab.projectType.exe"/>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+	<storageModule moduleId="org.eclipse.cdt.core.language.mapping">
+		<project-mappings>
+			<content-type-mapping configuration="com.freescale.s32ds.cross.gnu.e200.exe.Debug_RAM" content-type="org.eclipse.cdt.core.cHeader" language="com.windriver.cdt.build.diab.core.c"/>
+			<content-type-mapping configuration="com.freescale.s32ds.cross.gnu.e200.exe.Debug_RAM" content-type="org.eclipse.cdt.core.cSource" language="com.windriver.cdt.build.diab.core.c"/>
+			<content-type-mapping configuration="com.freescale.s32ds.cross.gnu.e200.exe.Debug_RAM" content-type="org.eclipse.cdt.core.cxxHeader" language="com.windriver.cdt.build.diab.core.cpp"/>
+			<content-type-mapping configuration="com.freescale.s32ds.cross.gnu.e200.exe.Debug_RAM" content-type="org.eclipse.cdt.core.cxxSource" language="com.windriver.cdt.build.diab.core.cpp"/>
+			<content-type-mapping configuration="com.windriver.cdt.diab.configuration.exe.debug.1931027875" content-type="org.eclipse.cdt.core.cHeader" language="com.windriver.cdt.build.diab.core.c"/>
+			<content-type-mapping configuration="com.windriver.cdt.diab.configuration.exe.debug.1931027875" content-type="org.eclipse.cdt.core.cSource" language="com.windriver.cdt.build.diab.core.c"/>
+			<content-type-mapping configuration="com.windriver.cdt.diab.configuration.exe.debug.1931027875" content-type="org.eclipse.cdt.core.cxxHeader" language="com.windriver.cdt.build.diab.core.cpp"/>
+			<content-type-mapping configuration="com.windriver.cdt.diab.configuration.exe.debug.1931027875" content-type="org.eclipse.cdt.core.cxxSource" language="com.windriver.cdt.build.diab.core.cpp"/>
+		</project-mappings>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.embsys" parent_project="true" register_architecture="e200" register_board="---  none ---" register_chip="MPC5775B" register_core="e200z759n3" register_vendor="Freescale"/>
+	<storageModule moduleId="refreshScope"/>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="com.windriver.cdt.diab.configuration.exe.debug.1931027875;com.windriver.cdt.diab.configuration.exe.debug.1931027875.;com.windriver.cdt.diab.tool.compiler.c.352336386;com.windriver.cdt.diab.inputType.compiler.c.1989269333">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.windriver.cdt.build.diab.core.diabScannerInfo"/>
+		</scannerConfigBuildInfo>
+	</storageModule>
+</cproject>

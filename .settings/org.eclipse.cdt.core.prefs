@@ -1,0 +1,11 @@
+eclipse.preferences.version=1
+environment/project/com.freescale.s32ds.cross.gnu.e200.exe.Debug_RAM/PATH/delimiter=;
+environment/project/com.freescale.s32ds.cross.gnu.e200.exe.Debug_RAM/PATH/operation=prepend
+environment/project/com.freescale.s32ds.cross.gnu.e200.exe.Debug_RAM/PATH/value=${S32DS_DIAB_PATH};${MSYS_LOC};
+environment/project/com.freescale.s32ds.cross.gnu.e200.exe.Debug_RAM/append=true
+environment/project/com.freescale.s32ds.cross.gnu.e200.exe.Debug_RAM/appendContributed=true
+environment/project/com.windriver.cdt.diab.configuration.exe.debug.1931027875/PATH/delimiter=;
+environment/project/com.windriver.cdt.diab.configuration.exe.debug.1931027875/PATH/operation=prepend
+environment/project/com.windriver.cdt.diab.configuration.exe.debug.1931027875/PATH/value=${S32DS_DIAB_PATH};${MSYS_LOC};
+environment/project/com.windriver.cdt.diab.configuration.exe.debug.1931027875/append=true
+environment/project/com.windriver.cdt.diab.configuration.exe.debug.1931027875/appendContributed=true

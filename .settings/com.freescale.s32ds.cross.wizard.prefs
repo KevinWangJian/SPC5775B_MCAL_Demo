@@ -1,0 +1,17 @@
+core=MPC5775B_Z7_1
+coreType=MPC5775B_Z7
+eclipse.preferences.version=1
+flashSize=400000
+flashStart=800400
+fpu=None
+groupName=SPC5775B_ETHERNET
+io=
+language=c
+library=ewl_c9x
+pinSet=
+processor=MPC5775B
+productVersion=v2017.R1 b171018 
+ramSize=80000
+ramStart=40000000
+toolchainVersion=
+wizardVersion=1.0.0.201902160909
