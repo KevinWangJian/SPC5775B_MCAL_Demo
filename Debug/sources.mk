@@ -29,6 +29,7 @@ src/MCAL/Module/Mcl/Src \
 src/MCAL/Module/Mcu/Src \
 src/MCAL/Module/Port/Src \
 src/MCAL/Module/Rte/Src \
+src/MCAL/Module/Spi/Src \
 src/Users \
 src \
 
