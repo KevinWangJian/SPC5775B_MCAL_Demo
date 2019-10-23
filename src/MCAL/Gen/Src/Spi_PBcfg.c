@@ -356,7 +356,7 @@ static CONST(Spi_ChannelConfigType, SPI_CONST) SpiChannelConfig_PB0[6] =
         /* SJA1105Channel*/
         EB,
         (Spi_DataType)1U,
-        260U,
+        290U,
         &Buffer_PBSJA1105Channel,
         &Spi_aSpiChannelState[5]
     }
@@ -742,7 +742,7 @@ static CONST(Spi_HWUnitConfigType, SPI_CONST) HWUnitConfig_PB[SPI_MAX_HWUNIT] =
 
     { DSPI_A_OFFSET, (uint8)8u, (uint8)SPI_MASTER , SPI_PHYUNIT_SYNC_U32 },
 
-    { DSPI_B_OFFSET, (uint8)8u, (uint8)SPI_MASTER , SPI_PHYUNIT_SYNC_U32 },
+    { DSPI_B_OFFSET, (uint8)8u, (uint8)SPI_MASTER , SPI_PHYUNIT_ASYNC_U32 },
 
     { DSPI_C_OFFSET, (uint8)8u, (uint8)SPI_MASTER , SPI_PHYUNIT_SYNC_U32 },
 

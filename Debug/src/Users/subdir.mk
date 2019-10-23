@@ -11,6 +11,7 @@ C_SRCS += \
 ../src/Users/NXP_TJA1100_Functions.c \
 ../src/Users/PhyDP83822I.c \
 ../src/Users/PhyTja110x.c \
+../src/Users/Switch_SJA1105.c \
 ../src/Users/tickTimer.c 
 
 OBJS += \
@@ -21,6 +22,7 @@ OBJS += \
 ./src/Users/NXP_TJA1100_Functions.o \
 ./src/Users/PhyDP83822I.o \
 ./src/Users/PhyTja110x.o \
+./src/Users/Switch_SJA1105.o \
 ./src/Users/tickTimer.o 
 
 C_DEPS += \
@@ -31,6 +33,7 @@ C_DEPS += \
 ./src/Users/NXP_TJA1100_Functions.d \
 ./src/Users/PhyDP83822I.d \
 ./src/Users/PhyTja110x.d \
+./src/Users/Switch_SJA1105.d \
 ./src/Users/tickTimer.d 
 
 

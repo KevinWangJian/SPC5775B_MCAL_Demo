@@ -47,6 +47,8 @@ int main(void)
 	PHY_TJA1101_Init();
 	PHY_DP83822_Init();
 
+	Switch_SJA1105_Init();
+
 	/* Loop forever */
 	for(;;)
 	{
