@@ -187,7 +187,7 @@ CONST(Can_43_MCAN_RxFilterTableType, CAN_43_MCAN_CONST) RxFilterTableID_PCConfig
         /* Can Controller Offset on chip: MCAN1=offset 0, MCAN2=offset 1, .. */
         (uint8)MCAN_1_OFFSET,
         /* ID type: EXTENDED, STANDARD, MIXED */
-        (Can_43_MCANIdType)CAN_43_MCAN_STANDARD,
+        (Can_43_MCANIdType)CAN_43_MCAN_EXTENDED,
         /* Filter Offset */
         (uint8)0x00U,
         /* Filter Config */
@@ -195,7 +195,7 @@ CONST(Can_43_MCAN_RxFilterTableType, CAN_43_MCAN_CONST) RxFilterTableID_PCConfig
         /* Filter Type */
         (uint8)0x02U,
         /* SFID1/EFID1 */
-        (uint32)0x000004a0U,
+        (uint32)0x1804f102U,
         /* SFID2/EFID2 */
         (uint32)0x00000000U
     },
@@ -232,16 +232,16 @@ CONST(Can_43_MCAN_RxFilterTableType, CAN_43_MCAN_CONST) RxFilterTableID_PCConfig
 
 CONST(Can_43_MCAN_MBConfigObjectType, CAN_43_MCAN_CONST) Can_43_MCAN_MessageBufferConfigs_PC[CAN_43_MCAN_MAXMBCOUNT_0] =
 {
-    /* Can_Network_CANNODE_5_Rx_Std_MailBox_1 Message Buffer of Can Controller ID = 0U*/
+    /* Can_Network_CANNODE_5_Rx_Ext_MailBox_1 Message Buffer of Can Controller ID = 0U*/
     {
         /* ControllerId  - based on the order from CanController list */
         (uint8)0U,
         /* ID type: EXTENDED, STANDARD */
-        (Can_43_MCANIdType)CAN_43_MCAN_STANDARD,
+        (Can_43_MCANIdType)CAN_43_MCAN_EXTENDED,
         /* Receive/Transmit MB configuration */
         (Can_43_MCAN_ObjType)CAN_43_MCAN_RECEIVE,
         /* MessageId */
-        (Can_IdType)0x4a0U,
+        (Can_IdType)0x1804f102U,
         /* This Bit not used in platfrom where IPV_MCAN present. Initialised to zero so as not to change generic file */
         (uint8)0U,
         /* Hardware Object ID */
@@ -336,22 +336,22 @@ CONST(Can_43_MCAN_MBConfigObjectType, CAN_43_MCAN_CONST) Can_43_MCAN_MessageBuff
 */
 CONST(Can_43_MCAN_ControllerSectionOffsetType, CAN_43_MCAN_CONST) Can_43_MCAN_ControllerSectionOffset_PC_0 =
 {
-    0U, /* Standard Filter Section Offset */
-    0U, /* Extended Filter Section is not initialzed */
+    0U, /* Standard Filter Section is not initialzed */
+    0U, /* Extended Filter Section Offset */
     0U, /* FIFO_0 Section is not initialzed */
     0U, /* FIFO_1 Section is not initialzed */  
-    1U, /* Rx_Buffer Section Offset */
-    19U /* Tx_Buffer Section Offset */
+    2U, /* Rx_Buffer Section Offset */
+    20U /* Tx_Buffer Section Offset */
 };
 
 CONST(Can_43_MCAN_ControllerSectionOffsetType, CAN_43_MCAN_CONST) Can_43_MCAN_ControllerSectionOffset_PC_1 =
 {
     0U, /* Standard Filter Section is not initialzed */
-    37U, /* Extended Filter Section Offset */
+    38U, /* Extended Filter Section Offset */
     0U, /* FIFO_0 Section is not initialzed */
     0U, /* FIFO_1 Section is not initialzed */  
-    39U, /* Rx_Buffer Section Offset */
-    57U /* Tx_Buffer Section Offset */
+    40U, /* Rx_Buffer Section Offset */
+    58U /* Tx_Buffer Section Offset */
 };
 
 /*==================================================================================================*/

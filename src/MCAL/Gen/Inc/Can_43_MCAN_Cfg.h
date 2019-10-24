@@ -149,7 +149,7 @@ extern "C"{
 (PR-MCAL-2944)Numeric ID's in configuration and definition of symbolic names in Can_43_MCAN_Cfg.h file.
 *
 */
-#define Can_43_MCAN_Can_Network_CANNODE_5_Rx_Std_MailBox_1  0U /* RECEIVE object of Can Controller ID = 0 */
+#define Can_43_MCAN_Can_Network_CANNODE_5_Rx_Ext_MailBox_1  0U /* RECEIVE object of Can Controller ID = 0 */
 #define Can_43_MCAN_Can_Network_CANNODE_6_Rx_Ext_MailBox_1_UDS  1U /* RECEIVE object of Can Controller ID = 1 */
 #define Can_43_MCAN_Can_Network_CANNODE_5_Tx_Std_MailBox_1  2U /* TRANSMIT object of Can Controller ID = 0 */
 #define Can_43_MCAN_Can_Network_CANNODE_6_Tx_Std_MailBox_1  3U /* TRANSMIT object of Can Controller ID = 1 */
