@@ -16,7 +16,12 @@
 #include "EthComm.h"
 #include "PhyTja110x.h"
 #include "PhyDP83822I.h"
+#include "Switch_SJA1105.h"
 
+
+
+SJA1105TypeDef SJA1105_DEVICE_TYPE;
+SJA1105ConfigStatus SJA1105_CONFIG_STA;
 
 
 /*
@@ -48,6 +53,8 @@ int main(void)
 	PHY_DP83822_Init();
 
 	Switch_SJA1105_Init();
+
+	SJA1105_ConfigStatusChecking(&SJA1105_DEVICE_TYPE, &SJA1105_CONFIG_STA);
 
 	/* Loop forever */
 	for(;;)

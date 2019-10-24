@@ -71,5 +71,6 @@ src/main.o: ../src/main.c C:/WindRiver/diab/5.9.4.0/include/lpragma.h \
   D:/DuPower/SRC/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/src/MCAL/Gen/Inc/modules.h \
   D:/DuPower/SRC/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/include/Users/EthComm.h \
   D:/DuPower/SRC/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/include/Users/PhyTja110x.h \
-  D:/DuPower/SRC/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/include/Users/PhyDP83822I.h
+  D:/DuPower/SRC/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/include/Users/PhyDP83822I.h \
+  D:/DuPower/SRC/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/include/Users/Switch_SJA1105.h
 

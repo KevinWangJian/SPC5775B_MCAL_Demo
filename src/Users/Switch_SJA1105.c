@@ -307,5 +307,62 @@ int SJA1105_ReadData(const uint32_t regAddr, uint8_t* pRdData, const uint16_t u8
 }
 
 
+/*
+@brief Checking SJA1105 chip configuration status and chip type.
+@para *pDevType, SJA1105 device type;
+@para *pDevConfigSta, SJA1105 configuration result status.
+@return 0, failed; 1, success;
+*/
+int SJA1105_ConfigStatusChecking(SJA1105TypeDef* pDevType, SJA1105ConfigStatus* pDevConfigSta)
+{
+	SJA1105TypeDef DevType = DEVICE_NONE;
+	SJA1105ConfigStatus DevConfigSta = CONFIG_INVALID;
+	int retVal = 0;
+	uint8_t rxBuf[4];
+	uint32_t rxData;
+
+	if (SJA1105_ReadData(DEVICE_CONFIGFLAG_REG, rxBuf, (sizeof(rxBuf)/sizeof(uint8_t))) == 0)
+	{
+		rxData = ((uint32_t)rxBuf[0] << 24) + ((uint32_t)rxBuf[1] << 16) + ((uint32_t)rxBuf[2] << 8) + rxBuf[3];
+
+		if (rxData & DEVICE_CONFIGFLAG_REG_CONFIGS_MASK)
+		{
+			/* CRC check OK? */
+			if (((rxData & DEVICE_CONFIGFLAG_REG_CRCCHKL_MASK) == 0) && ((rxData & DEVICE_CONFIGFLAG_REG_CRCCHKG_MASK) == 0))
+			{
+				if ((rxData & DEVICE_CONFIGFLAG_REG_IDS_MASK) == 0)
+				{
+					if (SJA1105_ReadData(DEVICE_PROD_ID_REG, rxBuf, (sizeof(rxBuf)/sizeof(uint8_t))) == 0)
+					{
+						rxData = ((uint32_t)rxBuf[0] << 24) + ((uint32_t)rxBuf[1] << 16) + ((uint32_t)rxBuf[2] << 8) + rxBuf[3];
+
+						rxData = (rxData & DEVICE_PROD_ID_REG_PART_NR_MASK) >> 4;
+
+						switch (rxData)
+						{
+							case SJA1105PEL_PROD_ID_PARTNR: DevType = DEVICE_SJA1105PEL;break;
+							case SJA1105QEL_PROD_ID_PARTNR: DevType = DEVICE_SJA1105QEL;break;
+							case SJA1105REL_PROD_ID_PARTNR: DevType = DEVICE_SJA1105REL;break;
+							case SJA1105SEL_PROD_ID_PARTNR: DevType = DEVICE_SJA1105SEL;break;
+							default:break;
+						}
+
+						DevConfigSta = CONFIG_VALID;
+
+						retVal = 1;
+					}
+				}
+			}
+		}
+	}
+
+	*pDevType = DevType;
+	*pDevConfigSta = DevConfigSta;
+
+	return (retVal);
+}
+
+
+
 
 
