@@ -267,6 +267,8 @@ typedef struct
 int PHY_DP83822_Init(void);
 void PHY_DP83822_GetCurrentStatus(void);
 
+int PHY_DP83822_SendDataFrame(void);
+
 
 #ifdef __cplusplus
 }

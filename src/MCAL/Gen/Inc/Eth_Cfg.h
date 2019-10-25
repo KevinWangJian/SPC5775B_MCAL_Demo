@@ -5,7 +5,7 @@
 *
 *   @brief   AUTOSAR Eth driver configuration header file
 *   @details File containing the configuration for the Ethernet driver
-*   @note    This file was generated on 2019-10-22.
+*   @note    This file was generated on 2019-10-25.
 *
 *   @addtogroup ETH_DRIVER_CONFIGURATION
 *   @{
@@ -323,7 +323,7 @@ typedef struct
     boolean MDIOSupport;         /**<Support MDIO for current controller */
     uint8 EthCtrlIdxInEthIf;     /**< Instance ID of the controller */
     uint8 *TxBufStartAddr;       /**< Start address for TX buffer of the controller */
-    uint8 *RxBufStartAddr;       /**< Start address for TX buffer of the controller */
+    uint8 *RxBufStartAddr;       /**< Start address for RX buffer of the controller */
 } Eth_StaticCtrlCfgType;
 
 /* 

@@ -147,6 +147,8 @@ extern "C"{
 #include "Eth_Fec.h" /* Own interface */
 #include "StdRegMacros.h"
 #include "EthIf_Cbk.h" /* EthIf callbacks to be called from Eth driver */
+
+#include <string.h>
 /*==============================================================================
 *                              SOURCE FILE VERSION INFORMATION
 ==============================================================================*/
@@ -234,6 +236,8 @@ struct ETH_FEC_MULTICAST_POOL_ITEM
     VAR(boolean, ETH_VAR) bActive;
     VAR(uint8, ETH_VAR) au8PhysAddr[6];
 };
+
+uint8 RxDataBuf[100];
 
 /*==============================================================================
 *                                       LOCAL MACROS
@@ -2147,7 +2151,7 @@ FUNC(void, ETH_CODE) Eth_Fec_ConfigureCtrl(CONST(uint8, AUTOMATIC) u8CtrlIdx)
 
     /* Initialize interrupts */
     u32RegisterValue = 0U; /* All interrupts are disabled */
-     /* Check whether the TX interrupt is enabled for this controller 
+     /* Check whether the RX interrupt is enabled for this controller
         and multiple configuration */
     /** @violates @ref Eth_Fec_c_REF_8 MISRA rule 13.7 
       * @violates @ref Eth_Fec_c_REF_11 MISRA rule 17.4 */
@@ -2156,7 +2160,7 @@ FUNC(void, ETH_CODE) Eth_Fec_ConfigureCtrl(CONST(uint8, AUTOMATIC) u8CtrlIdx)
     {
          u32RegisterValue = u32RegisterValue | FEC_EIMR_RXF_U32; /* Enable RX irq */       
     }
-    /* Check whether the RX interrupt is enabled for this controller
+    /* Check whether the TX interrupt is enabled for this controller
        and multiple configuration */
     /** @violates @ref Eth_Fec_c_REF_8 MISRA rule 13.7 
     * @violates @ref Eth_Fec_c_REF_11 MISRA rule 17.4 */
@@ -2662,7 +2666,6 @@ FUNC(boolean, ETH_CODE) Eth_Fec_IsRxIrqEnabled(CONST(uint8, AUTOMATIC) u8CtrlIdx
     }
     return bReturnValue;
 }
-
 /*================================================================================================*/
 /**
 * @brief         Reports received frames to the upper layer
@@ -2752,6 +2755,9 @@ FUNC(Eth_RxStatusType, ETH_CODE) Eth_Fec_ReportReception ( \
             /* Get the buffer length and pointer to it */
             /** @violates @ref Eth_Fec_c_REF_17 MISRA rule 1.2 */
             Eth_Fec_GetRxBufferData(u8CtrlIdx, u8BufCtr, u8MultiEnd, &u16Length, &pu8DataPtr, &u32FrameStatus);
+
+            memcpy((uint8*)RxDataBuf, (Eth_DataType*)pu8DataPtr, u16Length);
+
             /* Check whether the frame has been received without any error
              * and if is multicast check if is in the multicast pool */
              /* Regular broadcast and unicast address which is not multicast */

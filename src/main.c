@@ -53,7 +53,6 @@ int main(void)
 	PHY_DP83822_Init();
 
 	Switch_SJA1105_Init();
-
 	SJA1105_ConfigStatusChecking(&SJA1105_DEVICE_TYPE, &SJA1105_CONFIG_STA);
 
 	/* Loop forever */
@@ -67,6 +66,8 @@ int main(void)
 		PHY_TJA1101_GetCurrentStatus();
 		PHY_DP83822_GetCurrentStatus();
 
-		SystemDelay_Ms(100);
+		SystemDelay_Ms(1000);
+
+		PHY_DP83822_SendDataFrame();
 	}
 }

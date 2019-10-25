@@ -5,7 +5,7 @@
 *
 *   @brief   AUTOSAR Eth driver Link-Time configuration file
 *   @details File containing the configuration for the Ethernet driver
-*   @note    This file was generated on 2019-10-22.
+*   @note    This file was generated on 2019-10-25.
 *
 *   @addtogroup ETH_DRIVER_CONFIGURATION
 *   @{
@@ -171,6 +171,8 @@ extern "C"{
 * @par Memory usage:
 * - RX buffers area: Occupied space: 16512 Bytes
 * - TX buffers area: Occupied space: 16512 Bytes
+*
+* @warning Internal loopback is enabled, no external signals will be used
 */
 static CONST(Eth_StaticCtrlCfgType, ETH_APPL_CONST) Eth_StaticEthCtrlConfig_0 =
 {

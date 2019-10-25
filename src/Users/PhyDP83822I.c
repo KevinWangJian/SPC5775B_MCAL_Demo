@@ -9,6 +9,7 @@
 #include "Eth.h"
 #include "EthComm.h"
 #include "Eth_GeneralTypes.h"
+#include "Std_Types.h"
 
 
 static PHY_DP83822_ProTypeDef PHY_DP83822HF_Prop[2];
@@ -594,5 +595,105 @@ void PHY_DP83822_GetCurrentStatus(void)
 }
 
 
+/*
+@brief
+@para
+@para
+@return
+*/
+int PHY_DP83822_SendDataFrame(void)
+{
+	uint8_t i;
+	Std_ReturnType ret;
+	BufReq_ReturnType ethRet;
+	Eth_FrameType frameTypeARP;
+
+	uint8 bufIdx = 0;
+	uint8_t dummyCnt;
+
+	/*MAC frame is an ARP message saying "Who has 192.168.10.2? Tell 192.168.10.1"*/
+	Eth_DataType txMacFrame[LENGTH_FRAME + 18] = {
+        										0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,			/*Destination Address*/
+        										0x66,0x55,0x44,0x33,0x22,0x11,			/*Source Address(config in tresos)*/
+        										0x08,0x06,					  			/*Frametype_ARP*/
+        										0x00,0x01,0x08,0x00,0x06,0x04,0x00,0x01,/*Payload*/
+												0x66,0x55,0x44,0x33,0x22,0x11,			/*Payload*/
+												0xc0,0xa8,0x0a,0x01,					/*Payload*/
+												0x00,0x00,0x00,0x00,0x00,0x00,			/*Payload*/
+        										0xc0,0xa8,0x0a,0x02,					/*Payload*/
+												0x00,0x00,
+												0xff,0xff,0xff,0xff,0xff,0xff,
+												0x00,0x23,0xcd,0x76,0x63,0x1a,0x08,0x06,0x00,0x01
+                                            };
+
+	uint8 TargetMacAddr[6] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+
+	Eth_DataType *txBufPtr = &txMacFrame[OFFSET_PAYLOAD];
+	Eth_DataType **txBufPtrPtr = &txBufPtr;
+
+	uint16 lenByte = LENGTH_PAYLOAD + 18;
+	uint16 *lenBytePtr = &lenByte;
+
+//	if ((PHY_DP83822HF_Prop[0].PhyLinkStatus == Valid_Link_Established) && (PHY_DP83822HF_Prop[0].MiiLinkStatus == Active_100BaseTxFullDuplexLink))
+	{
+		dummyCnt = 0;
+		ethRet = Eth_ProvideTxBuffer(CTRL_INDEX, &bufIdx, txBufPtrPtr, lenBytePtr);
+
+		if(ethRet != BUFREQ_OK)
+		{
+			while (dummyCnt < 3U)
+			{
+				dummyCnt++;
+			}
+			return (0);
+		}
+		else
+		{
+			while (dummyCnt < 3U)
+			{
+				dummyCnt++;
+			}
+		}
+
+		/*If guaranteed memory is larger than requested memory, re-assign lenByte as requested value. Or return E_NOT_OK.*/
+		if(*lenBytePtr >= (LENGTH_PAYLOAD + 18))
+			lenByte = LENGTH_PAYLOAD + 18;
+		else
+			return (0);
+
+		/*Assign value to memory pointed by txBufPtr, whose value is assigned by txBufPtrPtr in Eth_ProvideTxBuffer.*/
+		for(i = 0; i < lenByte; i++)
+		{
+			*txBufPtr = txMacFrame[OFFSET_PAYLOAD + i];
+			txBufPtr++;
+		}
+
+		frameTypeARP = ((uint16)txMacFrame[OFFSET_FRAMETYPE] << 8U) | txMacFrame[OFFSET_FRAMETYPE + 1];
+
+		dummyCnt = 0;
+		ret = Eth_Transmit(CTRL_INDEX, bufIdx, frameTypeARP, TXCOMFIRMATION_OFF, lenByte, &TargetMacAddr[0]);
+
+		if(ret != E_OK)
+		{
+			while (dummyCnt < 3U)
+			{
+				dummyCnt++;
+			}
+
+			return (0);
+		}
+
+		while (dummyCnt < 3U)
+		{
+			dummyCnt++;
+		}
+
+		return (1);
+	}
+//	else
+//	{
+//		return (0);
+//	}
+}
 
 

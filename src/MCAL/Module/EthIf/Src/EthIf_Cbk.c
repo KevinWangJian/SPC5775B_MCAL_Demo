@@ -115,6 +115,12 @@ extern "C"{
 *                                       LOCAL FUNCTIONS
 ==================================================================================================*/
 
+volatile uint16 Rx_FrameType;
+volatile boolean BrdCastStatus;
+volatile uint8 Rx_SrcMacAddr[6];
+volatile uint8 Rx_DataBuf[100];
+volatile uint16 Rx_DataLen;
+volatile uint8 TEST;
 
 /*==================================================================================================
 *                                       GLOBAL FUNCTIONS
@@ -147,7 +153,18 @@ FUNC(void, ETHIF_CODE)EthIf_RxIndication(VAR(uint8, AUTOMATIC) CtrlIdx, \
                              P2VAR(Eth_DataType, AUTOMATIC, AUTOMATIC) DataPtr, \
                              VAR(uint16, AUTOMATIC) LenByte)
 {
-    ; /* This is an empty stub function */
+//    ; /* This is an empty stub function */
+	Rx_FrameType = FrameType;
+	BrdCastStatus = IsBroadcast;
+	memcpy(Rx_SrcMacAddr, PhysAddrPtr, 6);
+	memcpy(Rx_DataBuf, DataPtr, LenByte);
+	Rx_DataLen = LenByte;
+
+	TEST = 0;
+	while (TEST < 10U)
+	{
+		TEST++;
+	}
 }
 
 
