@@ -170,8 +170,6 @@ extern "C"{
 * @par Memory usage:
 * - RX buffers area: Occupied space: 16512 Bytes
 * - TX buffers area: Occupied space: 16512 Bytes
-*
-* @warning Internal loopback is enabled, no external signals will be used
 */
 static CONST(Eth_CtrlCfgType, ETH_APPL_CONST) EthConfigSet_0_EthCtrlConfig_0 =
 {
@@ -184,10 +182,8 @@ static CONST(Eth_CtrlCfgType, ETH_APPL_CONST) EthConfigSet_0_EthCtrlConfig_0 =
     - MII mode is selected
     - Broadcast is accepted
     - Promiscuous mode is enabled
-    - Internal loopback mode enabled
-    - Reception during transmission enabled
     - MII mode selected */
-    (((VAR(uint32, AUTOMATIC))1024U)<<16U) | 0x0000000dU, /**< Value stored to RCR during initialization */
+    (((VAR(uint32, AUTOMATIC))1024U)<<16U) | 0x0000000cU, /**< Value stored to RCR during initialization */
     (((VAR(uint32, AUTOMATIC))22U)<<1U) | ((VAR(uint32, AUTOMATIC))0U<<8U), /**< Value stored to MSCR during initialization, F_sys,max = 220 MHz */
 #if STD_ON == ETH_DEM_EVENT_DETECT
     {(VAR(uint32, AUTOMATIC))STD_OFF, ((Dem_EventIdType)0) },

@@ -66,7 +66,7 @@ int main(void)
 		PHY_TJA1101_GetCurrentStatus();
 		PHY_DP83822_GetCurrentStatus();
 
-		SystemDelay_Ms(1000);
+		SystemDelay_Ms(500);
 
 		PHY_DP83822_SendDataFrame();
 	}
