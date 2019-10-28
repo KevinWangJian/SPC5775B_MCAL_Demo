@@ -485,42 +485,42 @@ int PHY_DP83822_Init(void)
 	uint16_t RegRdData;
 	uint32_t timeoutCnt;
 
-	PHY_DP83822HF_RESET_1_LOW();
-	PHY_DP83822HF_RESET_2_LOW();
-	CntDelay(2000);
-	PHY_DP83822HF_RESET_1_HIGH();
-	PHY_DP83822HF_RESET_2_HIGH();
-
-	/* Reset PHY_1 chip. */
-	PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_1_ADDRESS,
-			                 	DP83822HF_PHYRCR_REG,
-							   (DP83822HF_PHYRCR_REG_SoftwareReset_Mask | \
-								DP83822HF_PHYRCR_REG_DigitalRestart_Mask));
-	timeoutCnt = 0;
-
-	do
-	{
-		PHY_DP83822_SMIReadRegData(DP83822HF_PHY_1_ADDRESS, DP83822HF_BMCR_REG, &RegRdData);
-		timeoutCnt++;
-	}
-	while (((RegRdData & DP83822HF_BMCR_REG_Reset_Mask) != 0) && (timeoutCnt < 0x10000000U));
-	if (timeoutCnt >= 0x10000000U)return (-1);
-
-	RegRdData = 0;
-	/* Reset PHY_2 chip. */
-	PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_2_ADDRESS,
-			                 	DP83822HF_PHYRCR_REG,
-							   (DP83822HF_PHYRCR_REG_SoftwareReset_Mask | \
-								DP83822HF_PHYRCR_REG_DigitalRestart_Mask));
-	timeoutCnt = 0;
-
-	do
-	{
-		PHY_DP83822_SMIReadRegData(DP83822HF_PHY_2_ADDRESS, DP83822HF_BMCR_REG, &RegRdData);
-		timeoutCnt++;
-	}
-	while (((RegRdData & DP83822HF_BMCR_REG_Reset_Mask) != 0) && (timeoutCnt < 0x10000000U));
-	if (timeoutCnt >= 0x10000000U)return (-1);
+//	PHY_DP83822HF_RESET_1_LOW();
+//	PHY_DP83822HF_RESET_2_LOW();
+//	CntDelay(2000);
+//	PHY_DP83822HF_RESET_1_HIGH();
+//	PHY_DP83822HF_RESET_2_HIGH();
+//
+//	/* Reset PHY_1 chip. */
+//	PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_1_ADDRESS,
+//			                 	DP83822HF_PHYRCR_REG,
+//							   (DP83822HF_PHYRCR_REG_SoftwareReset_Mask | \
+//								DP83822HF_PHYRCR_REG_DigitalRestart_Mask));
+//	timeoutCnt = 0;
+//
+//	do
+//	{
+//		PHY_DP83822_SMIReadRegData(DP83822HF_PHY_1_ADDRESS, DP83822HF_BMCR_REG, &RegRdData);
+//		timeoutCnt++;
+//	}
+//	while (((RegRdData & DP83822HF_BMCR_REG_Reset_Mask) != 0) && (timeoutCnt < 0x10000000U));
+//	if (timeoutCnt >= 0x10000000U)return (-1);
+//
+//	RegRdData = 0;
+//	/* Reset PHY_2 chip. */
+//	PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_2_ADDRESS,
+//			                 	DP83822HF_PHYRCR_REG,
+//							   (DP83822HF_PHYRCR_REG_SoftwareReset_Mask | \
+//								DP83822HF_PHYRCR_REG_DigitalRestart_Mask));
+//	timeoutCnt = 0;
+//
+//	do
+//	{
+//		PHY_DP83822_SMIReadRegData(DP83822HF_PHY_2_ADDRESS, DP83822HF_BMCR_REG, &RegRdData);
+//		timeoutCnt++;
+//	}
+//	while (((RegRdData & DP83822HF_BMCR_REG_Reset_Mask) != 0) && (timeoutCnt < 0x10000000U));
+//	if (timeoutCnt >= 0x10000000U)return (-1);
 
 	/* Enable Link loss recovery mechanism. */
 	PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_1_ADDRESS,
@@ -644,7 +644,7 @@ int PHY_DP83822_SendDataFrame(void)
 	uint16 lenByte = LENGTH_PAYLOAD;
 	uint16 *lenBytePtr = &lenByte;
 
-//	if ((PHY_DP83822HF_Prop[0].PhyLinkStatus == Valid_Link_Established) && (PHY_DP83822HF_Prop[0].MiiLinkStatus == Active_100BaseTxFullDuplexLink))
+	if ((PHY_DP83822HF_Prop[0].PhyLinkStatus == Valid_Link_Established) && (PHY_DP83822HF_Prop[0].MiiLinkStatus == Active_100BaseTxFullDuplexLink))
 	{
 		dummyCnt = 0;
 		ethRet = Eth_ProvideTxBuffer(CTRL_INDEX, &bufIdx, txBufPtrPtr, lenBytePtr);

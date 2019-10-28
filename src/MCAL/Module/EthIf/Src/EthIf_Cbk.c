@@ -155,15 +155,19 @@ FUNC(void, ETHIF_CODE)EthIf_RxIndication(VAR(uint8, AUTOMATIC) CtrlIdx, \
 {
 //    ; /* This is an empty stub function */
 	Rx_FrameType = FrameType;
-	BrdCastStatus = IsBroadcast;
-	memcpy(Rx_SrcMacAddr, PhysAddrPtr, 6);
-	memcpy(Rx_DataBuf, DataPtr, LenByte);
-	Rx_DataLen = LenByte;
 
-	TEST = 0;
-	while (TEST < 10U)
+	if (Rx_FrameType == 0x0806U)
 	{
-		TEST++;
+		BrdCastStatus = IsBroadcast;
+		memcpy(Rx_SrcMacAddr, PhysAddrPtr, 6);
+		memcpy(Rx_DataBuf, DataPtr, LenByte);
+		Rx_DataLen = LenByte;
+
+		TEST = 0;
+		while (TEST < 10U)
+		{
+			TEST++;
+		}
 	}
 }
 
