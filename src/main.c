@@ -45,15 +45,18 @@ int main(void)
 
 	SystemTickTimer_Init();
 
-	McanComm_Init();
-	McanComm_RxBufferInit();
+//	McanComm_Init();
+//	McanComm_RxBufferInit();
 
 	Ethernet_Init();
-	PHY_TJA1101_Init();
-	PHY_DP83822_Init();
 
-	Switch_SJA1105_Init();
-	SJA1105_ConfigStatusChecking(&SJA1105_DEVICE_TYPE, &SJA1105_CONFIG_STA);
+//	PHY_TJA1101_Init();
+//	PHY_DP83822_Init();
+
+//	Switch_SJA1105_Init();
+//	SJA1105_ConfigStatusChecking(&SJA1105_DEVICE_TYPE, &SJA1105_CONFIG_STA);
+
+//	PHY_DP83848C_Init();
 
 	/* Loop forever */
 	for(;;)
@@ -61,10 +64,10 @@ int main(void)
 		Dio_FlipChannel(DioConf_DioChannel_LED1_DRIVE_EN);
 		Dio_FlipChannel(DioConf_DioChannel_LED2_DRIVE_EN);
 
-		McanComm_TransmitProcess();
-
-		PHY_TJA1101_GetCurrentStatus();
-		PHY_DP83822_GetCurrentStatus();
+//		McanComm_TransmitProcess();
+//
+//		PHY_TJA1101_GetCurrentStatus();
+//		PHY_DP83822_GetCurrentStatus();
 
 		SystemDelay_Ms(500);
 

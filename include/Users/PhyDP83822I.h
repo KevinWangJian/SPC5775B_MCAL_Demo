@@ -262,7 +262,7 @@ typedef struct
 	uint8_t PhyAddress;
 }PHY_DP83822_ProTypeDef;
 
-
+void PHY_DP83848C_Init(void);
 
 int PHY_DP83822_Init(void);
 void PHY_DP83822_GetCurrentStatus(void);

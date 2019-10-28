@@ -461,6 +461,19 @@ int PHY_DP83822_SMIReadRegData(const uint8_t phyAddr, const uint16_t regAddr, ui
 }
 
 
+void PHY_DP83848C_Init(void)
+{
+	uint16_t RegRdData = 0;
+	uint32_t timeoutCnt = 0;
+
+	PHY_DP83822_SMIWriteRegData(0x01, 0x00, 0x0100);
+
+	PHY_DP83822_SMIReadRegData(0x01, 0x00, &RegRdData);
+
+	timeoutCnt = 10;
+}
+
+
 /*
 @brief
 @para
@@ -621,9 +634,6 @@ int PHY_DP83822_SendDataFrame(void)
 												0xc0,0xa8,0x0a,0x0a,					/*Payload*/
 												0x00,0x00,0x00,0x00,0x00,0x00,			/*Payload*/
         										0xc0,0xa8,0x0a,0x03						/*Payload*/
-//												0x00,0x00,
-//												0xff,0xff,0xff,0xff,0xff,0xff,
-//												0x00,0x23,0xcd,0x76,0x63,0x1a,0x08,0x06,0x00,0x01
                                             };
 
 	uint8 TargetMacAddr[6] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
@@ -634,7 +644,7 @@ int PHY_DP83822_SendDataFrame(void)
 	uint16 lenByte = LENGTH_PAYLOAD;
 	uint16 *lenBytePtr = &lenByte;
 
-	if ((PHY_DP83822HF_Prop[0].PhyLinkStatus == Valid_Link_Established) && (PHY_DP83822HF_Prop[0].MiiLinkStatus == Active_100BaseTxFullDuplexLink))
+//	if ((PHY_DP83822HF_Prop[0].PhyLinkStatus == Valid_Link_Established) && (PHY_DP83822HF_Prop[0].MiiLinkStatus == Active_100BaseTxFullDuplexLink))
 	{
 		dummyCnt = 0;
 		ethRet = Eth_ProvideTxBuffer(CTRL_INDEX, &bufIdx, txBufPtrPtr, lenBytePtr);
@@ -690,10 +700,10 @@ int PHY_DP83822_SendDataFrame(void)
 
 		return (1);
 	}
-	else
-	{
-		return (0);
-	}
+//	else
+//	{
+//		return (0);
+//	}
 }
 
 
