@@ -5,7 +5,7 @@
 *
 *   @brief   AUTOSAR Eth driver Post-Build configuration file
 *   @details File containing the configuration for the Ethernet driver
-*   @note    This file was generated on 2019-10-25.
+*   @note    This file was generated on 2019-10-29.
 *
 *   @addtogroup ETH_DRIVER_CONFIGURATION
 *   @{

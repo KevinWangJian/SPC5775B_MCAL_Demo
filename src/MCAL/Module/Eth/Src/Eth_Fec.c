@@ -239,6 +239,8 @@ struct ETH_FEC_MULTICAST_POOL_ITEM
 
 uint8 RxDataBuf[100];
 
+uint16 RX_LENGTH = 0;
+
 /*==============================================================================
 *                                       LOCAL MACROS
 ==============================================================================*/
@@ -1503,6 +1505,9 @@ static FUNC(void, ETH_CODE) Eth_Fec_GetRxBufferData    ( \
     u32ManipulationVar = u32ManipulationVar & FEC_RXBD_LENGTH_U32; 
     /* Return the length */
     u16FrameLength = (VAR(uint16, AUTOMATIC))(u32ManipulationVar & FEC_RXBD_LENGTH_U32); 
+
+    RX_LENGTH = u16FrameLength;
+
     /* Get data pointer and data length */
 #if STD_ON == ETH_USE_MULTIBUFFER_RX_FRAMES
     if( u16FrameLength > 1522U )
@@ -2771,6 +2776,7 @@ FUNC(Eth_RxStatusType, ETH_CODE) Eth_Fec_ReportReception ( \
                )
 #else
             if((0U == (u32FrameStatus & (ETH_FEC_RXF_ERRORS_MASK))))
+//            if((0U == (u32FrameStatus & (ETH_FEC_RXF_ERRORS_MASK))) || ((u32FrameStatus & 0x00040000U) == 0x00040000U))
 #endif /* STD_ON == ETH_UPDATE_PHYS_ADDR_FILTER */
             {   /* No error, frame can be passed to upper layers */
                 /* Check whether there is already a frame to pass */

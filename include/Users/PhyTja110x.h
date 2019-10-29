@@ -35,6 +35,7 @@ extern "C" {
 int PHY_TJA1101_Init(void);
 int PHY_TJA1101_GetCurrentStatus(void);
 
+int PHY_TJA1101_SendEthernetFrame(void);
 
 #ifdef __cplusplus
 }

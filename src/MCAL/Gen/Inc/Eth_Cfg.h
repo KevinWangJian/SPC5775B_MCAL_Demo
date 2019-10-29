@@ -5,7 +5,7 @@
 *
 *   @brief   AUTOSAR Eth driver configuration header file
 *   @details File containing the configuration for the Ethernet driver
-*   @note    This file was generated on 2019-10-25.
+*   @note    This file was generated on 2019-10-29.
 *
 *   @addtogroup ETH_DRIVER_CONFIGURATION
 *   @{
@@ -273,8 +273,8 @@ extern "C"{
 
 
     /* Sizes of memory blocks allocated for TX/RX data buffers and related descriptors */
-    #define ETH_TX_BUF_MEM_SIZE (16512U)
-    #define ETH_RX_BUF_MEM_SIZE (16512U)
+    #define ETH_TX_BUF_MEM_SIZE (23680U)
+    #define ETH_RX_BUF_MEM_SIZE (23680U)
     #define ETH_MAX_CONTROLLER_CFG  (1U)
 /*==================================================================================================
 *                                             ENUMS
@@ -323,7 +323,7 @@ typedef struct
     boolean MDIOSupport;         /**<Support MDIO for current controller */
     uint8 EthCtrlIdxInEthIf;     /**< Instance ID of the controller */
     uint8 *TxBufStartAddr;       /**< Start address for TX buffer of the controller */
-    uint8 *RxBufStartAddr;       /**< Start address for RX buffer of the controller */
+    uint8 *RxBufStartAddr;       /**< Start address for TX buffer of the controller */
 } Eth_StaticCtrlCfgType;
 
 /* 

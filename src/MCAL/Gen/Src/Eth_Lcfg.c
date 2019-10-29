@@ -5,7 +5,7 @@
 *
 *   @brief   AUTOSAR Eth driver Link-Time configuration file
 *   @details File containing the configuration for the Ethernet driver
-*   @note    This file was generated on 2019-10-25.
+*   @note    This file was generated on 2019-10-29.
 *
 *   @addtogroup ETH_DRIVER_CONFIGURATION
 *   @{
@@ -168,8 +168,8 @@ extern "C"{
 /**
 * @var Specified for EthCtrlConfig: EthCtrlConfig_0 CtrlId = 0U
 * @par Memory usage:
-* - RX buffers area: Occupied space: 16512 Bytes
-* - TX buffers area: Occupied space: 16512 Bytes
+* - RX buffers area: Occupied space: 23680 Bytes
+* - TX buffers area: Occupied space: 23680 Bytes
 */
 static CONST(Eth_CtrlCfgType, ETH_APPL_CONST) EthConfigSet_0_EthCtrlConfig_0 =
 {
@@ -178,18 +178,18 @@ static CONST(Eth_CtrlCfgType, ETH_APPL_CONST) EthConfigSet_0_EthCtrlConfig_0 =
     0x22118808U, /**< Last 16 bits of MAC address<<16 | 0x8808 */
     0x00000004U, /**< Value stored to TCR during initialization - full duplex mode selected */
     /* RCR value:
-    - Maximal received frame length is 1000
+    - Maximal received frame length is 1440
     - MII mode is selected
     - Broadcast is accepted
     - Promiscuous mode is enabled
     - MII mode selected */
-    (((VAR(uint32, AUTOMATIC))1024U)<<16U) | 0x0000000cU, /**< Value stored to RCR during initialization */
+    (((VAR(uint32, AUTOMATIC))1472U)<<16U) | 0x0000000cU, /**< Value stored to RCR during initialization */
     (((VAR(uint32, AUTOMATIC))22U)<<1U) | ((VAR(uint32, AUTOMATIC))0U<<8U), /**< Value stored to MSCR during initialization, F_sys,max = 220 MHz */
 #if STD_ON == ETH_DEM_EVENT_DETECT
     {(VAR(uint32, AUTOMATIC))STD_OFF, ((Dem_EventIdType)0) },
 #endif /* ETH_DEM_EVENT_DETECT */
-    1024U, /**< Maximum length of one Rx buffer (header, data, crc, 64-byte alignment) */
-    1024U, /**< Maximum length of one Tx buffer (header, data, 64-byte alignment) */
+    1472U, /**< Maximum length of one Rx buffer (header, data, crc, 64-byte alignment) */
+    1472U, /**< Maximum length of one Tx buffer (header, data, 64-byte alignment) */
     16U, /**< Number of Rx buffers */
     16U, /**< Number of Tx buffers */
 };
