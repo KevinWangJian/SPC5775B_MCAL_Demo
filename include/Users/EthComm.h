@@ -19,20 +19,20 @@ extern "C" {
 #include "Eth_GeneralTypes.h"
 
 
-#define  CTRL_INDEX		(0)
-#define  CFG_INDEX		(0)
+#define  CTRL_INDEX				(0)
+#define  CFG_INDEX				(0)
 
-#define TXCOMFIRMATION_OFF	0
-#define TXCOMFIRMATION_ON  	1
-#define LENGTH_FRAME 		42
-#define LENGTH_PAYLOAD 		28
-#define OFFSET_PAYLOAD		14
-#define OFFSET_FRAMETYPE	12
-#define NUM_PHY_REG 		30
-#define RX_NUM_MAX			1500
-#define LENGTH_MAC_ADD		6
-#define PHY_REG_ECR			17
-#define PHY_RGE_CR1			18
+#define TXCOMFIRMATION_OFF		0
+#define TXCOMFIRMATION_ON  		1
+#define LENGTH_FRAME 			42
+#define LENGTH_PAYLOAD 			28
+#define OFFSET_PAYLOAD			14
+#define OFFSET_FRAMETYPE		12
+#define NUM_PHY_REG 			30
+#define RX_NUM_MAX				1500
+#define LENGTH_MAC_ADD			6
+#define PHY_REG_ECR				17
+#define PHY_RGE_CR1				18
 
 
 
@@ -43,7 +43,7 @@ extern "C" {
 
 void Ethernet_Init(void);
 
-int Ethernet_SendFrameData(Eth_DataType* txDataBuf, uint16_t txLength);
+int Ethernet_SendFrameData(const Eth_DataType* txDataBuf, uint16 txLength);
 
 
 #ifdef __cplusplus

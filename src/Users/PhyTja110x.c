@@ -313,6 +313,7 @@ int PHY_TJA1101_GetCurrentStatus(void)
 	{
 		if (TJA110x_getCommunicationStatus(&CommStat, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
 		{
+			/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 			while (dummyCnt < 5U)dummyCnt++;
 
 			return (0);
@@ -326,12 +327,14 @@ int PHY_TJA1101_GetCurrentStatus(void)
 
 		if (TJA110x_getExternalStatus(&PhyExtStat, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
 		{
+			/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 			while (dummyCnt < 5U)dummyCnt++;
 
 			return (0);
 		}
 		else
 		{
+			/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 			while (dummyCnt < 5U)dummyCnt++;
 
 			return (1);
@@ -341,106 +344,37 @@ int PHY_TJA1101_GetCurrentStatus(void)
 	return (0);
 }
 
-
+/*
+@brief
+@details
+@para
+@return
+*/
 int PHY_TJA1101_SendEthernetFrame(void)
 {
-//	uint8_t dummyCnt;
-//
-//	uint8_t i;
-//	Std_ReturnType ret;
-//	BufReq_ReturnType ethRet;
-//	Eth_FrameType frameTypeARP;
-//	uint8 bufIdx = 0;
+	int result = 0;
 
 	/*MAC frame is an ARP message saying "Who has 192.168.10.3? Tell 192.168.10.10"*/
-	Eth_DataType txMacFrame[LENGTH_FRAME] = {
-        										0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,			/*Destination Address*/
-        										0x66,0x55,0x44,0x33,0x22,0x11,			/*Source Address(config in tresos)*/
-        										0x08,0x06,					  			/*Frametype_ARP*/
-        										0x00,0x01,0x08,0x00,0x06,0x04,0x00,0x01,/*Payload*/
-												0x66,0x55,0x44,0x33,0x22,0x11,			/*Payload*/
-												0xc0,0xa8,0x0a,0x0a,					/*Payload*/
-												0x00,0x00,0x00,0x00,0x00,0x00,			/*Payload*/
-        										0xc0,0xa8,0x0a,0x03						/*Payload*/
-                                            };
-
-//	uint8 TargetMacAddr[6] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
-//
-//	Eth_DataType *txBufPtr = &txMacFrame[OFFSET_PAYLOAD];
-//	Eth_DataType **txBufPtrPtr = &txBufPtr;
-//
-//	uint16 lenByte = LENGTH_PAYLOAD;
-//	uint16 *lenBytePtr = &lenByte;
+	const Eth_DataType txMacFrame[LENGTH_FRAME] = {
+        											0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,			/*Destination Address*/
+													0x66,0x55,0x44,0x33,0x22,0x11,			/*Source Address(config in tresos)*/
+													0x08,0x06,					  			/*Frametype_ARP*/
+													0x00,0x01,0x08,0x00,0x06,0x04,0x00,0x01,/*Payload*/
+													0x66,0x55,0x44,0x33,0x22,0x11,			/*Payload*/
+													0xc0,0xa8,0x0a,0x0a,					/*Payload*/
+													0x00,0x00,0x00,0x00,0x00,0x00,			/*Payload*/
+													0xc0,0xa8,0x0a,0x03						/*Payload*/
+                                            	  };
 
 	if (TJA1101_AttributeInfo.InitStat == TJA1101_Init_Success)
 	{
 		if ((TJA1101_AttributeInfo.LinkStat == TJA1101_Linkup_Success) && (TJA1101_AttributeInfo.PhySQILevel >= SQI_CLASS_E))
 		{
-			Ethernet_SendFrameData(txMacFrame, LENGTH_FRAME);
-
-//			dummyCnt = 0;
-//			ethRet = Eth_ProvideTxBuffer(CTRL_INDEX, &bufIdx, txBufPtrPtr, lenBytePtr);
-//
-//			if(ethRet != BUFREQ_OK)
-//			{
-//				while (dummyCnt < 3U)
-//				{
-//					dummyCnt++;
-//				}
-//				return (0);
-//			}
-//			else
-//			{
-//				while (dummyCnt < 3U)
-//				{
-//					dummyCnt++;
-//				}
-//			}
-//
-//			/*If guaranteed memory is larger than requested memory, re-assign lenByte as requested value. Or return E_NOT_OK.*/
-//			if(*lenBytePtr >= (LENGTH_PAYLOAD))
-//				lenByte = LENGTH_PAYLOAD;
-//			else
-//				return (0);
-//
-//			/*Assign value to memory pointed by txBufPtr, whose value is assigned by txBufPtrPtr in Eth_ProvideTxBuffer.*/
-//			for(i = 0; i < lenByte; i++)
-//			{
-//				*txBufPtr = txMacFrame[OFFSET_PAYLOAD + i];
-//				txBufPtr++;
-//			}
-//
-//			frameTypeARP = ((uint16)txMacFrame[OFFSET_FRAMETYPE] << 8U) | txMacFrame[OFFSET_FRAMETYPE + 1];
-//
-//			dummyCnt = 0;
-//			ret = Eth_Transmit(CTRL_INDEX, bufIdx, frameTypeARP, TXCOMFIRMATION_OFF, lenByte, &TargetMacAddr[0]);
-//
-//			if(ret != E_OK)
-//			{
-//				while (dummyCnt < 3U)
-//				{
-//					dummyCnt++;
-//				}
-//
-//				return (0);
-//			}
-//
-//			while (dummyCnt < 3U)
-//			{
-//				dummyCnt++;
-//			}
-
-			return (1);
-		}
-		else
-		{
-			return (0);
+			result = Ethernet_SendFrameData(txMacFrame, LENGTH_FRAME);
 		}
 	}
-	else
-	{
-		return (0);
-	}
+
+	return (result);
 }
 
 

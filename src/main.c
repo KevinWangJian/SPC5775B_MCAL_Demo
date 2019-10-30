@@ -67,7 +67,7 @@ int main(void)
 		PHY_TJA1101_GetCurrentStatus();
 //		PHY_DP83822_GetCurrentStatus();
 
-		SystemDelay_Ms(500);
+		SystemDelay_Ms(100);
 
 //		PHY_DP83822_SendDataFrame();
 		PHY_TJA1101_SendEthernetFrame();

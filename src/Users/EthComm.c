@@ -69,25 +69,22 @@ void Ethernet_Init(void)
 @para
 @return
 */
-int Ethernet_SendFrameData(Eth_DataType* txDataBuf, uint16_t txLength)
+int Ethernet_SendFrameData(const Eth_DataType* txDataBuf, uint16 txLength)
 {
 	int retResult = 0;
 	uint16 i;
-	uint8 bufIdx = 0;
+	uint8 targetMacAddr[6], bufIdx = 0;
 	Std_ReturnType ret;
 	BufReq_ReturnType ethRet;
 	Eth_FrameType frameType;
-	uint8 targetMacAddr[6];
 
 	if ((txDataBuf != NULL) && (txLength > OFFSET_PAYLOAD))
 	{
-		Eth_DataType *txBufPtr = &txDataBuf[0 + OFFSET_PAYLOAD];
+		Eth_DataType *txBufPtr = (Eth_DataType*)&txDataBuf[OFFSET_PAYLOAD];
 		Eth_DataType **txBufPtrPtr = &txBufPtr;
 
-		uint16 lenByte = txLength - OFFSET_PAYLOAD;
+		uint16 lenByte = txLength - OFFSET_PAYLOAD;		/* Payload data length. */
 		uint16 *lenBytePtr = &lenByte;
-
-		memcpy((uint8*)targetMacAddr, (Eth_DataType*)txDataBuf, 6);
 
 		if (Eth_ProvideTxBuffer(CTRL_INDEX, &bufIdx, txBufPtrPtr, lenBytePtr) != BUFREQ_OK)
 		{
@@ -110,6 +107,8 @@ int Ethernet_SendFrameData(Eth_DataType* txDataBuf, uint16_t txLength)
 				/* Assign frame type value. */
 				frameType = ((uint16)txDataBuf[OFFSET_FRAMETYPE] << 8U) | txDataBuf[OFFSET_FRAMETYPE + 1];
 
+				memcpy((uint8*)targetMacAddr, (Eth_DataType*)txDataBuf, 6);
+
 				/* Transmit Ethernet frame data. */
 				ret = Eth_Transmit(CTRL_INDEX, bufIdx, frameType, TXCOMFIRMATION_OFF, lenByte, &targetMacAddr[0]);
 
@@ -117,14 +116,6 @@ int Ethernet_SendFrameData(Eth_DataType* txDataBuf, uint16_t txLength)
 				{
 					retResult = 1;
 				}
-				else
-				{
-					retResult = 0;
-				}
-			}
-			else
-			{
-				retResult = 0;
 			}
 		}
 	}
