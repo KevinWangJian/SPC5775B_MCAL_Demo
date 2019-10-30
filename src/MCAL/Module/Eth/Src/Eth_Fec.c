@@ -237,10 +237,6 @@ struct ETH_FEC_MULTICAST_POOL_ITEM
     VAR(uint8, ETH_VAR) au8PhysAddr[6];
 };
 
-uint8 RxDataBuf[100];
-
-uint16 RX_LENGTH = 0;
-
 /*==============================================================================
 *                                       LOCAL MACROS
 ==============================================================================*/
@@ -1506,8 +1502,6 @@ static FUNC(void, ETH_CODE) Eth_Fec_GetRxBufferData    ( \
     /* Return the length */
     u16FrameLength = (VAR(uint16, AUTOMATIC))(u32ManipulationVar & FEC_RXBD_LENGTH_U32); 
 
-    RX_LENGTH = u16FrameLength;
-
     /* Get data pointer and data length */
 #if STD_ON == ETH_USE_MULTIBUFFER_RX_FRAMES
     if( u16FrameLength > 1522U )
@@ -2761,8 +2755,6 @@ FUNC(Eth_RxStatusType, ETH_CODE) Eth_Fec_ReportReception ( \
             /** @violates @ref Eth_Fec_c_REF_17 MISRA rule 1.2 */
             Eth_Fec_GetRxBufferData(u8CtrlIdx, u8BufCtr, u8MultiEnd, &u16Length, &pu8DataPtr, &u32FrameStatus);
 
-            memcpy((uint8*)RxDataBuf, (Eth_DataType*)pu8DataPtr, u16Length);
-
             /* Check whether the frame has been received without any error
              * and if is multicast check if is in the multicast pool */
              /* Regular broadcast and unicast address which is not multicast */
@@ -2776,7 +2768,6 @@ FUNC(Eth_RxStatusType, ETH_CODE) Eth_Fec_ReportReception ( \
                )
 #else
             if((0U == (u32FrameStatus & (ETH_FEC_RXF_ERRORS_MASK))))
-//            if((0U == (u32FrameStatus & (ETH_FEC_RXF_ERRORS_MASK))) || ((u32FrameStatus & 0x00040000U) == 0x00040000U))
 #endif /* STD_ON == ETH_UPDATE_PHYS_ADDR_FILTER */
             {   /* No error, frame can be passed to upper layers */
                 /* Check whether there is already a frame to pass */

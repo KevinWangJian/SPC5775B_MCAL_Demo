@@ -532,16 +532,6 @@ int PHY_DP83822_Init(void)
 							    DP83822HF_CR1_REG_LinkLossRecovery_Mask);
 
 
-//	PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_1_ADDRESS,
-//								DP83822HF_CR2_REG,
-//								(DP83822HF_CR2_REG_ExtendFullDuplexAbility_Mask));
-//
-//	PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_2_ADDRESS,
-//								DP83822HF_CR2_REG,
-//								(DP83822HF_CR2_REG_ExtendFullDuplexAbility_Mask));
-
-
-
 	/* LEDCFG1 Control: LED_1 LINK OK / BLINK on TX/RX Activity. */
 	PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_1_ADDRESS,
 							 	DP83822HF_LEDCFG1_REG,
@@ -655,7 +645,7 @@ int PHY_DP83822_SendDataFrame(void)
 	uint16 lenByte = LENGTH_PAYLOAD;
 	uint16 *lenBytePtr = &lenByte;
 
-	if ((PHY_DP83822HF_Prop[1].PhyLinkStatus == Valid_Link_Established) && (PHY_DP83822HF_Prop[1].MiiLinkStatus == Active_100BaseTxFullDuplexLink))
+	if ((PHY_DP83822HF_Prop[0].PhyLinkStatus == Valid_Link_Established) && (PHY_DP83822HF_Prop[0].MiiLinkStatus == Active_100BaseTxFullDuplexLink))
 	{
 		dummyCnt = 0;
 		ethRet = Eth_ProvideTxBuffer(CTRL_INDEX, &bufIdx, txBufPtrPtr, lenBytePtr);

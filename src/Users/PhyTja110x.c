@@ -110,8 +110,8 @@ NXP_TJA1100_Error_Code_t SMI_Send(Byte* data, Byte phyAddr, Byte* mask, NXP_TJA1
 */
 int PHY_TJA1101_Init(void)
 {
-	uint32_t delayCount, FLAG;
-	TJA1100_Basic_Control_Reg_t Tja110xBcr;
+	uint32_t delayCount;
+	TJA1100_Basic_Control_Reg_t    Tja110xBcr;
 	TJA110x_PHY_Identifier_1_Reg_t Tja110xId1;
 	TJA110x_PHY_Identifier_2_Reg_t Tja110xId2;
 	TJA110x_Extended_Control_Reg_t Tja110xEcr;
@@ -140,11 +140,17 @@ int PHY_TJA1101_Init(void)
 	Tja110xBcr.TJA1100_CT     = TJA1101_CT_DISABLE_COL_SIGNAL_TEST;
 	Tja110xBcr.TJA1100_UDE    = TJA1101_UDE_EN_MII_TRANSMIT_ONLY_WHEN_PHY_VALID_LINK;
 	if (TJA110x_setBasicControl(&Tja110xBcr, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)return (0);
+
+	delayCount = 0;
 	/* Wait reset complete. */
-	while (Tja110xBcr.TJA1100_RST == TJA1101_RST_PHY_RESET)
+	while ((Tja110xBcr.TJA1100_RST == TJA1101_RST_PHY_RESET) && (delayCount < 100000000U))
 	{
 		if (TJA110x_getBasicControl(&Tja110xBcr, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)return (0);
+
+		delayCount++;
 	}
+	if (delayCount >= 100000000U)return (0);
+
 
 	/* Get TJA1101 PHY id1 and id2 register value. */
 	if (TJA110x_getPHYIdentifier1(&Tja110xId1, PHY_TJA1101_ADDRESS) == NXP_TJA1100_SUCCESS)
@@ -183,12 +189,12 @@ int PHY_TJA1101_Init(void)
 	/* Reading CONFIG_1 register. */
 	if (TJA110x_getConfiguration1(&Tja110xCfg1Reg, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)return (0);
 
-	Tja110xCfg1Reg.TJA1101_MS   = TJA1101_MS_PHY_CONFIGURED_AS_MASTER;
-	Tja110xCfg1Reg.TJA1101_REACT_RE_WU = TJA1101_REACT_REMOTE_WAKEUP;
-	Tja110xCfg1Reg.TJA1101_REACT_LO_WU = TJA1101_REACT_LOCAL_WAKEUP;
-	Tja110xCfg1Reg.TJA1101_MIIM = TJA1101_MIIM_MII_MODE_ENABLED;
-	Tja110xCfg1Reg.TJA1101_APD  = TJA1101_APD_AUTONOMOUS_POWER_DOWN_DISABLED;
-	/* Rewrite CONFIG_1 register. */
+	Tja110xCfg1Reg.TJA1101_MS   		= TJA1101_MS_PHY_CONFIGURED_AS_MASTER;
+	Tja110xCfg1Reg.TJA1101_REACT_RE_WU 	= TJA1101_REACT_REMOTE_WAKEUP;
+	Tja110xCfg1Reg.TJA1101_REACT_LO_WU 	= TJA1101_REACT_LOCAL_WAKEUP;
+	Tja110xCfg1Reg.TJA1101_MIIM 		= TJA1101_MIIM_MII_MODE_ENABLED;
+	Tja110xCfg1Reg.TJA1101_APD  		= TJA1101_APD_AUTONOMOUS_POWER_DOWN_DISABLED;
+	/* Re-write CONFIG_1 register. */
 	if (TJA110x_setConfiguration1(&Tja110xCfg1Reg, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)return (0);
 
 	/* Reading CONFIG_2 register to get PHY device address. */
@@ -208,22 +214,17 @@ int PHY_TJA1101_Init(void)
 	if (TJA110x_setExtendedControl(&Tja110xEcr, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)return (0);
 
 	delayCount = 0;
-	FLAG = 0;
 
 	/* Wait TJA1101 PLL locked and stable. */
 	do
 	{
-		if (TJA110x_getGeneralStatus(&Tja110xGenStatus, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
-		{
-			FLAG = 1;
-			break;
-		}
+		if (TJA110x_getGeneralStatus(&Tja110xGenStatus, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)return (0);
 
 		delayCount++;
 	}
-	while ((Tja110xGenStatus.TJA1101_PLLL != TJA1101_PLLL_PLL_STABLE_AND_LOCKED) && (delayCount < 1000000U));
+	while ((Tja110xGenStatus.TJA1101_PLLL != TJA1101_PLLL_PLL_STABLE_AND_LOCKED) && (delayCount < 100000000U));
 
-	if (FLAG == 1)
+	if (delayCount >= 100000000U)
 	{
 		return (0);
 	}

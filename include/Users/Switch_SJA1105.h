@@ -40,16 +40,13 @@ extern "C" {
 #define SJA1105SEL_PROD_ID_PARTNR	(0x9A87U)
 
 
-
 #define DEVICE_ID_REG							(0x000000U)
-
 
 #define DEVICE_CONFIGFLAG_REG					(0x000001u)
 #define DEVICE_CONFIGFLAG_REG_CONFIGS_MASK		((uint32_t)1 << 31)
 #define DEVICE_CONFIGFLAG_REG_CRCCHKL_MASK		((uint32_t)1 << 30)
 #define DEVICE_CONFIGFLAG_REG_IDS_MASK			((uint32_t)1 << 29)
 #define DEVICE_CONFIGFLAG_REG_CRCCHKG_MASK		((uint32_t)1 << 28)
-
 
 
 #define RESET_CTRL_REG							(0x100440u)
@@ -83,14 +80,9 @@ typedef enum
 }SJA1105ConfigStatus;
 
 
-
-
-
 void Switch_SJA1105_Init(void);
-
 int SJA1105_WriteData(const uint32_t regAddr, const uint8_t* pWtData, const uint16_t u8WtDataLen);
 int SJA1105_ReadData(const uint32_t regAddr, uint8_t* pRdData, const uint16_t u8RdDataLen);
-
 int SJA1105_ConfigStatusChecking(SJA1105TypeDef* pDevType, SJA1105ConfigStatus* pDevConfigSta);
 
 
