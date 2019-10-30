@@ -79,30 +79,17 @@ int Ethernet_SendFrameData(Eth_DataType* txDataBuf, uint16_t txLength)
 	Eth_FrameType frameType;
 	uint8 targetMacAddr[6];
 
-	Eth_DataType *txBufPtr = NULL;
-	Eth_DataType **txBufPtrPtr = NULL;
-	uint16 lenByte;
-	uint16 *lenBytePtr = NULL;
-
-//	Eth_DataType *txBufPtr = &txDataBuf[0 + OFFSET_PAYLOAD];
-//	Eth_DataType **txBufPtrPtr = &txBufPtr;
-//
-//	uint16 lenByte = txLength - OFFSET_PAYLOAD;
-//	uint16 *lenBytePtr = &lenByte;
-
 	if ((txDataBuf != NULL) && (txLength > OFFSET_PAYLOAD))
 	{
-		txBufPtr = &txDataBuf[0 + OFFSET_PAYLOAD];
-		txBufPtrPtr = &txBufPtr;
+		Eth_DataType *txBufPtr = &txDataBuf[0 + OFFSET_PAYLOAD];
+		Eth_DataType **txBufPtrPtr = &txBufPtr;
 
-		lenByte = txLength - OFFSET_PAYLOAD;
-		lenBytePtr = &lenByte;
+		uint16 lenByte = txLength - OFFSET_PAYLOAD;
+		uint16 *lenBytePtr = &lenByte;
 
 		memcpy((uint8*)targetMacAddr, (Eth_DataType*)txDataBuf, 6);
 
-		ethRet = Eth_ProvideTxBuffer(CTRL_INDEX, &bufIdx, txBufPtrPtr, lenBytePtr);
-
-		if (ethRet != BUFREQ_OK)
+		if (Eth_ProvideTxBuffer(CTRL_INDEX, &bufIdx, txBufPtrPtr, lenBytePtr) != BUFREQ_OK)
 		{
 			retResult = 0;
 		}
