@@ -53,8 +53,8 @@ int main(void)
 	Switch_SJA1105_Init();
 	SJA1105_ConfigStatusChecking(&SJA1105_DEVICE_TYPE, &SJA1105_CONFIG_STA);
 
-//	PHY_TJA1101_Init();
-	PHY_DP83822_Init();
+	PHY_TJA1101_Init();
+//	PHY_DP83822_Init();
 
 	/* Loop forever */
 	for(;;)
@@ -64,12 +64,12 @@ int main(void)
 
 //		McanComm_TransmitProcess();
 
-//		PHY_TJA1101_GetCurrentStatus();
-		PHY_DP83822_GetCurrentStatus();
+		PHY_TJA1101_GetCurrentStatus();
+//		PHY_DP83822_GetCurrentStatus();
 
 		SystemDelay_Ms(500);
 
-		PHY_DP83822_SendDataFrame();
-//		PHY_TJA1101_SendEthernetFrame();
+//		PHY_DP83822_SendDataFrame();
+		PHY_TJA1101_SendEthernetFrame();
 	}
 }

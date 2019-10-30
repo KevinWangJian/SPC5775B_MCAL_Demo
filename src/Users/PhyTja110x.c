@@ -1,7 +1,7 @@
 /*
  * PhyTja110x.c
  *
- *  Created on: 2019Äê10ÔÂ22ÈÕ
+ *  Created on: 2019ï¿½ï¿½10ï¿½ï¿½22ï¿½ï¿½
  *      Author: admin
  */
 
@@ -19,27 +19,23 @@ static uint8_t   TJA1101_TYPE_NO = 0;
 static uint8_t   TJA1101_REVISION_NO = 0;
 static uint16_t  TJA1101_PHY_DEV_ADDR = 0;
 
-
-TJA110x_Communication_Status_Reg_t TJA1101_COMMUNICATION_STATUS;
-TJA110x_External_Status_Reg_t TJA1101_EXTERNAL_STATUS;
+static PHY_TJA1101_ATTRIBUTE_t TJA1101_AttributeInfo;
 
 
 /*
-@brief
-@details
-@para
-@return
+@brief  NOP command delay.
+@para   cnt, delay count value.
+@return None.
 */
 void nopDelay(uint32_t cnt)
 {
 	while (cnt--){;}
 }
 
-
 /*
-@brief
-@details
-@para
+@brief   
+@details 
+@para    
 @return
 */
 NXP_TJA1100_Error_Code_t SMI_Send(Byte* data, Byte phyAddr, Byte* mask, NXP_TJA1100_Access_t type)
@@ -47,12 +43,12 @@ NXP_TJA1100_Error_Code_t SMI_Send(Byte* data, Byte phyAddr, Byte* mask, NXP_TJA1
 	uint16_t regVal;
 	uint16_t writeVal;
 	uint8_t regAddr;
-	uint8_t dummyCount = 0;
+	uint8_t dummyCount;
 	NXP_TJA1100_Error_Code_t result = NXP_TJA1100_ERROR_WRITE_FAIL;
 
 	if (NXP_TJA1100_WRITE == type)
 	{
-		regAddr   = data[0];
+		regAddr   = data[0];								/* PHY Register Address. */
 		writeVal  = (((uint16_t)data[1] << 8) + data[2]);
 		writeVal &= (((uint16_t)mask[1] << 8) + mask[2]);
 
@@ -73,7 +69,7 @@ NXP_TJA1100_Error_Code_t SMI_Send(Byte* data, Byte phyAddr, Byte* mask, NXP_TJA1
 	}
 	else if (NXP_TJA1100_READ == type)
 	{
-		regAddr = data[0];
+		regAddr = data[0];									/* PHY Register Address. */
 
 		dummyCount = 0;
 
@@ -93,6 +89,8 @@ NXP_TJA1100_Error_Code_t SMI_Send(Byte* data, Byte phyAddr, Byte* mask, NXP_TJA1
 	}
 	else
 	{
+		dummyCount = 0;
+
 		while (dummyCount < 5U)dummyCount++;
 
 		result = NXP_TJA1100_ERROR_WRITE_FAIL;
@@ -101,12 +99,11 @@ NXP_TJA1100_Error_Code_t SMI_Send(Byte* data, Byte phyAddr, Byte* mask, NXP_TJA1
 	return (result);
 }
 
-
 /*
-@brief
-@details
-@para
-@return
+@brief This function is initialize TJA1101 chip and configure TJA1101 working parameters.
+@details This function should be called first by users before call other PHY functions.
+@para None.
+@return 0, initialization failed; 1, initialization success;
 */
 int PHY_TJA1101_Init(void)
 {
@@ -127,11 +124,11 @@ int PHY_TJA1101_Init(void)
 	nopDelay(2000);
 	PHY_TJA1101_RESET_HIGH();
 
+	TJA1101_AttributeInfo.PhySpeed = TJA1101_100Mbps;
+
 	/* Software RESET command to TJA1101 chip. */
 	Tja110xBcr.TJA1100_RST    = TJA1101_RST_PHY_RESET;
 	Tja110xBcr.TJA1100_LB  	  = TJA1101_LB_NORMAL_OPERATION;
-	Tja110xBcr.TJA1100_SS_LSB = TJA1101_SS_LSB_1;
-	Tja110xBcr.TJA1100_SS_MSB = TJA1101_SS_MSB_0;
 	Tja110xBcr.TJA1100_ANE    = TJA1101_ANE_DISABLE_AUTONEGOTIATION_PROCESS;
 	Tja110xBcr.TJA1100_PWRD   = TJA1101_PWRD_NORMAL_OPERATION;
 	Tja110xBcr.TJA1100_ISL    = TJA1101_ISL_NORMAL_OPERATION;
@@ -139,18 +136,51 @@ int PHY_TJA1101_Init(void)
 	Tja110xBcr.TJA1100_DM     = TJA1101_DM_FULL_DUPLEX;
 	Tja110xBcr.TJA1100_CT     = TJA1101_CT_DISABLE_COL_SIGNAL_TEST;
 	Tja110xBcr.TJA1100_UDE    = TJA1101_UDE_EN_MII_TRANSMIT_ONLY_WHEN_PHY_VALID_LINK;
-	if (TJA110x_setBasicControl(&Tja110xBcr, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)return (0);
+
+	if (TJA1101_AttributeInfo.PhySpeed == TJA1101_10Mbps)
+	{
+		Tja110xBcr.TJA1100_SS_LSB = TJA1101_SS_LSB_0;
+		Tja110xBcr.TJA1100_SS_MSB = TJA1101_SS_MSB_0;
+	}
+	else if (TJA1101_AttributeInfo.PhySpeed == TJA1101_100Mbps)
+	{
+		Tja110xBcr.TJA1100_SS_LSB = TJA1101_SS_LSB_1;
+		Tja110xBcr.TJA1100_SS_MSB = TJA1101_SS_MSB_0;
+	}
+	else if (TJA1101_AttributeInfo.PhySpeed == TJA1101_1000Mbps)
+	{
+		Tja110xBcr.TJA1100_SS_LSB = TJA1101_SS_LSB_0;
+		Tja110xBcr.TJA1100_SS_MSB = TJA1101_SS_MSB_1;
+	}
+	else
+	{
+		Tja110xBcr.TJA1100_SS_LSB = TJA1101_SS_LSB_1;
+		Tja110xBcr.TJA1100_SS_MSB = TJA1101_SS_MSB_0;
+	}
+
+	if (TJA110x_setBasicControl(&Tja110xBcr, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
+	{
+		TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
+		return (0);
+	}
 
 	delayCount = 0;
 	/* Wait reset complete. */
 	while ((Tja110xBcr.TJA1100_RST == TJA1101_RST_PHY_RESET) && (delayCount < 100000000U))
 	{
-		if (TJA110x_getBasicControl(&Tja110xBcr, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)return (0);
+		if (TJA110x_getBasicControl(&Tja110xBcr, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
+		{
+			TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
+			return (0);
+		}
 
 		delayCount++;
 	}
-	if (delayCount >= 100000000U)return (0);
-
+	if (delayCount >= 100000000U)
+	{
+		TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
+		return (0);
+	}
 
 	/* Get TJA1101 PHY id1 and id2 register value. */
 	if (TJA110x_getPHYIdentifier1(&Tja110xId1, PHY_TJA1101_ADDRESS) == NXP_TJA1100_SUCCESS)
@@ -166,11 +196,13 @@ int PHY_TJA1101_Init(void)
 		}
 		else
 		{
+			TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
 			return (0);
 		}
 	}
 	else
 	{
+		TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
 		return (0);
 	}
 
@@ -181,44 +213,75 @@ int PHY_TJA1101_Init(void)
 	Tja110xEcr.TJA1101_TRS  = TJA1101_TRS_STOPS_TRAINING_PHASE;
 	Tja110xEcr.TJA1101_TM   = TJA1101_TM_NO_TEST_MODE;
 	Tja110xEcr.TJA1101_CBT  = TJA1101_CBT_STOPS_TDR_BASED_CABLE_TEST;
-	Tja110xEcr.TJA1101_LM   = TJA1101_LM_INTERNAL_LOOPBACK;
+	Tja110xEcr.TJA1101_LM   = TJA1101_LM_INTERNAL_LOOPBACK;							/* Attention:BCR register(0x00) LOOPBACK bit must be set to 1. */
 	Tja110xEcr.TJA1101_CFEN = TJA1101_CFEN_CONFIGURATION_REGISTER_ACCESS_ENABLED;
 	Tja110xEcr.TJA1101_WR   = TJA1101_WR_NO_WAKEUP_SIGNAL_TO_BE_SENT;
-	if (TJA110x_setExtendedControl(&Tja110xEcr, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)return (0);
+	if (TJA110x_setExtendedControl(&Tja110xEcr, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
+	{
+		TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
+		return (0);
+	}
 
 	/* Reading CONFIG_1 register. */
-	if (TJA110x_getConfiguration1(&Tja110xCfg1Reg, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)return (0);
-
+	if (TJA110x_getConfiguration1(&Tja110xCfg1Reg, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
+	{
+		TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
+		return (0);
+	}
 	Tja110xCfg1Reg.TJA1101_MS   		= TJA1101_MS_PHY_CONFIGURED_AS_MASTER;
 	Tja110xCfg1Reg.TJA1101_REACT_RE_WU 	= TJA1101_REACT_REMOTE_WAKEUP;
 	Tja110xCfg1Reg.TJA1101_REACT_LO_WU 	= TJA1101_REACT_LOCAL_WAKEUP;
 	Tja110xCfg1Reg.TJA1101_MIIM 		= TJA1101_MIIM_MII_MODE_ENABLED;
 	Tja110xCfg1Reg.TJA1101_APD  		= TJA1101_APD_AUTONOMOUS_POWER_DOWN_DISABLED;
 	/* Re-write CONFIG_1 register. */
-	if (TJA110x_setConfiguration1(&Tja110xCfg1Reg, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)return (0);
+	if (TJA110x_setConfiguration1(&Tja110xCfg1Reg, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
+	{
+		TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
+		return (0);
+	}
 
 	/* Reading CONFIG_2 register to get PHY device address. */
-	if (TJA110x_getConfiguration2(&Tja110xCfg2Reg, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)return (0);
-	TJA1101_PHY_DEV_ADDR = Tja110xCfg2Reg.TJA1101_PHYAD;
+	if (TJA110x_getConfiguration2(&Tja110xCfg2Reg, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
+	{
+		TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
+		return (0);
+	}
+	TJA1101_AttributeInfo.PhyAddress = (uint8_t)Tja110xCfg2Reg.TJA1101_PHYAD;
 
 	/* Reading COMMON CONFIG register. */
-	if (TJA110x_getCommonConfiguration(&Tja110xCommonCfgReg, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)return (0);
-
+	if (TJA110x_getCommonConfiguration(&Tja110xCommonCfgReg, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
+	{
+		TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
+		return (0);
+	}
 	Tja110xCommonCfgReg.TJA1101_AUTO_OP  = AUTONOMOUS_OPERATION;
 	Tja110xCommonCfgReg.TJA1101_CLK_MODE = CLK_25MHZ_XTAL_NOCLK_AT_CLKINOUT;
 	Tja110xCommonCfgReg.TJA1101_LDO_MODE = INTERNAL_1V8_LDO_ENABLED;
 	/* Rewrite COMMON CONFIG register. */
-	if (TJA110x_setCommonConfiguration(&Tja110xCommonCfgReg, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)return (0);
+	if (TJA110x_setCommonConfiguration(&Tja110xCommonCfgReg, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
+	{
+		TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
+		return (0);
+	}
 
+	/* Re-write ECR register CONFIG_EN bit to 0 and disable configuration register accessable. */
 	Tja110xEcr.TJA1101_CFEN = TJA1101_CFEN_CONFIGURATION_REGISTER_ACCESS_DISABLED;
-	if (TJA110x_setExtendedControl(&Tja110xEcr, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)return (0);
+	if (TJA110x_setExtendedControl(&Tja110xEcr, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
+	{
+		TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
+		return (0);
+	}
 
 	delayCount = 0;
 
 	/* Wait TJA1101 PLL locked and stable. */
 	do
 	{
-		if (TJA110x_getGeneralStatus(&Tja110xGenStatus, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)return (0);
+		if (TJA110x_getGeneralStatus(&Tja110xGenStatus, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
+		{
+			TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
+			return (0);
+		}
 
 		delayCount++;
 	}
@@ -226,12 +289,13 @@ int PHY_TJA1101_Init(void)
 
 	if (delayCount >= 100000000U)
 	{
+		TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
 		return (0);
 	}
 
+	TJA1101_AttributeInfo.InitStat = TJA1101_Init_Success;
 	return (1);
 }
-
 
 /*
 @brief
@@ -242,42 +306,51 @@ int PHY_TJA1101_Init(void)
 int PHY_TJA1101_GetCurrentStatus(void)
 {
 	uint8_t dummyCnt = 0;
+	TJA110x_Communication_Status_Reg_t CommStat;
+	TJA110x_External_Status_Reg_t PhyExtStat;
 
-	if (TJA110x_getCommunicationStatus(&TJA1101_COMMUNICATION_STATUS, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
+	if (TJA1101_AttributeInfo.InitStat == TJA1101_Init_Success)
 	{
-		while (dummyCnt < 5U)dummyCnt++;
+		if (TJA110x_getCommunicationStatus(&CommStat, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
+		{
+			while (dummyCnt < 5U)dummyCnt++;
 
-		return (0);
-	}
-	else
-	{
-		while (dummyCnt < 5U)dummyCnt++;
+			return (0);
+		}
+		else
+		{
+			TJA1101_AttributeInfo.LinkStat    = (PHY_TJA1101_LinkupStatus_t)CommStat.TJA1101_LU;
+			TJA1101_AttributeInfo.PhySQILevel = (PHY_TJA1101_SQI_Level_t)CommStat.TJA1101_SQI;
+			TJA1101_AttributeInfo.PhyMode	  = (PHY_TJA1101_ModeState_t)CommStat.TJA1101_PHYS;
+		}
+
+		if (TJA110x_getExternalStatus(&PhyExtStat, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
+		{
+			while (dummyCnt < 5U)dummyCnt++;
+
+			return (0);
+		}
+		else
+		{
+			while (dummyCnt < 5U)dummyCnt++;
+
+			return (1);
+		}
 	}
 
-	if (TJA110x_getExternalStatus(&TJA1101_EXTERNAL_STATUS, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
-	{
-		while (dummyCnt < 5U)dummyCnt++;
-
-		return (0);
-	}
-	else
-	{
-		while (dummyCnt < 5U)dummyCnt++;
-	}
-
-	return (1);
+	return (0);
 }
 
 
 int PHY_TJA1101_SendEthernetFrame(void)
 {
+	uint8_t dummyCnt;
+
 	uint8_t i;
 	Std_ReturnType ret;
 	BufReq_ReturnType ethRet;
 	Eth_FrameType frameTypeARP;
-
 	uint8 bufIdx = 0;
-	uint8_t dummyCnt;
 
 	/*MAC frame is an ARP message saying "Who has 192.168.10.3? Tell 192.168.10.10"*/
 	Eth_DataType txMacFrame[LENGTH_FRAME] = {
@@ -299,61 +372,74 @@ int PHY_TJA1101_SendEthernetFrame(void)
 	uint16 lenByte = LENGTH_PAYLOAD;
 	uint16 *lenBytePtr = &lenByte;
 
-	if ((TJA1101_COMMUNICATION_STATUS.TJA1101_LU == TJA1101_LU_OK) && (TJA1101_COMMUNICATION_STATUS.TJA1101_SQI >= TJA1101_SQI_CLASS_D_SQI_RATIO))
+	if (TJA1101_AttributeInfo.InitStat == TJA1101_Init_Success)
 	{
-		dummyCnt = 0;
-		ethRet = Eth_ProvideTxBuffer(CTRL_INDEX, &bufIdx, txBufPtrPtr, lenBytePtr);
-
-		if(ethRet != BUFREQ_OK)
+		if ((TJA1101_AttributeInfo.LinkStat == TJA1101_Linkup_Success) && (TJA1101_AttributeInfo.PhySQILevel >= SQI_CLASS_E))
 		{
+//			Ethernet_SendFrameData(txMacFrame, LENGTH_FRAME);
+
+			dummyCnt = 0;
+			ethRet = Eth_ProvideTxBuffer(CTRL_INDEX, &bufIdx, txBufPtrPtr, lenBytePtr);
+
+			if(ethRet != BUFREQ_OK)
+			{
+				while (dummyCnt < 3U)
+				{
+					dummyCnt++;
+				}
+				return (0);
+			}
+			else
+			{
+				while (dummyCnt < 3U)
+				{
+					dummyCnt++;
+				}
+			}
+
+			/*If guaranteed memory is larger than requested memory, re-assign lenByte as requested value. Or return E_NOT_OK.*/
+			if(*lenBytePtr >= (LENGTH_PAYLOAD))
+				lenByte = LENGTH_PAYLOAD;
+			else
+				return (0);
+
+			/*Assign value to memory pointed by txBufPtr, whose value is assigned by txBufPtrPtr in Eth_ProvideTxBuffer.*/
+			for(i = 0; i < lenByte; i++)
+			{
+				*txBufPtr = txMacFrame[OFFSET_PAYLOAD + i];
+				txBufPtr++;
+			}
+
+			frameTypeARP = ((uint16)txMacFrame[OFFSET_FRAMETYPE] << 8U) | txMacFrame[OFFSET_FRAMETYPE + 1];
+
+			dummyCnt = 0;
+			ret = Eth_Transmit(CTRL_INDEX, bufIdx, frameTypeARP, TXCOMFIRMATION_OFF, lenByte, &TargetMacAddr[0]);
+
+			if(ret != E_OK)
+			{
+				while (dummyCnt < 3U)
+				{
+					dummyCnt++;
+				}
+
+				return (0);
+			}
+
 			while (dummyCnt < 3U)
 			{
 				dummyCnt++;
 			}
-			return (0);
+
+			return (1);
 		}
 		else
 		{
-			while (dummyCnt < 3U)
-			{
-				dummyCnt++;
-			}
-		}
-
-		/*If guaranteed memory is larger than requested memory, re-assign lenByte as requested value. Or return E_NOT_OK.*/
-		if(*lenBytePtr >= (LENGTH_PAYLOAD))
-			lenByte = LENGTH_PAYLOAD;
-		else
-			return (0);
-
-		/*Assign value to memory pointed by txBufPtr, whose value is assigned by txBufPtrPtr in Eth_ProvideTxBuffer.*/
-		for(i = 0; i < lenByte; i++)
-		{
-			*txBufPtr = txMacFrame[OFFSET_PAYLOAD + i];
-			txBufPtr++;
-		}
-
-		frameTypeARP = ((uint16)txMacFrame[OFFSET_FRAMETYPE] << 8U) | txMacFrame[OFFSET_FRAMETYPE + 1];
-
-		dummyCnt = 0;
-		ret = Eth_Transmit(CTRL_INDEX, bufIdx, frameTypeARP, TXCOMFIRMATION_OFF, lenByte, &TargetMacAddr[0]);
-
-		if(ret != E_OK)
-		{
-			while (dummyCnt < 3U)
-			{
-				dummyCnt++;
-			}
-
 			return (0);
 		}
-
-		while (dummyCnt < 3U)
-		{
-			dummyCnt++;
-		}
-
-		return (1);
+	}
+	else
+	{
+		return (0);
 	}
 }
 

@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "mcal.h": "c",
+        "nxp_tja1100_functions.h": "c"
+    }
+}

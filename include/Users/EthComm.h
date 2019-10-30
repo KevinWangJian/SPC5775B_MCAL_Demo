@@ -16,7 +16,7 @@ extern "C" {
 #include "typedefs.h"
 #include "Std_Types.h"
 #include "Reg_eSys.h"
-
+#include "Eth_GeneralTypes.h"
 
 
 #define  CTRL_INDEX		(0)
@@ -43,6 +43,7 @@ extern "C" {
 
 void Ethernet_Init(void);
 
+int Ethernet_SendFrameData(Eth_DataType* txDataBuf, uint16_t txLength);
 
 
 #ifdef __cplusplus

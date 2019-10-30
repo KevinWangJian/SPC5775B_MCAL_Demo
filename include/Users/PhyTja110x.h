@@ -1,7 +1,7 @@
 /*
  * PhyTja110x.h
  *
- *  Created on: 2019Äê10ÔÂ22ÈÕ
+ *  Created on: 2019ï¿½ï¿½10ï¿½ï¿½22ï¿½ï¿½
  *      Author: admin
  */
 
@@ -30,6 +30,61 @@ extern "C" {
 
 #define  PHY_TJA1101_RESET_LOW()	Dio_WriteChannel(DioConf_DioChannel_TJA1101_RESET, STD_LOW)
 #define  PHY_TJA1101_RESET_HIGH()	Dio_WriteChannel(DioConf_DioChannel_TJA1101_RESET, STD_HIGH)
+
+
+typedef enum 
+{
+    TJA1101_Init_Failed = 0,
+    TJA1101_Init_Success = 1
+}PHY_TJA1101_InitStatus_t;
+
+typedef enum
+{
+	TJA1101_Linkup_Failed = 0,
+	TJA1101_Linkup_Success = 1
+}PHY_TJA1101_LinkupStatus_t;
+
+typedef enum
+{
+	TJA1101_Iddle 		 = 0,
+	TJA1101_Initializing = 1,
+	TJA1101_Configured 	 = 2,
+	TJA1101_Offline 	 = 3,
+	TJA1101_Active 		 = 4,
+	TJA1101_Isolate 	 = 5,
+	TJA1101_CableTest 	 = 6,
+	TJA1101_TestMode 	 = 7
+}PHY_TJA1101_ModeState_t;
+
+typedef enum
+{
+	SQI_WRS_CLASS_A = 0,		/* Unstable link */
+	SQI_CLASS_A     = 1,		/* Unstable link */
+	SQI_CLASS_B		= 2,		/* Unstable link */
+	SQI_CLASS_C		= 3,		/* Good link */
+	SQI_CLASS_D		= 4,		/* Good link, bit error rate < 1e-10 */
+	SQI_CLASS_E		= 5,		/* Good link */
+	SQI_CLASS_F		= 6,		/* Very Good link */
+	SQI_CLASS_G		= 7			/* Very Good link */
+}PHY_TJA1101_SQI_Level_t;
+
+typedef enum
+{
+	TJA1101_10Mbps   = 0,
+	TJA1101_100Mbps  = 1,
+	TJA1101_1000Mbps = 2
+}PHY_TJA1101_SPEED_Select_t;
+
+
+typedef struct 
+{
+	uint8_t 					PhyAddress;
+    PHY_TJA1101_InitStatus_t 	InitStat;
+    PHY_TJA1101_SPEED_Select_t 	PhySpeed;
+    PHY_TJA1101_LinkupStatus_t 	LinkStat;
+    PHY_TJA1101_ModeState_t    	PhyMode;
+    PHY_TJA1101_SQI_Level_t    	PhySQILevel;
+}PHY_TJA1101_ATTRIBUTE_t;
 
 
 int PHY_TJA1101_Init(void);
