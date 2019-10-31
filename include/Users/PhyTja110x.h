@@ -24,6 +24,11 @@ extern "C" {
 
 #define  PHY_TJA1101_ADDRESS	 	(0x06U)
 
+#define  PHY_TJA1101_ID1			(0x0180U)
+#define  PHY_TJA1101_ID2			(0x0037U)
+#define  PHY_TJA1101_TYPE_NO		(0x0010U)
+#define  PHY_TJA1101_REVISION_NO	(0x0001U)
+
 
 #define  PHY_TJA1101_ENABLE()		Dio_WriteChannel(DioConf_DioChannel_TJA1101_EN, STD_HIGH)
 #define  PHY_TJA1101_DISABLE()		Dio_WriteChannel(DioConf_DioChannel_TJA1101_EN, STD_LOW)
@@ -32,7 +37,21 @@ extern "C" {
 #define  PHY_TJA1101_RESET_HIGH()	Dio_WriteChannel(DioConf_DioChannel_TJA1101_RESET, STD_HIGH)
 
 
+typedef struct
+{
+	uint16 ID1;
+	uint16 ID2;
+	uint16 TYPE_NO;
+	uint16 VISION_NO;
+}PHY_TJA1101_ID_Info_t;
+
 typedef enum 
+{
+	TJA1101_Configure_As_Slaver = 0,
+	TJA1101_Configure_As_Master = 1
+}PHY_TJA1101_MasterSlaver_Select_t;
+
+typedef enum
 {
     TJA1101_Init_Failed = 0,
     TJA1101_Init_Success = 1
@@ -54,7 +73,7 @@ typedef enum
 	TJA1101_Isolate 	 = 5,
 	TJA1101_CableTest 	 = 6,
 	TJA1101_TestMode 	 = 7
-}PHY_TJA1101_ModeState_t;
+}PHY_TJA1101_State_t;
 
 typedef enum
 {
@@ -75,15 +94,32 @@ typedef enum
 	TJA1101_1000Mbps = 2
 }PHY_TJA1101_SPEED_Select_t;
 
+typedef enum
+{
+	NO_SHORT_CIRCUIT_DETECTED = 0,
+	SHORT_CIRCUIT_DETECTED = 1
+}PHY_TJA1101_SHORT_CIRCUIT_t;
+
+typedef enum
+{
+	NO_OPEN_CIRCUIT_DETECTED = 0,
+	OPEN_CIRCUIT_DETECTED = 1
+}PHY_TJA1101_OPEN_CIRCUIT_t;
+
 
 typedef struct 
 {
-	uint8_t 					PhyAddress;
-    PHY_TJA1101_InitStatus_t 	InitStat;
-    PHY_TJA1101_SPEED_Select_t 	PhySpeed;
-    PHY_TJA1101_LinkupStatus_t 	LinkStat;
-    PHY_TJA1101_ModeState_t    	PhyMode;
-    PHY_TJA1101_SQI_Level_t    	PhySQILevel;
+	uint8_t 							PhyAddress;
+	PHY_TJA1101_ID_Info_t				PhyIdInfo;
+	PHY_TJA1101_MasterSlaver_Select_t 	PhyMode;
+    PHY_TJA1101_InitStatus_t 			InitStatus;
+    PHY_TJA1101_SPEED_Select_t 			PhySpeed;
+    PHY_TJA1101_LinkupStatus_t 			LinkStatus;
+    PHY_TJA1101_State_t    				PhyState;
+    PHY_TJA1101_SQI_Level_t    			PhySQILevel;
+    PHY_TJA1101_SHORT_CIRCUIT_t 		PhyShortCircuitStatus;
+    PHY_TJA1101_OPEN_CIRCUIT_t  		PhyOpenCircuitStatus;
+
 }PHY_TJA1101_ATTRIBUTE_t;
 
 

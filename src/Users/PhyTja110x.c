@@ -33,10 +33,13 @@ void nopDelay(uint32_t cnt)
 }
 
 /*
-@brief   
-@details 
-@para    
-@return
+@brief Write data to or Read data from PHY registers.
+@details This function is called by users to configure or get data in PHY registers using SMI interface.
+@para *data, write or read data stored buffer.
+@para phyAddr, PHY address.
+@para *mask, mask value.
+@para type, operate direction.
+@return NXP_TJA1100_SUCCESS, success; NXP_TJA1100_ERROR_WRITE_FAIL, failed;
 */
 NXP_TJA1100_Error_Code_t SMI_Send(Byte* data, Byte phyAddr, Byte* mask, NXP_TJA1100_Access_t type)
 {
@@ -125,6 +128,7 @@ int PHY_TJA1101_Init(void)
 	PHY_TJA1101_RESET_HIGH();
 
 	TJA1101_AttributeInfo.PhySpeed = TJA1101_100Mbps;
+	TJA1101_AttributeInfo.PhyMode  = TJA1101_Configure_As_Slaver;
 
 	/* Software RESET command to TJA1101 chip. */
 	Tja110xBcr.TJA1100_RST    = TJA1101_RST_PHY_RESET;
@@ -160,7 +164,7 @@ int PHY_TJA1101_Init(void)
 
 	if (TJA110x_setBasicControl(&Tja110xBcr, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
 	{
-		TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
+		TJA1101_AttributeInfo.InitStatus = TJA1101_Init_Failed;
 		return (0);
 	}
 
@@ -170,7 +174,7 @@ int PHY_TJA1101_Init(void)
 	{
 		if (TJA110x_getBasicControl(&Tja110xBcr, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
 		{
-			TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
+			TJA1101_AttributeInfo.InitStatus = TJA1101_Init_Failed;
 			return (0);
 		}
 
@@ -178,31 +182,30 @@ int PHY_TJA1101_Init(void)
 	}
 	if (delayCount >= 100000000U)
 	{
-		TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
+		TJA1101_AttributeInfo.InitStatus = TJA1101_Init_Failed;
 		return (0);
 	}
 
 	/* Get TJA1101 PHY id1 and id2 register value. */
 	if (TJA110x_getPHYIdentifier1(&Tja110xId1, PHY_TJA1101_ADDRESS) == NXP_TJA1100_SUCCESS)
 	{
-		TJA1101_PHY_ID = ((uint32_t)Tja110xId1.TJA1100_PHY_ID1 << 3);
+		TJA1101_AttributeInfo.PhyIdInfo.ID1 = (uint16)Tja110xId1.TJA1100_PHY_ID1;
 
 		if (TJA110x_getPHYIdentifier2(&Tja110xId2, PHY_TJA1101_ADDRESS) == NXP_TJA1100_SUCCESS)
 		{
-			TJA1101_PHY_ID |= ((uint32_t)Tja110xId2.TJA1100_PHY_ID2 << 19);
-
-			TJA1101_TYPE_NO = Tja110xId2.TJA1100_TYPE;
-			TJA1101_REVISION_NO = Tja110xId2.TJA1100_REV;
+			TJA1101_AttributeInfo.PhyIdInfo.ID2 = (uint16)Tja110xId2.TJA1100_PHY_ID2;
+			TJA1101_AttributeInfo.PhyIdInfo.TYPE_NO = (uint16)Tja110xId2.TJA1100_TYPE;
+			TJA1101_AttributeInfo.PhyIdInfo.VISION_NO = (uint16)Tja110xId2.TJA1100_REV;
 		}
 		else
 		{
-			TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
+			TJA1101_AttributeInfo.InitStatus = TJA1101_Init_Failed;
 			return (0);
 		}
 	}
 	else
 	{
-		TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
+		TJA1101_AttributeInfo.InitStatus = TJA1101_Init_Failed;
 		return (0);
 	}
 
@@ -212,23 +215,31 @@ int PHY_TJA1101_Init(void)
 	Tja110xEcr.TJA1101_SJT  = TJA1101_SJT_SLAVE_JITTER_TEST_DISABLED;
 	Tja110xEcr.TJA1101_TRS  = TJA1101_TRS_STOPS_TRAINING_PHASE;
 	Tja110xEcr.TJA1101_TM   = TJA1101_TM_NO_TEST_MODE;
-	Tja110xEcr.TJA1101_CBT  = TJA1101_CBT_STOPS_TDR_BASED_CABLE_TEST;
-	Tja110xEcr.TJA1101_LM   = TJA1101_LM_INTERNAL_LOOPBACK;							/* Attention:BCR register(0x00) LOOPBACK bit must be set to 1. */
+	Tja110xEcr.TJA1101_CBT  = TJA1101_CBT_FORCES_TDR_BASED_CABLE_TEST;
+	Tja110xEcr.TJA1101_LM   = TJA1101_LM_INTERNAL_LOOPBACK;		/* Attention:BCR register(0x00) LOOPBACK bit must be set to 1. */
 	Tja110xEcr.TJA1101_CFEN = TJA1101_CFEN_CONFIGURATION_REGISTER_ACCESS_ENABLED;
 	Tja110xEcr.TJA1101_WR   = TJA1101_WR_NO_WAKEUP_SIGNAL_TO_BE_SENT;
 	if (TJA110x_setExtendedControl(&Tja110xEcr, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
 	{
-		TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
+		TJA1101_AttributeInfo.InitStatus = TJA1101_Init_Failed;
 		return (0);
 	}
 
 	/* Reading CONFIG_1 register. */
 	if (TJA110x_getConfiguration1(&Tja110xCfg1Reg, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
 	{
-		TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
+		TJA1101_AttributeInfo.InitStatus = TJA1101_Init_Failed;
 		return (0);
 	}
-	Tja110xCfg1Reg.TJA1101_MS   		= TJA1101_MS_PHY_CONFIGURED_AS_MASTER;
+
+	if (TJA1101_AttributeInfo.PhyMode == TJA1101_Configure_As_Master)
+	{
+		Tja110xCfg1Reg.TJA1101_MS   	= TJA1101_MS_PHY_CONFIGURED_AS_MASTER;
+	}
+	else
+	{
+		Tja110xCfg1Reg.TJA1101_MS   	= TJA1101_MS_PHY_CONFIGURED_AS_SLAVE;
+	}
 	Tja110xCfg1Reg.TJA1101_REACT_RE_WU 	= TJA1101_REACT_REMOTE_WAKEUP;
 	Tja110xCfg1Reg.TJA1101_REACT_LO_WU 	= TJA1101_REACT_LOCAL_WAKEUP;
 	Tja110xCfg1Reg.TJA1101_MIIM 		= TJA1101_MIIM_MII_MODE_ENABLED;
@@ -236,14 +247,14 @@ int PHY_TJA1101_Init(void)
 	/* Re-write CONFIG_1 register. */
 	if (TJA110x_setConfiguration1(&Tja110xCfg1Reg, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
 	{
-		TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
+		TJA1101_AttributeInfo.InitStatus = TJA1101_Init_Failed;
 		return (0);
 	}
 
 	/* Reading CONFIG_2 register to get PHY device address. */
 	if (TJA110x_getConfiguration2(&Tja110xCfg2Reg, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
 	{
-		TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
+		TJA1101_AttributeInfo.InitStatus = TJA1101_Init_Failed;
 		return (0);
 	}
 	TJA1101_AttributeInfo.PhyAddress = (uint8_t)Tja110xCfg2Reg.TJA1101_PHYAD;
@@ -251,7 +262,7 @@ int PHY_TJA1101_Init(void)
 	/* Reading COMMON CONFIG register. */
 	if (TJA110x_getCommonConfiguration(&Tja110xCommonCfgReg, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
 	{
-		TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
+		TJA1101_AttributeInfo.InitStatus = TJA1101_Init_Failed;
 		return (0);
 	}
 	Tja110xCommonCfgReg.TJA1101_AUTO_OP  = AUTONOMOUS_OPERATION;
@@ -260,7 +271,7 @@ int PHY_TJA1101_Init(void)
 	/* Rewrite COMMON CONFIG register. */
 	if (TJA110x_setCommonConfiguration(&Tja110xCommonCfgReg, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
 	{
-		TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
+		TJA1101_AttributeInfo.InitStatus = TJA1101_Init_Failed;
 		return (0);
 	}
 
@@ -268,7 +279,7 @@ int PHY_TJA1101_Init(void)
 	Tja110xEcr.TJA1101_CFEN = TJA1101_CFEN_CONFIGURATION_REGISTER_ACCESS_DISABLED;
 	if (TJA110x_setExtendedControl(&Tja110xEcr, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
 	{
-		TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
+		TJA1101_AttributeInfo.InitStatus = TJA1101_Init_Failed;
 		return (0);
 	}
 
@@ -279,7 +290,7 @@ int PHY_TJA1101_Init(void)
 	{
 		if (TJA110x_getGeneralStatus(&Tja110xGenStatus, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
 		{
-			TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
+			TJA1101_AttributeInfo.InitStatus = TJA1101_Init_Failed;
 			return (0);
 		}
 
@@ -289,11 +300,11 @@ int PHY_TJA1101_Init(void)
 
 	if (delayCount >= 100000000U)
 	{
-		TJA1101_AttributeInfo.InitStat = TJA1101_Init_Failed;
+		TJA1101_AttributeInfo.InitStatus = TJA1101_Init_Failed;
 		return (0);
 	}
 
-	TJA1101_AttributeInfo.InitStat = TJA1101_Init_Success;
+	TJA1101_AttributeInfo.InitStatus = TJA1101_Init_Success;
 	return (1);
 }
 
@@ -305,43 +316,47 @@ int PHY_TJA1101_Init(void)
 */
 int PHY_TJA1101_GetCurrentStatus(void)
 {
+	int result = 0;
 	uint8_t dummyCnt = 0;
 	TJA110x_Communication_Status_Reg_t CommStat;
 	TJA110x_External_Status_Reg_t PhyExtStat;
 
-	if (TJA1101_AttributeInfo.InitStat == TJA1101_Init_Success)
+	if (TJA1101_AttributeInfo.InitStatus == TJA1101_Init_Success)
 	{
 		if (TJA110x_getCommunicationStatus(&CommStat, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
 		{
 			/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 			while (dummyCnt < 5U)dummyCnt++;
 
-			return (0);
+			result = 0;
 		}
 		else
 		{
-			TJA1101_AttributeInfo.LinkStat    = (PHY_TJA1101_LinkupStatus_t)CommStat.TJA1101_LU;
+			TJA1101_AttributeInfo.LinkStatus  = (PHY_TJA1101_LinkupStatus_t)CommStat.TJA1101_LU;
 			TJA1101_AttributeInfo.PhySQILevel = (PHY_TJA1101_SQI_Level_t)CommStat.TJA1101_SQI;
-			TJA1101_AttributeInfo.PhyMode	  = (PHY_TJA1101_ModeState_t)CommStat.TJA1101_PHYS;
-		}
+			TJA1101_AttributeInfo.PhyState	  = (PHY_TJA1101_State_t)CommStat.TJA1101_PHYS;
 
-		if (TJA110x_getExternalStatus(&PhyExtStat, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
-		{
-			/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
-			while (dummyCnt < 5U)dummyCnt++;
+			if (TJA110x_getExternalStatus(&PhyExtStat, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
+			{
+				/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
+				while (dummyCnt < 5U)dummyCnt++;
 
-			return (0);
-		}
-		else
-		{
-			/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
-			while (dummyCnt < 5U)dummyCnt++;
+				result = 0;
+			}
+			else
+			{
+				/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
+				while (dummyCnt < 5U)dummyCnt++;
 
-			return (1);
+				TJA1101_AttributeInfo.PhyShortCircuitStatus = (PHY_TJA1101_SHORT_CIRCUIT_t)PhyExtStat.TJA1101_SDS;
+				TJA1101_AttributeInfo.PhyOpenCircuitStatus  = (PHY_TJA1101_OPEN_CIRCUIT_t)PhyExtStat.TJA1101_ODS;
+
+				result = 1;
+			}
 		}
 	}
 
-	return (0);
+	return (result);
 }
 
 /*
@@ -366,9 +381,9 @@ int PHY_TJA1101_SendEthernetFrame(void)
 													0xc0,0xa8,0x0a,0x03						/*Payload*/
                                             	  };
 
-	if (TJA1101_AttributeInfo.InitStat == TJA1101_Init_Success)
+	if (TJA1101_AttributeInfo.InitStatus == TJA1101_Init_Success)
 	{
-		if ((TJA1101_AttributeInfo.LinkStat == TJA1101_Linkup_Success) && (TJA1101_AttributeInfo.PhySQILevel >= SQI_CLASS_E))
+		if ((TJA1101_AttributeInfo.LinkStatus == TJA1101_Linkup_Success) && (TJA1101_AttributeInfo.PhySQILevel >= SQI_CLASS_E))
 		{
 			result = Ethernet_SendFrameData(txMacFrame, LENGTH_FRAME);
 		}
