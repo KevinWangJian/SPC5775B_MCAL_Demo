@@ -16,5 +16,7 @@ src/MCAL/Module/EthIf/Src/EthIf_Cbk.o: \
   D:/DuPower/SRC/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/include/Base/Mcal.h \
   D:/DuPower/SRC/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/include/Base/Soc_Ips.h \
   D:/DuPower/SRC/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/include/Base/Reg_eSys.h \
-  D:/DuPower/SRC/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/include/Base/MemMap.h
+  D:/DuPower/SRC/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/include/Base/MemMap.h \
+  D:/DuPower/SRC/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/include/Users/EthComm.h \
+  D:/DuPower/SRC/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/include/typedefs.h
 

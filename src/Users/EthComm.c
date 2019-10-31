@@ -12,6 +12,10 @@
 #include "Eth_GeneralTypes.h"
 
 
+static EthernetRxFrameBuffer_t EthRxFrameBuffer;
+
+
+
 /*
 @brief
 @details
@@ -121,6 +125,45 @@ int Ethernet_SendFrameData(const Eth_DataType* txDataBuf, uint16 txLength)
 
 	return (retResult);
 }
+
+/*
+@brief
+@details
+@para
+@return
+*/
+int Ethernet_WriteRxFrameToBuffer(EthernetFrameData_Def_t* pRxframeData)
+{
+	int result;
+
+	if (EthRxFrameBuffer.RxFrameBuf[EthRxFrameBuffer.WritePtr].FrameValid != FALSE)
+	{
+		result = 0;
+	}
+	else
+	{
+		EthRxFrameBuffer.RxFrameBuf[EthRxFrameBuffer.WritePtr].IsBroadcast   = pRxframeData->IsBroadcast;
+		EthRxFrameBuffer.RxFrameBuf[EthRxFrameBuffer.WritePtr].FrameType     = pRxframeData->FrameType;
+		EthRxFrameBuffer.RxFrameBuf[EthRxFrameBuffer.WritePtr].DataLength    = pRxframeData->DataLength;
+
+		EthRxFrameBuffer.RxFrameBuf[EthRxFrameBuffer.WritePtr].ptrDataBuffer = pRxframeData->ptrDataBuffer;
+		EthRxFrameBuffer.RxFrameBuf[EthRxFrameBuffer.WritePtr].ptrSrcMacAddr = pRxframeData->ptrSrcMacAddr;
+
+		EthRxFrameBuffer.RxFrameBuf[EthRxFrameBuffer.WritePtr].FrameValid    = pRxframeData->FrameValid;
+
+		EthRxFrameBuffer.WritePtr++;
+
+		if (EthRxFrameBuffer.WritePtr >= ETH_RX_FRAME_BUF_SIZE)
+		{
+			EthRxFrameBuffer.WritePtr = 0;
+		}
+
+		result = 1;
+	}
+
+	return (result);
+}
+
 
 
 

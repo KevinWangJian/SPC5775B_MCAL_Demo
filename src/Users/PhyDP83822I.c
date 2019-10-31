@@ -481,7 +481,7 @@ int PHY_DP83822_Init(void)
 	PHY_DP83822HF_RESET_2_HIGH();
 	CntDelay(2000);
 
-#if 1
+#if 0
 	/* Reset PHY_1 chip. */
 	if (PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_1_ADDRESS, DP83822HF_BMCR_REG, DP83822HF_BMCR_REG_Reset_Mask) == 0)
 	{
