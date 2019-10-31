@@ -27,39 +27,38 @@ void Ethernet_Init(void)
 	/*Set SIU_FECCR register manually to select MII-Lite. API is avalable in MCAL4.3*/
 	REG_WRITE32(SIU_FECCR_REG_ADDR, (uint32)0x00000001UL);
 
+	/* Initializes the Ethernet Driver. */
 	Eth_Init(&EthConfigSet_0);
 
 	dummyCnt = 0;
+	/* Initializes the Ethernet Driver. */
 	retVal = Eth_ControllerInit(CTRL_INDEX, CFG_INDEX);
 
 	if (retVal == E_OK)
 	{
-		dummyCnt = 0;
 		retVal = E_NOT_OK;
+
+		/* Enables the given controller. */
 		retVal = Eth_SetControllerMode(CTRL_INDEX, ETH_MODE_ACTIVE);
 
 		if (retVal == E_OK)
 		{
-			while (dummyCnt < 3U) {
-				dummyCnt++;
-			}
+			/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
+			while (dummyCnt < 5U) dummyCnt++;
 
+			/* Obtains the physical source address used by the indexed controller. */
 			Eth_GetPhysAddr(CTRL_INDEX, &MAC_Addr[0]);
-
-			dummyCnt = 0;
 		}
 		else
 		{
-			while (dummyCnt < 3U) {
-				dummyCnt++;
-			}
+			/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
+			while (dummyCnt < 5U) dummyCnt++;
 		}
 	}
 	else
 	{
-		while (dummyCnt < 3U) {
-			dummyCnt++;
-		}
+		/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
+		while (dummyCnt < 5U) dummyCnt++;
 	}
 }
 

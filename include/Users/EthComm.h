@@ -22,20 +22,13 @@ extern "C" {
 #define  CTRL_INDEX				(0)
 #define  CFG_INDEX				(0)
 
-#define TXCOMFIRMATION_OFF		0
-#define TXCOMFIRMATION_ON  		1
-#define LENGTH_FRAME 			42
-#define LENGTH_PAYLOAD 			28
-#define OFFSET_PAYLOAD			14
-#define OFFSET_FRAMETYPE		12
-#define NUM_PHY_REG 			30
-#define RX_NUM_MAX				1500
-#define LENGTH_MAC_ADD			6
-#define PHY_REG_ECR				17
-#define PHY_RGE_CR1				18
-
-
-
+#define TXCOMFIRMATION_OFF		(0)
+#define TXCOMFIRMATION_ON  		(1)
+#define LENGTH_MAC_ADD			(6)
+#define LENGTH_FRAME 			(42)
+#define LENGTH_PAYLOAD 			(28)
+#define OFFSET_PAYLOAD			(14)
+#define OFFSET_FRAMETYPE		(12)
 
 
 #define  SIU_FECCR_REG_ADDR		(SIU_BASEADDR + 0x9E0)

@@ -29,12 +29,12 @@ extern "C" {
 #define DP83822HF_PHY_1_ADDRESS		(0x01)
 #define DP83822HF_PHY_2_ADDRESS		(0x02)
 
-
 #define PHY_DP83822HF_RESET_1_LOW()							Dio_WriteChannel(DioConf_DioChannel_DP83822HF_1_RESET, STD_LOW)
 #define PHY_DP83822HF_RESET_1_HIGH()						Dio_WriteChannel(DioConf_DioChannel_DP83822HF_1_RESET, STD_HIGH)
 
 #define PHY_DP83822HF_RESET_2_LOW()							Dio_WriteChannel(DioConf_DioChannel_DP83822HF_2_RESET, STD_LOW)
 #define PHY_DP83822HF_RESET_2_HIGH()						Dio_WriteChannel(DioConf_DioChannel_DP83822HF_2_RESET, STD_HIGH)
+
 
 /* Register definition. */
 #define DP83822HF_BMCR_REG									(0x0000)
@@ -254,21 +254,20 @@ typedef enum
 
 typedef struct
 {
-	PhyLinkState PhyLinkStatus;
+	uint8_t 				PhyAddress;
+	PhyLinkState 			PhyLinkStatus;
 	PhyAutoNegotiationState AutoNegotiationCompleteStatus;
-	PhyDuplexModeState DuplexStatus;
-	PhySpeedModeState SpeedStatus;
-	PhyMIILinkState MiiLinkStatus;
-	uint8_t PhyAddress;
+	PhyDuplexModeState 		DuplexStatus;
+	PhySpeedModeState 		SpeedStatus;
+	PhyMIILinkState 		MiiLinkStatus;
 }PHY_DP83822_ProTypeDef;
 
-void PHY_DP83848C_Init(void);
 
 int PHY_DP83822_Init(void);
+
 void PHY_DP83822_GetCurrentStatus(void);
 
 int PHY_DP83822_SendDataFrame(void);
-
 
 #ifdef __cplusplus
 }

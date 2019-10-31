@@ -461,19 +461,6 @@ int PHY_DP83822_SMIReadRegData(const uint8_t phyAddr, const uint16_t regAddr, ui
 }
 
 
-void PHY_DP83848C_Init(void)
-{
-	uint16_t RegRdData = 0;
-	uint32_t timeoutCnt = 0;
-
-	PHY_DP83822_SMIWriteRegData(0x01, 0x00, 0x0100);
-
-	PHY_DP83822_SMIReadRegData(0x01, 0x00, &RegRdData);
-
-	timeoutCnt = 10;
-}
-
-
 /*
 @brief
 @para
@@ -482,73 +469,162 @@ void PHY_DP83848C_Init(void)
 */
 int PHY_DP83822_Init(void)
 {
-	uint16_t RegRdData;
+	int result;
+	uint16_t RegRdData, WriteRegData;
 	uint32_t timeoutCnt;
 
-//	PHY_DP83822HF_RESET_1_LOW();
-//	PHY_DP83822HF_RESET_2_LOW();
-//	CntDelay(2000);
-//	PHY_DP83822HF_RESET_1_HIGH();
-//	PHY_DP83822HF_RESET_2_HIGH();
-//
-//	/* Reset PHY_1 chip. */
-//	PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_1_ADDRESS,
-//			                 	DP83822HF_PHYRCR_REG,
-//							   (DP83822HF_PHYRCR_REG_SoftwareReset_Mask | \
-//								DP83822HF_PHYRCR_REG_DigitalRestart_Mask));
-//	timeoutCnt = 0;
-//
-//	do
-//	{
-//		PHY_DP83822_SMIReadRegData(DP83822HF_PHY_1_ADDRESS, DP83822HF_BMCR_REG, &RegRdData);
-//		timeoutCnt++;
-//	}
-//	while (((RegRdData & DP83822HF_BMCR_REG_Reset_Mask) != 0) && (timeoutCnt < 0x10000000U));
-//	if (timeoutCnt >= 0x10000000U)return (-1);
-//
-//	RegRdData = 0;
-//	/* Reset PHY_2 chip. */
-//	PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_2_ADDRESS,
-//			                 	DP83822HF_PHYRCR_REG,
-//							   (DP83822HF_PHYRCR_REG_SoftwareReset_Mask | \
-//								DP83822HF_PHYRCR_REG_DigitalRestart_Mask));
-//	timeoutCnt = 0;
-//
-//	do
-//	{
-//		PHY_DP83822_SMIReadRegData(DP83822HF_PHY_2_ADDRESS, DP83822HF_BMCR_REG, &RegRdData);
-//		timeoutCnt++;
-//	}
-//	while (((RegRdData & DP83822HF_BMCR_REG_Reset_Mask) != 0) && (timeoutCnt < 0x10000000U));
-//	if (timeoutCnt >= 0x10000000U)return (-1);
+	/* Hardware reset DP83822I chips. */
+	PHY_DP83822HF_RESET_1_LOW();
+	PHY_DP83822HF_RESET_2_LOW();
+	CntDelay(2000);
+	PHY_DP83822HF_RESET_1_HIGH();
+	PHY_DP83822HF_RESET_2_HIGH();
+	CntDelay(2000);
+
+#if 1
+	/* Reset PHY_1 chip. */
+	if (PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_1_ADDRESS, DP83822HF_BMCR_REG, DP83822HF_BMCR_REG_Reset_Mask) == 0)
+	{
+		result = 0;
+		return (result);
+	}
+
+	timeoutCnt = 0;
+	while (((RegRdData & DP83822HF_BMCR_REG_Reset_Mask) != 0) && (timeoutCnt < 0x10000000U));
+	{
+		if (PHY_DP83822_SMIReadRegData(DP83822HF_PHY_1_ADDRESS, DP83822HF_BMCR_REG, &RegRdData) == 0)
+		{
+			result = 0;
+			return (result);
+		}
+		timeoutCnt++;
+	}
+	if (timeoutCnt >= 0x10000000U)
+	{
+		result = 0;
+		return (result);
+	}
+
+	/* Reset PHY_2 chip. */
+	if (PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_2_ADDRESS, DP83822HF_BMCR_REG, DP83822HF_BMCR_REG_Reset_Mask) == 0)
+	{
+		result = 0;
+		return (result);
+	}
+
+	timeoutCnt = 0;
+	RegRdData  = 0;
+	while (((RegRdData & DP83822HF_BMCR_REG_Reset_Mask) != 0) && (timeoutCnt < 0x10000000U));
+	{
+		if (PHY_DP83822_SMIReadRegData(DP83822HF_PHY_2_ADDRESS, DP83822HF_BMCR_REG, &RegRdData) == 0)
+		{
+			result = 0;
+			return (result);
+		}
+		timeoutCnt++;
+	}
+	if (timeoutCnt >= 0x10000000U)
+	{
+		result = 0;
+		return (result);
+	}
+#endif
+
+	WriteRegData  = 0;
+	WriteRegData |= (DP83822HF_BMCR_REG_SpeedSel_Mask | \
+			         DP83822HF_BMCR_REG_AutoNegotiationEnable_Mask | \
+					 DP83822HF_BMCR_REG_DuplexMode_Mask);
+	/* MII normal operation, 100Mbps, Enable Auto_negotiation, Full-duplex mode. */
+	if (PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_1_ADDRESS, DP83822HF_BMCR_REG, WriteRegData) == 0)
+	{
+		result = 0;
+		return (result);
+	}
+	if (PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_2_ADDRESS, DP83822HF_BMCR_REG, WriteRegData) == 0)
+	{
+		result = 0;
+		return (result);
+	}
+
+
+	WriteRegData  = 0;
+	WriteRegData |= (((uint16_t)1 << 8) | ((uint16_t)1 << 7) | ((uint16_t)1 << 6) | ((uint16_t)1 << 5));
+
+	if (PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_1_ADDRESS, DP83822HF_ANAR_REG, WriteRegData) == 0)
+	{
+		result = 0;
+		return (result);
+	}
+	if (PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_2_ADDRESS, DP83822HF_ANAR_REG, WriteRegData) == 0)
+	{
+		result = 0;
+		return (result);
+	}
+
+
+	WriteRegData  = 0;
+	WriteRegData |= (DP83822HF_CR1_REG_TDRAutoRun_Mask | \
+					 DP83822HF_CR1_REG_LinkLossRecovery_Mask);
 
 	/* Enable Link loss recovery mechanism. */
-	PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_1_ADDRESS,
-							 	DP83822HF_CR1_REG,
-							    DP83822HF_CR1_REG_LinkLossRecovery_Mask);
+	if (PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_1_ADDRESS, DP83822HF_CR1_REG, WriteRegData) == 0)
+	{
+		result = 0;
+		return (result);
+	}
+	if (PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_2_ADDRESS, DP83822HF_CR1_REG, WriteRegData) == 0)
+	{
+		result = 0;
+		return (result);
+	}
 
-	PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_2_ADDRESS,
-							    DP83822HF_CR1_REG,
-							    DP83822HF_CR1_REG_LinkLossRecovery_Mask);
 
+	WriteRegData  = 0;
+	WriteRegData |= (DP83822HF_CR2_REG_IsolateMii_Mask | \
+					 DP83822HF_CR2_REG_RX_ER_Mask);
+
+	if (PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_1_ADDRESS, DP83822HF_CR2_REG, WriteRegData) == 0)
+	{
+		result = 0;
+		return (result);
+	}
+	if (PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_2_ADDRESS, DP83822HF_CR2_REG, WriteRegData) == 0)
+	{
+		result = 0;
+		return (result);
+	}
+
+
+	WriteRegData  = 0;
+	WriteRegData |= DP83822HF_LEDCFG1_REG_LED1Contrl(0x8);
 
 	/* LEDCFG1 Control: LED_1 LINK OK / BLINK on TX/RX Activity. */
-	PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_1_ADDRESS,
-							 	DP83822HF_LEDCFG1_REG,
-								DP83822HF_LEDCFG1_REG_LED1Contrl(0x8));
+	if (PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_1_ADDRESS, DP83822HF_LEDCFG1_REG, WriteRegData) == 0)
+	{
+		result = 0;
+		return (result);
+	}
+	if (PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_2_ADDRESS, DP83822HF_LEDCFG1_REG, WriteRegData) == 0)
+	{
+		result = 0;
+		return (result);
+	}
 
-	PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_2_ADDRESS,
-							 	DP83822HF_LEDCFG1_REG,
-								DP83822HF_LEDCFG1_REG_LED1Contrl(0x8));
+
+	WriteRegData  = 0;
+	WriteRegData |= DP83822HF_IOCTRL1_REG_LED1GPIOCtrl(0x1);
 
 	/* IOCTRL1 Control: LED_1 config to GPIO output.  */
-	PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_1_ADDRESS,
-							 	DP83822HF_IOCTRL1_REG,
-								DP83822HF_IOCTRL1_REG_LED1GPIOCtrl(0x1));
-
-	PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_2_ADDRESS,
-							 	DP83822HF_IOCTRL1_REG,
-								DP83822HF_IOCTRL1_REG_LED1GPIOCtrl(0x1));
+	if (PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_1_ADDRESS, DP83822HF_IOCTRL1_REG, WriteRegData) == 0)
+	{
+		result = 0;
+		return (result);
+	}
+	if (PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_2_ADDRESS, DP83822HF_IOCTRL1_REG, WriteRegData) == 0)
+	{
+		result = 0;
+		return (result);
+	}
 
 	return (1);
 }
@@ -617,95 +693,27 @@ void PHY_DP83822_GetCurrentStatus(void)
 */
 int PHY_DP83822_SendDataFrame(void)
 {
-	uint8_t i;
-	Std_ReturnType ret;
-	BufReq_ReturnType ethRet;
-	Eth_FrameType frameTypeARP;
-
-	uint8 bufIdx = 0;
-	uint8_t dummyCnt;
+	int result = 0;
 
 	/*MAC frame is an ARP message saying "Who has 192.168.10.3? Tell 192.168.10.10"*/
-	Eth_DataType txMacFrame[LENGTH_FRAME] = {
-        										0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,			/*Destination Address*/
-        										0x66,0x55,0x44,0x33,0x22,0x11,			/*Source Address(config in tresos)*/
-        										0x08,0x06,					  			/*Frametype_ARP*/
-        										0x00,0x01,0x08,0x00,0x06,0x04,0x00,0x01,/*Payload*/
-												0x66,0x55,0x44,0x33,0x22,0x11,			/*Payload*/
-												0xc0,0xa8,0x0a,0x0a,					/*Payload*/
-												0x00,0x00,0x00,0x00,0x00,0x00,			/*Payload*/
-        										0xc0,0xa8,0x0a,0x03						/*Payload*/
-                                            };
+	const Eth_DataType txMacFrame[LENGTH_FRAME] = {
+        											0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,			/*Destination Address*/
+													0x66,0x55,0x44,0x33,0x22,0x11,			/*Source Address(config in tresos)*/
+													0x08,0x06,					  			/*Frametype_ARP*/
+													0x00,0x01,0x08,0x00,0x06,0x04,0x00,0x01,/*Payload*/
+													0x66,0x55,0x44,0x33,0x22,0x11,			/*Payload*/
+													0xc0,0xa8,0x0a,0x0a,					/*Payload*/
+													0x00,0x00,0x00,0x00,0x00,0x00,			/*Payload*/
+													0xc0,0xa8,0x0a,0x03						/*Payload*/
+                                            	  };
 
-	uint8 TargetMacAddr[6] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
-
-	Eth_DataType *txBufPtr = &txMacFrame[OFFSET_PAYLOAD];
-	Eth_DataType **txBufPtrPtr = &txBufPtr;
-
-	uint16 lenByte = LENGTH_PAYLOAD;
-	uint16 *lenBytePtr = &lenByte;
-
-	if (((PHY_DP83822HF_Prop[0].PhyLinkStatus == Valid_Link_Established) && (PHY_DP83822HF_Prop[0].MiiLinkStatus == Active_100BaseTxFullDuplexLink)) ||
-			((PHY_DP83822HF_Prop[1].PhyLinkStatus == Valid_Link_Established) && (PHY_DP83822HF_Prop[1].MiiLinkStatus == Active_100BaseTxFullDuplexLink)))
+	if (((PHY_DP83822HF_Prop[0].PhyLinkStatus == Valid_Link_Established) && (PHY_DP83822HF_Prop[0].MiiLinkStatus == Active_100BaseTxFullDuplexLink)) || \
+		((PHY_DP83822HF_Prop[1].PhyLinkStatus == Valid_Link_Established) && (PHY_DP83822HF_Prop[1].MiiLinkStatus == Active_100BaseTxFullDuplexLink)))
 	{
-		dummyCnt = 0;
-		ethRet = Eth_ProvideTxBuffer(CTRL_INDEX, &bufIdx, txBufPtrPtr, lenBytePtr);
-
-		if(ethRet != BUFREQ_OK)
-		{
-			while (dummyCnt < 3U)
-			{
-				dummyCnt++;
-			}
-			return (0);
-		}
-		else
-		{
-			while (dummyCnt < 3U)
-			{
-				dummyCnt++;
-			}
-		}
-
-		/*If guaranteed memory is larger than requested memory, re-assign lenByte as requested value. Or return E_NOT_OK.*/
-		if(*lenBytePtr >= (LENGTH_PAYLOAD))
-			lenByte = LENGTH_PAYLOAD;
-		else
-			return (0);
-
-		/*Assign value to memory pointed by txBufPtr, whose value is assigned by txBufPtrPtr in Eth_ProvideTxBuffer.*/
-		for(i = 0; i < lenByte; i++)
-		{
-			*txBufPtr = txMacFrame[OFFSET_PAYLOAD + i];
-			txBufPtr++;
-		}
-
-		frameTypeARP = ((uint16)txMacFrame[OFFSET_FRAMETYPE] << 8U) | txMacFrame[OFFSET_FRAMETYPE + 1];
-
-		dummyCnt = 0;
-		ret = Eth_Transmit(CTRL_INDEX, bufIdx, frameTypeARP, TXCOMFIRMATION_OFF, lenByte, &TargetMacAddr[0]);
-
-		if(ret != E_OK)
-		{
-			while (dummyCnt < 3U)
-			{
-				dummyCnt++;
-			}
-
-			return (0);
-		}
-
-		while (dummyCnt < 3U)
-		{
-			dummyCnt++;
-		}
-
-		return (1);
+		result = Ethernet_SendFrameData(txMacFrame, LENGTH_FRAME);
 	}
-//	else
-//	{
-//		return (0);
-//	}
+
+	return (result);
 }
 
 

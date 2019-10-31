@@ -14,10 +14,6 @@
 #include "Eth_GeneralTypes.h"
 
 
-static uint32_t  TJA1101_PHY_ID = 0;
-static uint8_t   TJA1101_TYPE_NO = 0;
-static uint8_t   TJA1101_REVISION_NO = 0;
-static uint16_t  TJA1101_PHY_DEV_ADDR = 0;
 
 static PHY_TJA1101_ATTRIBUTE_t TJA1101_AttributeInfo;
 

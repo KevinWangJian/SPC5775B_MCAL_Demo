@@ -45,8 +45,8 @@ int main(void)
 
 	SystemTickTimer_Init();
 
-//	McanComm_Init();
-//	McanComm_RxBufferInit();
+	McanComm_Init();
+	McanComm_RxBufferInit();
 
 	Ethernet_Init();
 
@@ -62,7 +62,7 @@ int main(void)
 		Dio_FlipChannel(DioConf_DioChannel_LED1_DRIVE_EN);
 		Dio_FlipChannel(DioConf_DioChannel_LED2_DRIVE_EN);
 
-//		McanComm_TransmitProcess();
+		McanComm_TransmitProcess();
 
 		PHY_TJA1101_GetCurrentStatus();
 		PHY_DP83822_GetCurrentStatus();
