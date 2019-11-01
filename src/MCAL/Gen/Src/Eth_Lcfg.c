@@ -5,7 +5,7 @@
 *
 *   @brief   AUTOSAR Eth driver Link-Time configuration file
 *   @details File containing the configuration for the Ethernet driver
-*   @note    This file was generated on 2019-10-29.
+*   @note    This file was generated on 2019-11-01.
 *
 *   @addtogroup ETH_DRIVER_CONFIGURATION
 *   @{
