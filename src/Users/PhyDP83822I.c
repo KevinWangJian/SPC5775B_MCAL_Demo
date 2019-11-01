@@ -563,8 +563,7 @@ int PHY_DP83822_Init(void)
 
 
 	WriteRegData  = 0;
-	WriteRegData |= (DP83822HF_CR1_REG_TDRAutoRun_Mask | \
-					 DP83822HF_CR1_REG_LinkLossRecovery_Mask);
+	WriteRegData |= (DP83822HF_CR1_REG_TDRAutoRun_Mask | DP83822HF_CR1_REG_LinkLossRecovery_Mask);
 
 	/* Enable Link loss recovery mechanism. */
 	if (PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_1_ADDRESS, DP83822HF_CR1_REG, WriteRegData) == 0)
@@ -580,8 +579,7 @@ int PHY_DP83822_Init(void)
 
 
 	WriteRegData  = 0;
-	WriteRegData |= (DP83822HF_CR2_REG_IsolateMii_Mask | \
-					 DP83822HF_CR2_REG_RX_ER_Mask);
+	WriteRegData |= (DP83822HF_CR2_REG_IsolateMii_Mask | DP83822HF_CR2_REG_RX_ER_Mask);
 
 	if (PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_1_ADDRESS, DP83822HF_CR2_REG, WriteRegData) == 0)
 	{
