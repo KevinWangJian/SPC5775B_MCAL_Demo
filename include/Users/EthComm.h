@@ -49,7 +49,6 @@ typedef struct
 //	uint8*			ptrDestMacAddr;
 }EthernetFrameData_Def_t;
 
-
 typedef struct
 {
 	uint16  WritePtr;
@@ -58,12 +57,26 @@ typedef struct
 }EthernetRxFrameBuffer_t;
 
 
+typedef struct
+{
+	boolean  		FrameValid;
+	boolean 		IsBroadcast;
+	Eth_FrameType 	FrameType;
+	uint16			DataLength;
+	Eth_DataType    FrameData[ETH_MAX_PAYLOAD_SIZE];
+	uint8			SrcMacAddr[LENGTH_MAC_ADD];
+}EthernetPerFrameTypeDef_t;
+
+
+
 
 void Ethernet_Init(void);
 
 int Ethernet_SendFrameData(const Eth_DataType* txDataBuf, uint16 txLength);
 
 int Ethernet_WriteRxFrameToBuffer(EthernetFrameData_Def_t* pRxframeData);
+
+int Ethernet_ReadRxFrameFromBuffer(EthernetPerFrameTypeDef_t* pRetFrameData);
 
 
 #ifdef __cplusplus

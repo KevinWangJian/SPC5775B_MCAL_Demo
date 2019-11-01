@@ -10,18 +10,18 @@
 #include "StdRegMacros.h"
 #include "Reg_eSys.h"
 #include "Port.h"
-#include "Dio.h"
 #include "IntCtrl.h"
 #include "McanComm.h"
 #include "EthComm.h"
 #include "PhyTja110x.h"
 #include "PhyDP83822I.h"
 #include "Switch_SJA1105.h"
-
+#include "tickTimer.h"
 
 
 SJA1105TypeDef SJA1105_DEVICE_TYPE;
 SJA1105ConfigStatus SJA1105_CONFIG_STA;
+EthernetPerFrameTypeDef_t RxEthernetFrame;
 
 
 /*
@@ -59,17 +59,19 @@ int main(void)
 	/* Loop forever */
 	for(;;)
 	{
-		Dio_FlipChannel(DioConf_DioChannel_LED1_DRIVE_EN);
-		Dio_FlipChannel(DioConf_DioChannel_LED2_DRIVE_EN);
-
-		McanComm_TransmitProcess();
+		Ethernet_ReadRxFrameFromBuffer(&RxEthernetFrame);
 
 		PHY_TJA1101_GetCurrentStatus();
 		PHY_DP83822_GetCurrentStatus();
 
-		SystemDelay_Ms(100);
+		if (CommUpdateEvent)
+		{
+			McanComm_TransmitProcess();
 
-		PHY_DP83822_SendDataFrame();
-		PHY_TJA1101_SendEthernetFrame();
+			PHY_DP83822_SendDataFrame();
+			PHY_TJA1101_SendEthernetFrame();
+
+			CommUpdateEvent = 0;
+		}
 	}
 }

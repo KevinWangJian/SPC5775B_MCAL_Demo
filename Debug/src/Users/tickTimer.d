@@ -18,5 +18,8 @@ src/Users/tickTimer.o: ../src/Users/tickTimer.c \
   D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/src/MCAL/Module/Gpt/Inc/Gpt_Pit_Types.h \
   D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/src/MCAL/Module/Gpt/Inc/Gpt_eMios_Types.h \
   D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/src/MCAL/Module/Mcl/Inc/eMios_Common_Types.h \
-  D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/include/Base/MemMap.h
+  D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/include/Base/MemMap.h \
+  D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/src/MCAL/Module/Dio/Inc/Dio.h \
+  D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/src/MCAL/Gen/Inc/Dio_Cfg.h \
+  D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/src/MCAL/Module/Dio/Inc/Dio_EnvCfg.h
 

@@ -149,7 +149,7 @@ FUNC(void, ETHIF_CODE)EthIf_RxIndication(VAR(uint8, AUTOMATIC) CtrlIdx, \
                              P2VAR(Eth_DataType, AUTOMATIC, AUTOMATIC) DataPtr, \
                              VAR(uint16, AUTOMATIC) LenByte)
 {
-	EthernetFrameData_Def_t rxFrame;
+	volatile EthernetFrameData_Def_t rxFrame;
 
 	if (CtrlIdx == CTRL_INDEX)
 	{
@@ -160,7 +160,7 @@ FUNC(void, ETHIF_CODE)EthIf_RxIndication(VAR(uint8, AUTOMATIC) CtrlIdx, \
 		rxFrame.ptrSrcMacAddr = PhysAddrPtr;
 		rxFrame.FrameValid	  = TRUE;
 
-		Ethernet_WriteRxFrameToBuffer(&rxFrame);
+		Ethernet_WriteRxFrameToBuffer((EthernetFrameData_Def_t*)&rxFrame);
 	}
 }
 

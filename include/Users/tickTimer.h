@@ -21,6 +21,8 @@ extern "C" {
 #define  TICKTIMER_PERIOD_1MS	(40000U)
 
 
+extern volatile uint32_t CommUpdateEvent;
+
 void SystemTickTimer_Init(void);
 void SystemDelay_Ms(uint32_t timeMs);
 

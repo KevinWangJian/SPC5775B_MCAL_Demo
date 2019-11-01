@@ -51,9 +51,6 @@ src/main.o: ../src/main.c C:/WindRiver/diab/5.9.4.0/include/lpragma.h \
   D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/src/MCAL/Module/Port/Inc/Port_EnvCfg.h \
   D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/src/MCAL/Module/Port/Inc/Port_Siu_Types.h \
   D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/src/MCAL/Module/Port/Inc/Port_Igf_Types.h \
-  D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/src/MCAL/Module/Dio/Inc/Dio.h \
-  D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/src/MCAL/Gen/Inc/Dio_Cfg.h \
-  D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/src/MCAL/Module/Dio/Inc/Dio_EnvCfg.h \
   D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/include/Users/IntCtrl.h \
   D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/include/Users/McanComm.h \
   C:/WindRiver/diab/5.9.4.0/include/stdio.h \
@@ -72,6 +69,10 @@ src/main.o: ../src/main.c C:/WindRiver/diab/5.9.4.0/include/lpragma.h \
   D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/include/Users/EthComm.h \
   D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/include/Base/Eth_GeneralTypes.h \
   D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/include/Users/PhyTja110x.h \
+  D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/src/MCAL/Gen/Inc/Dio_Cfg.h \
+  D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/src/MCAL/Module/Dio/Inc/Dio_EnvCfg.h \
+  D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/src/MCAL/Module/Dio/Inc/Dio.h \
   D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/include/Users/PhyDP83822I.h \
-  D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/include/Users/Switch_SJA1105.h
+  D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/include/Users/Switch_SJA1105.h \
+  D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet/SPC5775B_ETHERNET_Z7_0/include/Users/tickTimer.h
 
