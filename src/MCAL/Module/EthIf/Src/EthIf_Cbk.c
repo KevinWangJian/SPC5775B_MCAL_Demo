@@ -161,6 +161,11 @@ FUNC(void, ETHIF_CODE)EthIf_RxIndication(VAR(uint8, AUTOMATIC) CtrlIdx, \
 		rxFrame.FrameValid	  = TRUE;
 
 		Ethernet_WriteRxFrameToBuffer((EthernetFrameData_Def_t*)&rxFrame);
+
+		if (Ethernet_IsRXBIrqFlagSet(CtrlIdx))
+		{
+			Ethernet_ClrRXBIrqFlag(CtrlIdx);
+		}
 	}
 }
 
@@ -180,7 +185,7 @@ FUNC(void, ETHIF_CODE)EthIf_RxIndication(VAR(uint8, AUTOMATIC) CtrlIdx, \
 FUNC(void, ETHIF_CODE)EthIf_TxConfirmation(VAR(uint8, AUTOMATIC) CtrlIdx, \
                                                VAR(uint8, AUTOMATIC) BufIdx)
 {
-    ; /* This is an empty stub function */ 
+	Ethernet_ClrTXBIrqFlag(CtrlIdx);
 }
 
 /*================================================================================================*/

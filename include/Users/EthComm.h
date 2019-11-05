@@ -72,6 +72,12 @@ typedef struct
 
 void Ethernet_Init(void);
 
+void Ethernet_ClrRXBIrqFlag(uint8 u8CtrlIdx);
+void Ethernet_ClrTXBIrqFlag(uint8 u8CtrlIdx);
+boolean Ethernet_IsRXBIrqFlagSet(uint8 u8CtrlIdx);
+void Ethernet_ClrMIIIrqFlag(uint8 u8CtrlIdx);
+boolean Ethernet_IsMIIIrqFlagSet(uint8 u8CtrlIdx);
+
 int Ethernet_SendFrameData(const Eth_DataType* txDataBuf, uint16 txLength);
 
 int Ethernet_WriteRxFrameToBuffer(EthernetFrameData_Def_t* pRxframeData);

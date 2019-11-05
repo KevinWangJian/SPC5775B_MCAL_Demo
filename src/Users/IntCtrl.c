@@ -30,7 +30,7 @@ void InterruptController_Init(void)
 	REG_WRITE8(INTC_PSR_ADDR(348), 0x07);					/* Can_IsrCombined_IL0 (M_CAN0/M_CAN1 Line0/Line1) */
 
 	REG_WRITE8(INTC_PSR_ADDR(194), 0x07);					/* Eth_TxIrqHdlr_0 */
-	REG_WRITE8(INTC_PSR_ADDR(195), 0x07);					/* Eth_RxIrqHdlr_0 */
+	REG_WRITE8(INTC_PSR_ADDR(195), 0x0A);					/* Eth_RxIrqHdlr_0 */
 
 	ASM_KEYWORD("wrteei 1");
 }

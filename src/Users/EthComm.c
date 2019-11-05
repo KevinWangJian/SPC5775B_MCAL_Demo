@@ -10,6 +10,7 @@
 #include "StdRegMacros.h"
 #include "Eth_Cfg.h"
 #include "Eth_GeneralTypes.h"
+#include "Eth_Fec.h"
 
 
 static EthernetRxFrameBuffer_t EthRxFrameBuffer = {0};
@@ -72,6 +73,158 @@ void Ethernet_Init(void)
 @para
 @return
 */
+void Ethernet_ClrRXBIrqFlag(uint8 u8CtrlIdx)
+{
+	uint32 ETH_BASE_ADDR;
+
+	if (u8CtrlIdx == 0U)
+	{
+		ETH_BASE_ADDR = FEC_0_BASEADDR;
+	}
+#if ETH_MAXCTRLS_SUPPORTED > 1U
+	else if (u8CtrlIdx == 1U)
+	{
+		ETH_BASE_ADDR = FEC_1_BASEADDR;
+	}
+#endif
+
+	REG_WRITE32(ETH_BASE_ADDR + FEC_EIR_ADDR16, FEC_EIR_RXB_W1C);
+}
+
+/*
+@brief
+@details
+@para
+@return
+*/
+void Ethernet_ClrTXBIrqFlag(uint8 u8CtrlIdx)
+{
+	uint32 ETH_BASE_ADDR;
+
+	if (u8CtrlIdx == 0U)
+	{
+		ETH_BASE_ADDR = FEC_0_BASEADDR;
+	}
+#if ETH_MAXCTRLS_SUPPORTED > 1U
+	else if (u8CtrlIdx == 1U)
+	{
+		ETH_BASE_ADDR = FEC_1_BASEADDR;
+	}
+#endif
+
+	REG_WRITE32(ETH_BASE_ADDR + FEC_EIR_ADDR16, FEC_EIR_TXB_W1C);
+}
+
+/*
+@brief
+@details
+@para
+@return
+*/
+boolean Ethernet_IsRXBIrqFlagSet(uint8 u8CtrlIdx)
+{
+	uint32 u32RegisterValue;
+	boolean bReturnValue;
+
+	uint32 ETH_BASE_ADDR;
+
+	if (u8CtrlIdx == 0U)
+	{
+		ETH_BASE_ADDR = FEC_0_BASEADDR;
+	}
+#if ETH_MAXCTRLS_SUPPORTED > 1U
+	else if (u8CtrlIdx == 1U)
+	{
+		ETH_BASE_ADDR = FEC_1_BASEADDR;
+	}
+#endif
+
+    u32RegisterValue = REG_READ32(ETH_BASE_ADDR + FEC_EIR_ADDR16);
+    /* Check whether the bit is set */
+    if(FEC_EIR_RXB_U32 == (u32RegisterValue & FEC_EIR_RXB_U32))
+    {
+        bReturnValue = TRUE;
+    }
+    else
+    {
+        /** @violates @ref Eth_Fec_c_REF_19 MISRA rule 11.3 */
+        bReturnValue = FALSE;
+    }
+
+    return bReturnValue;
+}
+
+/*
+@brief
+@details
+@para
+@return
+*/
+void Ethernet_ClrMIIIrqFlag(uint8 u8CtrlIdx)
+{
+	uint32 ETH_BASE_ADDR;
+
+	if (u8CtrlIdx == 0U)
+	{
+		ETH_BASE_ADDR = FEC_0_BASEADDR;
+	}
+#if ETH_MAXCTRLS_SUPPORTED > 1U
+	else if (u8CtrlIdx == 1U)
+	{
+		ETH_BASE_ADDR = FEC_1_BASEADDR;
+	}
+#endif
+
+	REG_WRITE32(ETH_BASE_ADDR + FEC_EIR_ADDR16, FEC_EIR_MII_W1C);
+}
+
+/*
+@brief
+@details
+@para
+@return
+*/
+boolean Ethernet_IsMIIIrqFlagSet(uint8 u8CtrlIdx)
+{
+	uint32 u32RegisterValue;
+	boolean bReturnValue;
+
+	uint32 ETH_BASE_ADDR;
+
+	if (u8CtrlIdx == 0U)
+	{
+		ETH_BASE_ADDR = FEC_0_BASEADDR;
+	}
+#if ETH_MAXCTRLS_SUPPORTED > 1U
+	else if (u8CtrlIdx == 1U)
+	{
+		ETH_BASE_ADDR = FEC_1_BASEADDR;
+	}
+#endif
+
+    u32RegisterValue = REG_READ32(ETH_BASE_ADDR + FEC_EIR_ADDR16);
+    /* Check whether the bit is set */
+    if(FEC_EIR_MII_U32 == (u32RegisterValue & FEC_EIR_MII_U32))
+    {
+        bReturnValue = TRUE;
+    }
+    else
+    {
+        /** @violates @ref Eth_Fec_c_REF_19 MISRA rule 11.3 */
+        bReturnValue = FALSE;
+    }
+
+    return bReturnValue;
+}
+
+
+
+/*
+@brief
+@details
+@para
+@return
+*/
 int Ethernet_SendFrameData(const Eth_DataType* txDataBuf, uint16 txLength)
 {
 	int retResult = 0;
@@ -113,7 +266,7 @@ int Ethernet_SendFrameData(const Eth_DataType* txDataBuf, uint16 txLength)
 				memcpy((uint8*)targetMacAddr, (Eth_DataType*)txDataBuf, 6);
 
 				/* Transmit Ethernet frame data. */
-				ret = Eth_Transmit(CTRL_INDEX, bufIdx, frameType, TXCOMFIRMATION_OFF, lenByte, &targetMacAddr[0]);
+				ret = Eth_Transmit(CTRL_INDEX, bufIdx, frameType, TXCOMFIRMATION_ON, lenByte, &targetMacAddr[0]);
 
 				if (ret == E_OK)
 				{

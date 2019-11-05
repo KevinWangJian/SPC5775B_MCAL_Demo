@@ -22,7 +22,10 @@ extern "C" {
 #include "Dio.h"
 
 
-#define USE_MCAL	(1U)
+#define USE_MCAL								(1U)
+
+#define ETH_PHY_CHIP_RESET_ENABLE				(0U)
+#define ETH_100BASE_TX_AUTO_NEGOTIATION_ENABLE	(1U)
 
 
 /* DP83822HF Device PHY address */
@@ -204,6 +207,7 @@ extern "C" {
 #define DP83822HF_LEDCFG1_REG								(0x0460)
 #define DP83822HF_LEDCFG1_REG_LED1Contrl_Mask				((uint16_t)0xf << 8)
 #define DP83822HF_LEDCFG1_REG_LED1Contrl(x)					((uint16_t)x << 8)
+#define DP83822HF_LEDCFG1_REG_LED3Contrl(x)					((uint16_t)x << 4)
 #define DP83822HF_LEDCFG1_REG_LED3Contrl_Mask				((uint16_t)0xf << 4)
 
 #define DP83822HF_IOCTRL_REG								(0x0461)
