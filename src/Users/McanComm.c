@@ -339,16 +339,6 @@ void McanComm_ReceiveProcess_1(void)
 #endif
 
 
-///*
-//@brief
-//@details
-//@para
-//@return
-//*/
-//ISR(Can_IsrCombined_IL0_IL1)
-//{
-//	Os_Entry_Can_IsrCombined_IL0();
-//}
 
 
 

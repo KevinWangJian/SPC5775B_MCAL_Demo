@@ -424,8 +424,8 @@ CONST(Can_43_MCAN_ControllerBaudrateConfigType, CAN_43_MCAN_CONST) Can_43_MCAN_C
                       /* Propagation segment */
                       /* Phase segment 1 */
                       ((uint32)1U << MCAN_FD_PRESDIV_OFFSET) |  /* CAN FD propagation segment */
-                      ((uint32)5U << MCAN_FD_PSEG1_OFFSET) | /* Time segment 1 = Propagation segment + Phase segment 1 */
-                      ((uint32)2U<<MCAN_FD_PSEG2_OFFSET) |   /* Time segment 2 = Phase segment 2 */
+                      ((uint32)6U << MCAN_FD_PSEG1_OFFSET) | /* Time segment 1 = Propagation segment + Phase segment 1 */
+                      ((uint32)1U<<MCAN_FD_PSEG2_OFFSET) |   /* Time segment 2 = Phase segment 2 */
                       ((uint32)0U<<MCAN_FD_SJW_OFFSET) /* Sync jump width*/
                     ),
             (uint32)0U<<8, /* TRCV DELAY*/
@@ -496,8 +496,8 @@ CONST(Can_43_MCAN_ControllerBaudrateConfigType, CAN_43_MCAN_CONST) Can_43_MCAN_C
                       /* Propagation segment */
                       /* Phase segment 1 */
                       ((uint32)7U << MCAN_FD_PRESDIV_OFFSET) |  /* CAN FD propagation segment */
-                      ((uint32)5U << MCAN_FD_PSEG1_OFFSET) | /* Time segment 1 = Propagation segment + Phase segment 1 */
-                      ((uint32)2U<<MCAN_FD_PSEG2_OFFSET) |   /* Time segment 2 = Phase segment 2 */
+                      ((uint32)6U << MCAN_FD_PSEG1_OFFSET) | /* Time segment 1 = Propagation segment + Phase segment 1 */
+                      ((uint32)1U<<MCAN_FD_PSEG2_OFFSET) |   /* Time segment 2 = Phase segment 2 */
                       ((uint32)0U<<MCAN_FD_SJW_OFFSET) /* Sync jump width*/
                     ),
             (uint32)0U<<8, /* TRCV DELAY*/
