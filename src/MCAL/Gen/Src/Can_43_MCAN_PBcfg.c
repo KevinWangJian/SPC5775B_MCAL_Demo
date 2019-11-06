@@ -419,7 +419,7 @@ CONST(Can_43_MCAN_ControllerBaudrateConfigType, CAN_43_MCAN_CONST) Can_43_MCAN_C
         #if (CAN_43_MCAN_FD_MODE_ENABLE == STD_ON)
         {
             (uint32)((uint32)1U << MCAN_FD_OFFSET_U8), /*CAN FD Activated*/
-            (uint32)2000U,   /* 500kbps baud rate */
+            (uint32)2000U,   /* 2000kbps baud rate */
             (uint32)(
                       /* Propagation segment */
                       /* Phase segment 1 */
@@ -427,7 +427,7 @@ CONST(Can_43_MCAN_ControllerBaudrateConfigType, CAN_43_MCAN_CONST) Can_43_MCAN_C
                       ((uint32)6U << MCAN_FD_PSEG1_OFFSET) | /* Time segment 1 = Propagation segment + Phase segment 1 */
                       ((uint32)1U<<MCAN_FD_PSEG2_OFFSET) |   /* Time segment 2 = Phase segment 2 */
                       ((uint32)0U<<MCAN_FD_SJW_OFFSET) /* Sync jump width*/
-                    ),
+                    ),		/* Sample point 80% */
             (uint32)0U<<8, /* TRCV DELAY*/
             									(boolean)FALSE, /*TRCV DELAY DISABLED*/
             (uint32)((uint32)1U<<MCAN_FD_BRS_OFFSET) /* BRS activated */
@@ -499,7 +499,7 @@ CONST(Can_43_MCAN_ControllerBaudrateConfigType, CAN_43_MCAN_CONST) Can_43_MCAN_C
                       ((uint32)6U << MCAN_FD_PSEG1_OFFSET) | /* Time segment 1 = Propagation segment + Phase segment 1 */
                       ((uint32)1U<<MCAN_FD_PSEG2_OFFSET) |   /* Time segment 2 = Phase segment 2 */
                       ((uint32)0U<<MCAN_FD_SJW_OFFSET) /* Sync jump width*/
-                    ),
+                    ),		/* Sample point 80% */
             (uint32)0U<<8, /* TRCV DELAY*/
             									(boolean)FALSE, /*TRCV DELAY DISABLED*/
             (uint32)((uint32)1U<<MCAN_FD_BRS_OFFSET) /* BRS activated */
