@@ -24,7 +24,7 @@ extern "C" {
 
 #define USE_MCAL								(1U)
 
-#define ETH_PHY_CHIP_RESET_ENABLE				(0U)
+#define ETH_PHY_CHIP_RESET_ENABLE				(1U)
 #define ETH_100BASE_TX_AUTO_NEGOTIATION_ENABLE	(1U)
 
 

@@ -532,14 +532,9 @@ int PHY_DP83822_Init(void)
 
 	WriteRegData = 0;
 	/* MII normal operation, 100Mbps, Enable Auto_negotiation, Full-duplex mode. */
-#if (ETH_100BASE_TX_AUTO_NEGOTIATION_ENABLE == 1U)
 	WriteRegData |= (DP83822HF_BMCR_REG_SpeedSel_Mask | \
 			         DP83822HF_BMCR_REG_AutoNegotiationEnable_Mask | \
 					 DP83822HF_BMCR_REG_DuplexMode_Mask);
-#else
-	/* MII normal operation, 100Mbps, Disable Auto_negotiation, Full-duplex mode. */
-	WriteRegData |= (DP83822HF_BMCR_REG_SpeedSel_Mask | DP83822HF_BMCR_REG_DuplexMode_Mask);
-#endif
 
 	if (PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_1_ADDRESS, DP83822HF_BMCR_REG, WriteRegData) == 0)
 	{
@@ -555,7 +550,8 @@ int PHY_DP83822_Init(void)
 
 	WriteRegData  = 0;
 	/* Enable execution of TDR procedure, Enable Link loss recovery mechanism. */
-	WriteRegData |= (DP83822HF_CR1_REG_TDRAutoRun_Mask | DP83822HF_CR1_REG_LinkLossRecovery_Mask);
+//	WriteRegData |= (DP83822HF_CR1_REG_TDRAutoRun_Mask | DP83822HF_CR1_REG_LinkLossRecovery_Mask);
+	WriteRegData |= (DP83822HF_CR1_REG_LinkLossRecovery_Mask);
 
 	if (PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_1_ADDRESS, DP83822HF_CR1_REG, WriteRegData) == 0)
 	{
@@ -571,7 +567,7 @@ int PHY_DP83822_Init(void)
 
 	WriteRegData = 0;
 	/* LEDCFG1 Control: LED_1 LINK OK / BLINK on TX/RX Activity. */
-	WriteRegData |= (DP83822HF_LEDCFG1_REG_LED1Contrl(0x8) | (DP83822HF_LEDCFG1_REG_LED3Contrl(0x1)) | (0x01));
+	WriteRegData |= (DP83822HF_LEDCFG1_REG_LED1Contrl(0x8) | (DP83822HF_LEDCFG1_REG_LED3Contrl(0x5)) | (0x01));
 
 	if (PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_1_ADDRESS, DP83822HF_LEDCFG1_REG, WriteRegData) == 0)
 	{
@@ -681,18 +677,11 @@ int PHY_DP83822_SendDataFrame(void)
 													0xc0,0xa8,0x0a,0x03						/*Payload*/
                                             	  };
 
-#if (ETH_100BASE_TX_AUTO_NEGOTIATION_ENABLE == 1U)
 	if (((PHY_DP83822HF_Prop[0].PhyLinkStatus == Valid_Link_Established) && (PHY_DP83822HF_Prop[0].MiiLinkStatus == Active_100BaseTxFullDuplexLink)) || \
 		((PHY_DP83822HF_Prop[1].PhyLinkStatus == Valid_Link_Established) && (PHY_DP83822HF_Prop[1].MiiLinkStatus == Active_100BaseTxFullDuplexLink)))
 	{
 		result = Ethernet_SendFrameData(txMacFrame, LENGTH_FRAME);
 	}
-#else
-	if (PHY_DP83822HF_Prop[0].PhyLinkStatus == Valid_Link_Established)
-	{
-		result = Ethernet_SendFrameData(txMacFrame, LENGTH_FRAME);
-	}
-#endif
 
 	return (result);
 }
