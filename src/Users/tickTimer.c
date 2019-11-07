@@ -56,7 +56,7 @@ static void User_Func(void)
 
 	delayCnt++;
 
-	if (delayCnt >= 100U)
+	if (delayCnt >= 200U)
 	{
 		delayCnt = 0;
 

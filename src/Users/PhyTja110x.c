@@ -120,8 +120,9 @@ int PHY_TJA1101_Init(void)
 	PHY_TJA1101_ENABLE();
 
 	PHY_TJA1101_RESET_LOW();
-	nopDelay(2000);
+	nopDelay(5000);
 	PHY_TJA1101_RESET_HIGH();
+	nopDelay(5000);
 
 	TJA1101_AttributeInfo.PhySpeed = TJA1101_100Mbps;
 	TJA1101_AttributeInfo.PhyMode  = TJA1101_Configure_As_Slaver;

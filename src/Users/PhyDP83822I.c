@@ -476,10 +476,10 @@ int PHY_DP83822_Init(void)
 	/* Hardware reset DP83822I chips. */
 	PHY_DP83822HF_RESET_1_LOW();
 	PHY_DP83822HF_RESET_2_LOW();
-	CntDelay(2000);
+	CntDelay(5000);
 	PHY_DP83822HF_RESET_1_HIGH();
 	PHY_DP83822HF_RESET_2_HIGH();
-	CntDelay(2000);
+	CntDelay(5000);
 
 #if (ETH_PHY_CHIP_RESET_ENABLE == 1U)
 	/* Reset PHY_1 chip. */

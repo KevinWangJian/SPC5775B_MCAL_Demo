@@ -56,6 +56,8 @@ int main(void)
 	PHY_TJA1101_Init();
 	PHY_DP83822_Init();
 
+	SystemDelay_Ms(100);
+
 	/* Loop forever */
 	for(;;)
 	{
