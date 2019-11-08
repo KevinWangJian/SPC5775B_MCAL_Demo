@@ -476,10 +476,10 @@ int PHY_DP83822_Init(void)
 	/* Hardware reset DP83822I chips. */
 	PHY_DP83822HF_RESET_1_LOW();
 	PHY_DP83822HF_RESET_2_LOW();
-	CntDelay(5000);
+	CntDelay(1000000);
 	PHY_DP83822HF_RESET_1_HIGH();
 	PHY_DP83822HF_RESET_2_HIGH();
-	CntDelay(5000);
+	CntDelay(1000000);
 
 #if (ETH_PHY_CHIP_RESET_ENABLE == 1U)
 	/* Reset PHY_1 chip. */
@@ -664,23 +664,35 @@ void PHY_DP83822_GetCurrentStatus(void)
 int PHY_DP83822_SendDataFrame(void)
 {
 	int result = 0;
+	uint16 FrameLength;
 
 	/*MAC frame is an ARP message saying "Who has 192.168.10.3? Tell 192.168.10.10"*/
-	const Eth_DataType txMacFrame[LENGTH_FRAME] = {
-        											0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,			/*Destination Address*/
-													0x66,0x55,0x44,0x33,0x22,0x11,			/*Source Address(config in tresos)*/
-													0x08,0x06,					  			/*Frametype_ARP*/
-													0x00,0x01,0x08,0x00,0x06,0x04,0x00,0x01,/*Payload*/
-													0x66,0x55,0x44,0x33,0x22,0x11,			/*Payload*/
-													0xc0,0xa8,0x0a,0x0a,					/*Payload*/
-													0x00,0x00,0x00,0x00,0x00,0x00,			/*Payload*/
-													0xc0,0xa8,0x0a,0x03						/*Payload*/
-                                            	  };
+//	const Eth_DataType txMacFrame[LENGTH_FRAME] = {
+//        											0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,			/*Destination Address*/
+//													0x66,0x55,0x44,0x33,0x22,0x11,			/*Source Address(config in tresos)*/
+//													0x08,0x06,					  			/*Frametype_ARP*/
+//													0x00,0x01,0x08,0x00,0x06,0x04,0x00,0x01,/*Payload*/
+//													0x66,0x55,0x44,0x33,0x22,0x11,			/*Payload*/
+//													0xc0,0xa8,0x0a,0x0a,					/*Payload*/
+//													0x00,0x00,0x00,0x00,0x00,0x00,			/*Payload*/
+//													0xc0,0xa8,0x0a,0x03						/*Payload*/
+//                                            	  };
 
-	if (((PHY_DP83822HF_Prop[0].PhyLinkStatus == Valid_Link_Established) && (PHY_DP83822HF_Prop[0].MiiLinkStatus == Active_100BaseTxFullDuplexLink)) || \
-		((PHY_DP83822HF_Prop[1].PhyLinkStatus == Valid_Link_Established) && (PHY_DP83822HF_Prop[1].MiiLinkStatus == Active_100BaseTxFullDuplexLink)))
+	const Eth_DataType txMacFrame[24] = {
+        									0x20,0x3D,0x19,0x1C,0x29,0xCD,			/*Destination Address*/
+											0x66,0x55,0x44,0x33,0x22,0x11,			/*Source Address(config in tresos)*/
+											0x00,0x0A,					  			/*Frametype_ARP*/
+											0x00,0x01,0x08,0x00,0x06,0x04,0x00,0x01,/*Payload*/
+											0x55,0xAA
+                                        };
+
+//	if (((PHY_DP83822HF_Prop[0].PhyLinkStatus == Valid_Link_Established) && (PHY_DP83822HF_Prop[0].MiiLinkStatus == Active_100BaseTxFullDuplexLink)) || \
+//		((PHY_DP83822HF_Prop[1].PhyLinkStatus == Valid_Link_Established) && (PHY_DP83822HF_Prop[1].MiiLinkStatus == Active_100BaseTxFullDuplexLink)))
+	if ((PHY_DP83822HF_Prop[0].PhyLinkStatus == Valid_Link_Established) && (PHY_DP83822HF_Prop[0].MiiLinkStatus == Active_100BaseTxFullDuplexLink))
 	{
-		result = Ethernet_SendFrameData(txMacFrame, LENGTH_FRAME);
+		FrameLength = 24;
+
+		result = Ethernet_SendFrameData(txMacFrame, FrameLength);
 	}
 
 	return (result);
