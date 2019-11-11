@@ -667,32 +667,30 @@ int PHY_DP83822_SendDataFrame(void)
 	uint16 FrameLength;
 
 	/*MAC frame is an ARP message saying "Who has 192.168.10.3? Tell 192.168.10.10"*/
-//	const Eth_DataType txMacFrame[LENGTH_FRAME] = {
-//        											0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,			/*Destination Address*/
-//													0x66,0x55,0x44,0x33,0x22,0x11,			/*Source Address(config in tresos)*/
-//													0x08,0x06,					  			/*Frametype_ARP*/
-//													0x00,0x01,0x08,0x00,0x06,0x04,0x00,0x01,/*Payload*/
-//													0x66,0x55,0x44,0x33,0x22,0x11,			/*Payload*/
-//													0xc0,0xa8,0x0a,0x0a,					/*Payload*/
-//													0x00,0x00,0x00,0x00,0x00,0x00,			/*Payload*/
-//													0xc0,0xa8,0x0a,0x03						/*Payload*/
-//                                            	  };
+	const Eth_DataType txMacFrame[LENGTH_FRAME] = {
+        											0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,			/*Destination Address*/
+													0x66,0x55,0x44,0x33,0x22,0x11,			/*Source Address(config in tresos)*/
+													0x08,0x06,					  			/*Frametype_ARP*/
+													0x00,0x01,0x08,0x00,0x06,0x04,0x00,0x01,/*Payload*/
+													0x66,0x55,0x44,0x33,0x22,0x11,			/*Payload*/
+													0xc0,0xa8,0x0a,0x0a,					/*Payload*/
+													0x00,0x00,0x00,0x00,0x00,0x00,			/*Payload*/
+													0xc0,0xa8,0x0a,0x03						/*Payload*/
+                                            	   };
 
-	const Eth_DataType txMacFrame[24] = {
-        									0x20,0x3D,0x19,0x1C,0x29,0xCD,			/*Destination Address*/
-											0x66,0x55,0x44,0x33,0x22,0x11,			/*Source Address(config in tresos)*/
-											0x00,0x0A,					  			/*Frametype_ARP*/
-											0x00,0x01,0x08,0x00,0x06,0x04,0x00,0x01,/*Payload*/
-											0x55,0xAA
-                                        };
+//	const Eth_DataType txMacFrame[24] = {
+//        									0x20,0x3D,0x19,0x1C,0x29,0xCD,			/*Destination Address*/
+//											0x66,0x55,0x44,0x33,0x22,0x11,			/*Source Address(config in tresos)*/
+//											0x00,0x0A,					  			/*Frametype_ARP*/
+//											0x00,0x01,0x08,0x00,0x06,0x04,0x00,0x01,/*Payload*/
+//											0x55,0xAA
+//                                        };
 
 //	if (((PHY_DP83822HF_Prop[0].PhyLinkStatus == Valid_Link_Established) && (PHY_DP83822HF_Prop[0].MiiLinkStatus == Active_100BaseTxFullDuplexLink)) || \
 //		((PHY_DP83822HF_Prop[1].PhyLinkStatus == Valid_Link_Established) && (PHY_DP83822HF_Prop[1].MiiLinkStatus == Active_100BaseTxFullDuplexLink)))
 	if ((PHY_DP83822HF_Prop[0].PhyLinkStatus == Valid_Link_Established) && (PHY_DP83822HF_Prop[0].MiiLinkStatus == Active_100BaseTxFullDuplexLink))
 	{
-		FrameLength = 24;
-
-		result = Ethernet_SendFrameData(txMacFrame, FrameLength);
+		result = Ethernet_SendFrameData(txMacFrame, (sizeof(txMacFrame)/sizeof(Eth_DataType)));
 	}
 
 	return (result);
