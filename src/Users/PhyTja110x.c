@@ -15,7 +15,7 @@
 
 
 
-static PHY_TJA1101_ATTRIBUTE_t TJA1101_AttributeInfo;
+PHY_TJA1101_ATTRIBUTE_t TJA1101_AttributeInfo;
 
 
 /*
@@ -120,7 +120,7 @@ int PHY_TJA1101_Init(void)
 	PHY_TJA1101_ENABLE();
 
 	PHY_TJA1101_RESET_LOW();
-	nopDelay(100000);
+	nopDelay(500000);
 	PHY_TJA1101_RESET_HIGH();
 	nopDelay(100000);
 
@@ -380,7 +380,7 @@ int PHY_TJA1101_SendEthernetFrame(void)
 
 	if (TJA1101_AttributeInfo.InitStatus == TJA1101_Init_Success)
 	{
-//		if ((TJA1101_AttributeInfo.LinkStatus == TJA1101_Linkup_Success) && (TJA1101_AttributeInfo.PhySQILevel >= SQI_CLASS_E))
+		if ((TJA1101_AttributeInfo.LinkStatus == TJA1101_Linkup_Success) && (TJA1101_AttributeInfo.PhySQILevel >= SQI_CLASS_E))
 		{
 			result = Ethernet_SendFrameData(txMacFrame, LENGTH_FRAME);
 		}

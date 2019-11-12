@@ -84,6 +84,7 @@ int Ethernet_WriteRxFrameToBuffer(EthernetFrameData_Def_t* pRxframeData);
 
 int Ethernet_ReadRxFrameFromBuffer(EthernetPerFrameTypeDef_t* pRetFrameData);
 
+void Ethernet_TransmitFramesTest(void);
 
 #ifdef __cplusplus
 }

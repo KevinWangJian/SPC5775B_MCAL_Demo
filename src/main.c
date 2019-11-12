@@ -50,7 +50,7 @@ int main(void)
 
 	Ethernet_Init();
 
-	Switch_SJA1105_Init();
+	SJA1105_Init();
 	SJA1105_ConfigStatusChecking(&SJA1105_DEVICE_TYPE, &SJA1105_CONFIG_STA);
 
 	PHY_TJA1101_Init();
@@ -68,9 +68,7 @@ int main(void)
 		{
 			McanComm_TransmitProcess();
 
-			PHY_DP83822_SendDataFrame();
-
-//			PHY_TJA1101_SendEthernetFrame();
+			Ethernet_TransmitFramesTest();
 
 			CommUpdateEvent = 0;
 		}

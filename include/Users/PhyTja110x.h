@@ -119,8 +119,10 @@ typedef struct
     PHY_TJA1101_SQI_Level_t    			PhySQILevel;
     PHY_TJA1101_SHORT_CIRCUIT_t 		PhyShortCircuitStatus;
     PHY_TJA1101_OPEN_CIRCUIT_t  		PhyOpenCircuitStatus;
-
 }PHY_TJA1101_ATTRIBUTE_t;
+
+
+extern PHY_TJA1101_ATTRIBUTE_t TJA1101_AttributeInfo;
 
 
 int PHY_TJA1101_Init(void);

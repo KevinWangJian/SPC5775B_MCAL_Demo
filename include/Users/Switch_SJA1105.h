@@ -49,8 +49,12 @@ extern "C" {
 #define DEVICE_CONFIGFLAG_REG_CRCCHKG_MASK		((uint32_t)1 << 28)
 
 
-#define RESET_CTRL_REG							(0x100440u)
-#define UNIT_DISABLE							(0x1007FDu)
+#define RESET_CTRL_REG							(0x100440U)
+#define RESET_CTRL_POR_RST_MASK					((uint32_t)1 << 1)
+#define RESET_CTRL_COLD_RST_MASK				((uint32_t)1 << 2)
+#define RESET_CTRL_WARM_RST_MASK				((uint32_t)1 << 3)
+
+#define UNIT_DISABLE_REG_FOR_RGU				(0x1007FDU)
 
 
 #define CFG_PAD_MII0_TX_REG						(0x100800u)
@@ -80,9 +84,11 @@ typedef enum
 }SJA1105ConfigStatus;
 
 
-void Switch_SJA1105_Init(void);
+
 int SJA1105_WriteData(const uint32_t regAddr, const uint8_t* pWtData, const uint16_t u8WtDataLen);
 int SJA1105_ReadData(const uint32_t regAddr, uint8_t* pRdData, const uint16_t u8RdDataLen);
+int SJA1105_ResetChip(void);
+void SJA1105_Init(void);
 int SJA1105_ConfigStatusChecking(SJA1105TypeDef* pDevType, SJA1105ConfigStatus* pDevConfigSta);
 
 
