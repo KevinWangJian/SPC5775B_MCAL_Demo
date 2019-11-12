@@ -22,6 +22,8 @@ extern "C" {
 
 
 extern volatile uint32_t CommUpdateEvent;
+extern volatile uint32_t systemGlobalTickCount;
+
 
 void SystemTickTimer_Init(void);
 void SystemDelay_Ms(uint32_t timeMs);

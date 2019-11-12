@@ -25,5 +25,14 @@ src/Users/EthComm.o: ../src/Users/EthComm.c \
   D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet_20191112/SPC5775B_ETHERNET_Z7_0/src/MCAL/Gen/Inc/Dio_Cfg.h \
   D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet_20191112/SPC5775B_ETHERNET_Z7_0/src/MCAL/Module/Dio/Inc/Dio_EnvCfg.h \
   D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet_20191112/SPC5775B_ETHERNET_Z7_0/src/MCAL/Module/Dio/Inc/Dio.h \
-  D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet_20191112/SPC5775B_ETHERNET_Z7_0/include/Users/PhyTja110x.h
+  D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet_20191112/SPC5775B_ETHERNET_Z7_0/include/Users/PhyTja110x.h \
+  D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet_20191112/SPC5775B_ETHERNET_Z7_0/include/Users/tickTimer.h \
+  D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet_20191112/SPC5775B_ETHERNET_Z7_0/src/MCAL/Module/Gpt/Inc/Gpt.h \
+  D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet_20191112/SPC5775B_ETHERNET_Z7_0/src/MCAL/Module/Gpt/Inc/Gpt_Ipw_Types.h \
+  D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet_20191112/SPC5775B_ETHERNET_Z7_0/src/MCAL/Module/Gpt/Inc/Gpt_Stm_Types.h \
+  D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet_20191112/SPC5775B_ETHERNET_Z7_0/src/MCAL/Gen/Inc/Gpt_Cfg.h \
+  D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet_20191112/SPC5775B_ETHERNET_Z7_0/src/MCAL/Module/Gpt/Inc/Gpt_EnvCfg.h \
+  D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet_20191112/SPC5775B_ETHERNET_Z7_0/src/MCAL/Module/Gpt/Inc/Gpt_Pit_Types.h \
+  D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet_20191112/SPC5775B_ETHERNET_Z7_0/src/MCAL/Module/Gpt/Inc/Gpt_eMios_Types.h \
+  D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet_20191112/SPC5775B_ETHERNET_Z7_0/src/MCAL/Module/Mcl/Inc/eMios_Common_Types.h
 

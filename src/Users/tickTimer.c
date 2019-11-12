@@ -13,6 +13,9 @@ volatile uint32_t tickTimerCount = 0;
 
 volatile uint32_t CommUpdateEvent = 0;
 
+volatile uint32_t systemGlobalTickCount = 0;
+
+
 /*
 @brief
 @details
@@ -79,6 +82,13 @@ void Callback_func(void)
 	SystemTickTimerCount_Decrement();
 
 	User_Func();
+
+	systemGlobalTickCount++;
+
+	if (systemGlobalTickCount >= 0xFFFFFFFFU)
+	{
+		systemGlobalTickCount = 0U;
+	}
 }
 
 /*

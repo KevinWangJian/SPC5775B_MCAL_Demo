@@ -21,7 +21,7 @@
 
 SJA1105TypeDef SJA1105_DEVICE_TYPE;
 SJA1105ConfigStatus SJA1105_CONFIG_STA;
-EthernetPerFrameTypeDef_t RxEthernetFrame;
+
 
 
 /*
@@ -56,17 +56,17 @@ int main(void)
 	PHY_TJA1101_Init();
 	PHY_DP83822_Init();
 
+	Ethernet_FrameData_Init();
+
 	/* Loop forever */
 	for(;;)
 	{
-		Ethernet_ReadRxFrameFromBuffer(&RxEthernetFrame);
-
 		PHY_TJA1101_GetCurrentStatus();
 		PHY_DP83822_GetCurrentStatus();
 
 		if (CommUpdateEvent)
 		{
-			McanComm_TransmitProcess();
+//			McanComm_TransmitProcess();
 
 			Ethernet_TransmitFramesTest();
 
