@@ -401,7 +401,7 @@ void Ethernet_FrameData_Init(void)
 
 	payloadLength = sizeof(txMacFrame)/sizeof(Eth_DataType) - 14;
 
-	memset((Eth_DataType*)&txMacFrame[12], payloadLength, 2);
+	memcpy((Eth_DataType*)&txMacFrame[12], (uint8_t*)&payloadLength, 2);
 }
 
 /*

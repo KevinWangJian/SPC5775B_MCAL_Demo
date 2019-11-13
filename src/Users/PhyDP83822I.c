@@ -12,7 +12,7 @@
 #include "Std_Types.h"
 
 
-PHY_DP83822_ProTypeDef PHY_DP83822HF_Prop[2];
+PHY_DP83822_ProTypeDef PHY_DP83822HF_Prop[ETH_DP83822_PHY_CHIP_NUM] = {0};
 
 
 /*
@@ -21,41 +21,40 @@ PHY_DP83822_ProTypeDef PHY_DP83822HF_Prop[2];
 @para
 @return
 */
-void CntDelay(uint32_t cnt)
+static void CntDelay(uint32_t cnt)
 {
 	while (cnt--){;}
 }
 
-
 /*
-@brief Write data to DP83822HF chip internal registers.
+@brief Write data to DP83822HF chip internal registers by SMI interface.
 @para phyAddr, DP83822HF PHY address;
 @para regAddr, internal register address;
 @para WtData, the new write data;
 @return 1,success; 0,failed;
 */
-int PHY_DP83822_SMIWriteRegData(const uint8_t phyAddr, const uint16_t regAddr, const uint16_t WtData)
+static int PHY_DP83822_SMIWriteRegData(const uint8_t phyAddr, const uint16_t regAddr, const uint16_t WtData)
 {
-	const uint8_t TIMEOUT = 100;
-	uint8_t MMD = 0, ExtendRegCmd = 0;
+	uint8_t MMD, ExtendRegCmd;
 	uint16_t writeData, writeAddr;
-	uint8_t dummyCount = 0;
+	uint8_t dummyCount;
 	Eth_ReturnType ret;
-
-	int retVal = -1;
 
 	if (regAddr <= 0x001FU)
 	{
 		ret = Eth_WriteMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)regAddr, (uint16)WtData);
-		dummyCount = 0;
 
 		if (ret != ETH_OK)
 		{
+			dummyCount = 0;
+			/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 			while (dummyCount < 3U)dummyCount++;
 			return (0);
 		}
 		else
 		{
+			dummyCount = 0;
+			/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 			while (dummyCount < 3U)dummyCount++;
 			return (1);
 		}
@@ -67,12 +66,10 @@ int PHY_DP83822_SMIWriteRegData(const uint8_t phyAddr, const uint16_t regAddr, c
 		writeData = ((uint16_t)ExtendRegCmd << 14) + MMD;
 
 		ret = Eth_WriteMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)DP83822HF_REGCR_REG, (uint16)writeData);
-		dummyCount = 0;
 
 		if (ret == ETH_OK)
 		{
 			ret = Eth_WriteMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)DP83822HF_ADDAR_REG, (uint16)regAddr);
-			dummyCount = 0;
 
 			if (ret == ETH_OK)
 			{
@@ -81,38 +78,46 @@ int PHY_DP83822_SMIWriteRegData(const uint8_t phyAddr, const uint16_t regAddr, c
 				writeData = ((uint16_t)ExtendRegCmd << 14) + MMD;
 
 				ret = Eth_WriteMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)DP83822HF_REGCR_REG, (uint16)writeData);
-				dummyCount = 0;
 
 				if (ret == ETH_OK)
 				{
 					ret = Eth_WriteMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)DP83822HF_ADDAR_REG, (uint16)WtData);
-					dummyCount = 0;
 
 					if (ret == ETH_OK)
 					{
+						dummyCount = 0;
+						/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 						while (dummyCount < 3U)dummyCount++;
 						return (1);
 					}
 					else
 					{
+						dummyCount = 0;
+						/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 						while (dummyCount < 3U)dummyCount++;
 						return (0);
 					}
 				}
 				else
 				{
+					dummyCount = 0;
+					/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 					while (dummyCount < 3U)dummyCount++;
 					return (0);
 				}
 			}
 			else
 			{
+				dummyCount = 0;
+				/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 				while (dummyCount < 3U)dummyCount++;
 				return (0);
 			}
 		}
 		else
 		{
+			dummyCount = 0;
+			/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 			while (dummyCount < 3U)dummyCount++;
 			return (0);
 		}
@@ -124,7 +129,6 @@ int PHY_DP83822_SMIWriteRegData(const uint8_t phyAddr, const uint16_t regAddr, c
 		writeData = ((uint16_t)ExtendRegCmd << 14) + MMD;
 
 		ret = Eth_WriteMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)DP83822HF_REGCR_REG, (uint16)writeData);
-		dummyCount = 0;
 
 		if (ret == ETH_OK)
 		{
@@ -132,7 +136,6 @@ int PHY_DP83822_SMIWriteRegData(const uint8_t phyAddr, const uint16_t regAddr, c
 			writeAddr &= 0x0FFFU;
 
 			ret = Eth_WriteMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)DP83822HF_ADDAR_REG, (uint16)writeAddr);
-			dummyCount = 0;
 
 			if (ret == ETH_OK)
 			{
@@ -141,38 +144,46 @@ int PHY_DP83822_SMIWriteRegData(const uint8_t phyAddr, const uint16_t regAddr, c
 				writeData = ((uint16_t)ExtendRegCmd << 14) + MMD;
 
 				ret = Eth_WriteMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)DP83822HF_REGCR_REG, (uint16)writeData);
-				dummyCount = 0;
 
 				if (ret == ETH_OK)
 				{
 					ret = Eth_WriteMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)DP83822HF_ADDAR_REG, (uint16)WtData);
-					dummyCount = 0;
 
 					if (ret == ETH_OK)
 					{
+						dummyCount = 0;
+						/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 						while (dummyCount < 3U)dummyCount++;
 						return (1);
 					}
 					else
 					{
+						dummyCount = 0;
+						/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 						while (dummyCount < 3U)dummyCount++;
 						return (0);
 					}
 				}
 				else
 				{
+					dummyCount = 0;
+					/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 					while (dummyCount < 3U)dummyCount++;
 					return (0);
 				}
 			}
 			else
 			{
+				dummyCount = 0;
+				/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 				while (dummyCount < 3U)dummyCount++;
 				return (0);
 			}
 		}
 		else
 		{
+			dummyCount = 0;
+			/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 			while (dummyCount < 3U)dummyCount++;
 			return (0);
 		}
@@ -184,7 +195,6 @@ int PHY_DP83822_SMIWriteRegData(const uint8_t phyAddr, const uint16_t regAddr, c
 		writeData = ((uint16_t)ExtendRegCmd << 14) + MMD;
 
 		ret = Eth_WriteMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)DP83822HF_REGCR_REG, (uint16)writeData);
-		dummyCount = 0;
 
 		if (ret == ETH_OK)
 		{
@@ -192,7 +202,6 @@ int PHY_DP83822_SMIWriteRegData(const uint8_t phyAddr, const uint16_t regAddr, c
 			writeAddr &= 0x0FFFU;
 
 			ret = Eth_WriteMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)DP83822HF_ADDAR_REG, (uint16)writeAddr);
-			dummyCount = 0;
 
 			if (ret == ETH_OK)
 			{
@@ -201,77 +210,88 @@ int PHY_DP83822_SMIWriteRegData(const uint8_t phyAddr, const uint16_t regAddr, c
 				writeData = ((uint16_t)ExtendRegCmd << 14) + MMD;
 
 				ret = Eth_WriteMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)DP83822HF_REGCR_REG, (uint16)writeData);
-				dummyCount = 0;
 
 				if (ret == ETH_OK)
 				{
 					ret = Eth_WriteMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)DP83822HF_ADDAR_REG, (uint16)WtData);
-					dummyCount = 0;
 
 					if (ret == ETH_OK)
 					{
+						dummyCount = 0;
+						/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 						while (dummyCount < 3U)dummyCount++;
 						return (1);
 					}
 					else
 					{
+						dummyCount = 0;
+						/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 						while (dummyCount < 3U)dummyCount++;
 						return (0);
 					}
 				}
 				else
 				{
+					dummyCount = 0;
+					/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 					while (dummyCount < 3U)dummyCount++;
 					return (0);
 				}
 			}
 			else
 			{
+				dummyCount = 0;
+				/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 				while (dummyCount < 3U)dummyCount++;
 				return (0);
 			}
 		}
 		else
 		{
+			dummyCount = 0;
+			/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 			while (dummyCount < 3U)dummyCount++;
 			return (0);
 		}
 	}
 	else
 	{
+		dummyCount = 0;
+		/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 		while (dummyCount < 3U)dummyCount++;
 		return (0);
 	}
 }
 
-
 /*
-@brief
-@para
-@para
-@return
+@brief Read data from DP83822HF chip internal registers by SMI interface.
+@para phyAddr, DP83822HF PHY address;
+@para regAddr, internal register address;
+@para *pRdData, a pointer to the read-out register value;
+@return 1,success; 0,failed;
 */
-int PHY_DP83822_SMIReadRegData(const uint8_t phyAddr, const uint16_t regAddr, uint16_t* pRdData)
+static int PHY_DP83822_SMIReadRegData(const uint8_t phyAddr, const uint16_t regAddr, uint16_t* pRdData)
 {
-	const uint8_t TIMEOUT = 100;
-	uint8_t MMD = 0, ExtendRegCmd = 0;
+	uint8_t MMD, ExtendRegCmd;
 	uint16_t writeData, writeAddr;
-	uint8_t dummyCount = 0;
+	uint8_t dummyCount;
 	Eth_ReturnType ret;
-	int retVal = -1;
 
 	if (regAddr <= 0x001FU)
 	{
 		ret = Eth_ReadMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)regAddr, (uint16 *)pRdData);
-		dummyCount = 0;
 
 		if (ret == ETH_OK)
 		{
+			dummyCount = 0;
+			/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 			while (dummyCount < 3U)dummyCount++;
 			return (1);
 		}
 		else
 		{
+			dummyCount = 0;
+			/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 			while (dummyCount < 3U)dummyCount++;
 			return (0);
 		}
@@ -283,12 +303,10 @@ int PHY_DP83822_SMIReadRegData(const uint8_t phyAddr, const uint16_t regAddr, ui
 		writeData = ((uint16_t)ExtendRegCmd << 14) + MMD;
 
 		ret = Eth_WriteMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)DP83822HF_REGCR_REG, (uint16)writeData);
-		dummyCount = 0;
 
 		if (ret == ETH_OK)
 		{
 			ret = Eth_WriteMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)DP83822HF_ADDAR_REG, (uint16)regAddr);
-			dummyCount = 0;
 
 			if (ret == ETH_OK)
 			{
@@ -297,38 +315,46 @@ int PHY_DP83822_SMIReadRegData(const uint8_t phyAddr, const uint16_t regAddr, ui
 				writeData = ((uint16_t)ExtendRegCmd << 14) + MMD;
 
 				ret = Eth_WriteMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)DP83822HF_REGCR_REG, (uint16)writeData);
-				dummyCount = 0;
 
 				if (ret == ETH_OK)
 				{
 					ret = Eth_ReadMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)DP83822HF_ADDAR_REG, (uint16 *)pRdData);
-					dummyCount = 0;
 
 					if (ret == ETH_OK)
 					{
+						dummyCount = 0;
+						/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 						while (dummyCount < 3U)dummyCount++;
 						return (1);
 					}
 					else
 					{
+						dummyCount = 0;
+						/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 						while (dummyCount < 3U)dummyCount++;
 						return (0);
 					}
 				}
 				else
 				{
+					dummyCount = 0;
+					/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 					while (dummyCount < 3U)dummyCount++;
 					return (0);
 				}
 			}
 			else
 			{
+				dummyCount = 0;
+				/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 				while (dummyCount < 3U)dummyCount++;
 				return (0);
 			}
 		}
 		else
 		{
+			dummyCount = 0;
+			/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 			while (dummyCount < 3U)dummyCount++;
 			return (0);
 		}
@@ -340,7 +366,6 @@ int PHY_DP83822_SMIReadRegData(const uint8_t phyAddr, const uint16_t regAddr, ui
 		writeData = ((uint16_t)ExtendRegCmd << 14) + MMD;
 
 		ret = Eth_WriteMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)DP83822HF_REGCR_REG, (uint16)writeData);
-		dummyCount = 0;
 
 		if (ret == ETH_OK)
 		{
@@ -348,7 +373,6 @@ int PHY_DP83822_SMIReadRegData(const uint8_t phyAddr, const uint16_t regAddr, ui
 			writeAddr &= 0x0FFFU;
 
 			ret = Eth_WriteMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)DP83822HF_ADDAR_REG, (uint16)writeAddr);
-			dummyCount = 0;
 
 			if (ret == ETH_OK)
 			{
@@ -357,38 +381,46 @@ int PHY_DP83822_SMIReadRegData(const uint8_t phyAddr, const uint16_t regAddr, ui
 				writeData = ((uint16_t)ExtendRegCmd << 14) + MMD;
 
 				ret = Eth_WriteMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)DP83822HF_REGCR_REG, (uint16)writeData);
-				dummyCount = 0;
 
 				if (ret == ETH_OK)
 				{
 					ret = Eth_ReadMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)DP83822HF_ADDAR_REG, (uint16 *)pRdData);
-					dummyCount = 0;
 
 					if (ret == ETH_OK)
 					{
+						dummyCount = 0;
+						/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 						while (dummyCount < 3U)dummyCount++;
 						return (1);
 					}
 					else
 					{
+						dummyCount = 0;
+						/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 						while (dummyCount < 3U)dummyCount++;
 						return (0);
 					}
 				}
 				else
 				{
+					dummyCount = 0;
+					/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 					while (dummyCount < 3U)dummyCount++;
 					return (0);
 				}
 			}
 			else
 			{
+				dummyCount = 0;
+				/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 				while (dummyCount < 3U)dummyCount++;
 				return (0);
 			}
 		}
 		else
 		{
+			dummyCount = 0;
+			/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 			while (dummyCount < 3U)dummyCount++;
 			return (0);
 		}
@@ -400,7 +432,6 @@ int PHY_DP83822_SMIReadRegData(const uint8_t phyAddr, const uint16_t regAddr, ui
 		writeData = ((uint16_t)ExtendRegCmd << 14) + MMD;
 
 		ret = Eth_WriteMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)DP83822HF_REGCR_REG, (uint16)writeData);
-		dummyCount = 0;
 
 		if (ret == ETH_OK)
 		{
@@ -408,7 +439,6 @@ int PHY_DP83822_SMIReadRegData(const uint8_t phyAddr, const uint16_t regAddr, ui
 			writeAddr &= 0x0FFFU;
 
 			ret = Eth_WriteMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)DP83822HF_ADDAR_REG, (uint16)writeAddr);
-			dummyCount = 0;
 
 			if (ret == ETH_OK)
 			{
@@ -417,61 +447,73 @@ int PHY_DP83822_SMIReadRegData(const uint8_t phyAddr, const uint16_t regAddr, ui
 				writeData = ((uint16_t)ExtendRegCmd << 14) + MMD;
 
 				ret = Eth_WriteMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)DP83822HF_REGCR_REG, (uint16)writeData);
-				dummyCount = 0;
 
 				if (ret == ETH_OK)
 				{
 					ret = Eth_ReadMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)DP83822HF_ADDAR_REG, (uint16 *)pRdData);
-					dummyCount = 0;
 
 					if (ret == ETH_OK)
 					{
+						dummyCount = 0;
+						/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 						while (dummyCount < 3U)dummyCount++;
 						return (1);
 					}
 					else
 					{
+						dummyCount = 0;
+						/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 						while (dummyCount < 3U)dummyCount++;
 						return (0);
 					}
 				}
 				else
 				{
+					dummyCount = 0;
+					/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 					while (dummyCount < 3U)dummyCount++;
 					return (0);
 				}
 			}
 			else
 			{
+				dummyCount = 0;
+				/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 				while (dummyCount < 3U)dummyCount++;
 				return (0);
 			}
 		}
 		else
 		{
+			dummyCount = 0;
+			/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 			while (dummyCount < 3U)dummyCount++;
 			return (0);
 		}
 	}
 	else
 	{
+		dummyCount = 0;
+		/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 		while (dummyCount < 3U)dummyCount++;
 		return (0);
 	}
 }
 
-
 /*
-@brief
-@para
-@para
-@return
+@brief Initialize DP83822 PHY chips.
+@para None.
+@para None.
+@return 0, Failed; 1; Successfully;
 */
 int PHY_DP83822_Init(void)
 {
 	int result;
-	uint16_t RegRdData, WriteRegData;
+	uint16_t WriteRegData;
+#if (ETH_PHY_CHIP_RESET_ENABLE == 1U)
+	uint16_t RegRdData;
 	uint32_t timeoutCnt;
+#endif
 
 	/* Hardware reset DP83822I chips. */
 	PHY_DP83822HF_RESET_1_LOW();
@@ -479,8 +521,9 @@ int PHY_DP83822_Init(void)
 	CntDelay(1000000);
 	PHY_DP83822HF_RESET_1_HIGH();
 	PHY_DP83822HF_RESET_2_HIGH();
-	CntDelay(1000000);
+	CntDelay(50000);
 
+	/********************** 1, Reset DP83822 PHY chips *******************/
 #if (ETH_PHY_CHIP_RESET_ENABLE == 1U)
 	/* Reset PHY_1 chip. */
 	if (PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_1_ADDRESS, DP83822HF_BMCR_REG, DP83822HF_BMCR_REG_Reset_Mask) == 0)
@@ -489,6 +532,7 @@ int PHY_DP83822_Init(void)
 		return (result);
 	}
 
+	/* Wait reset sequence completely. */
 	timeoutCnt = 0;
 	while (((RegRdData & DP83822HF_BMCR_REG_Reset_Mask) != 0) && (timeoutCnt < 0x10000000U));
 	{
@@ -512,6 +556,7 @@ int PHY_DP83822_Init(void)
 		return (result);
 	}
 
+	/* Wait reset sequence completely. */
 	timeoutCnt = 0;
 	RegRdData  = 0;
 	while (((RegRdData & DP83822HF_BMCR_REG_Reset_Mask) != 0) && (timeoutCnt < 0x10000000U));
@@ -530,6 +575,7 @@ int PHY_DP83822_Init(void)
 	}
 #endif
 
+	/********************** 2, Configure PHY work mode and speed *******************/
 	WriteRegData = 0;
 	/* MII normal operation, 100Mbps, Enable Auto_negotiation, Full-duplex mode. */
 	WriteRegData |= (DP83822HF_BMCR_REG_SpeedSel_Mask | \
@@ -547,10 +593,10 @@ int PHY_DP83822_Init(void)
 		return (result);
 	}
 
-
+	/********************** 3, Configure PHY link loss recovery *******************/
 	WriteRegData  = 0;
 	/* Enable execution of TDR procedure, Enable Link loss recovery mechanism. */
-	WriteRegData |= (DP83822HF_CR1_REG_LinkLossRecovery_Mask);
+	WriteRegData |= (DP83822HF_CR1_REG_TDRAutoRun_Mask | DP83822HF_CR1_REG_LinkLossRecovery_Mask);
 
 	if (PHY_DP83822_SMIWriteRegData(DP83822HF_PHY_1_ADDRESS, DP83822HF_CR1_REG, WriteRegData) == 0)
 	{
@@ -563,7 +609,7 @@ int PHY_DP83822_Init(void)
 		return (result);
 	}
 
-
+	/********************** 4, Configure PHY LED1 light link on and blink when TX and RX activity *******************/
 	WriteRegData = 0;
 	/* LEDCFG1 Control: LED_1 LINK OK / BLINK on TX/RX Activity. */
 	WriteRegData |= (DP83822HF_LEDCFG1_REG_LED1Contrl(0x8) | (DP83822HF_LEDCFG1_REG_LED3Contrl(0x5)) | (0x01));
@@ -579,7 +625,7 @@ int PHY_DP83822_Init(void)
 		return (result);
 	}
 
-
+	/********************** 5, Configure PHY LED1 light work as GPIO output mode *******************/
 	WriteRegData  = 0;
 	/* IOCTRL1 Control: LED_1 config to GPIO output.  */
 	WriteRegData |= DP83822HF_IOCTRL1_REG_LED1GPIOCtrl(0x1);
@@ -598,9 +644,9 @@ int PHY_DP83822_Init(void)
 	return (1);
 }
 
-
 /*
-@brief Get current DP83822HF property status.
+@brief Polling current DP83822 PHY link status,speed information and other properties.
+@details This func should be called by user's APP program to polling DP83822 PHY status periodically.
 @para None.
 @return None.
 */
@@ -609,10 +655,11 @@ void PHY_DP83822_GetCurrentStatus(void)
 	uint16_t RegRdData;
 	uint8_t index;
 	int result;
+	uint8_t PHY_BASEADDR = DP83822HF_PHY_1_ADDRESS;
 
-	for (index = 0; index < 2; index++)
+	for (index = 0; index < ETH_DP83822_PHY_CHIP_NUM; index++)
 	{
-		result = PHY_DP83822_SMIReadRegData((DP83822HF_PHY_1_ADDRESS + index), DP83822HF_BMSR_REG, &RegRdData);
+		result = PHY_DP83822_SMIReadRegData((PHY_BASEADDR + index), DP83822HF_BMSR_REG, &RegRdData);
 
 		if (result == 1)
 		{
@@ -625,7 +672,7 @@ void PHY_DP83822_GetCurrentStatus(void)
 			PHY_DP83822HF_Prop[index].AutoNegotiationCompleteStatus = 0;
 		}
 
-		result = PHY_DP83822_SMIReadRegData((DP83822HF_PHY_1_ADDRESS + index), DP83822HF_PHYSTS_REG, &RegRdData);
+		result = PHY_DP83822_SMIReadRegData((PHY_BASEADDR + index), DP83822HF_PHYSTS_REG, &RegRdData);
 
 		if (result == 1)
 		{
@@ -638,7 +685,7 @@ void PHY_DP83822_GetCurrentStatus(void)
 			PHY_DP83822HF_Prop[index].SpeedStatus = 0;
 		}
 
-		result = PHY_DP83822_SMIReadRegData((DP83822HF_PHY_1_ADDRESS + index), DP83822HF_PHYCR_REG, &RegRdData);
+		result = PHY_DP83822_SMIReadRegData((PHY_BASEADDR + index), DP83822HF_PHYCR_REG, &RegRdData);
 
 		if (result == 1)
 		{
@@ -652,7 +699,6 @@ void PHY_DP83822_GetCurrentStatus(void)
 		}
 	}
 }
-
 
 /*
 @brief
@@ -674,12 +720,12 @@ int PHY_DP83822_SendDataFrame(void)
 													0xc0,0xa8,0x0a,0x0a,					/*Payload*/
 													0x00,0x00,0x00,0x00,0x00,0x00,			/*Payload*/
 													0xc0,0xa8,0x0a,0x03						/*Payload*/
-                                            	   };
+                                            	  };
 
 	if (((PHY_DP83822HF_Prop[0].PhyLinkStatus == Valid_Link_Established) && (PHY_DP83822HF_Prop[0].MiiLinkStatus == Active_100BaseTxFullDuplexLink)) || \
 		((PHY_DP83822HF_Prop[1].PhyLinkStatus == Valid_Link_Established) && (PHY_DP83822HF_Prop[1].MiiLinkStatus == Active_100BaseTxFullDuplexLink)))
 	{
-		result = Ethernet_SendFrameData(txMacFrame, (sizeof(txMacFrame)/sizeof(Eth_DataType)));
+		result = Ethernet_SendFrameData(txMacFrame, LENGTH_FRAME);
 	}
 
 	return (result);

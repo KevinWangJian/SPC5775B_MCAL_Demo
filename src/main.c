@@ -19,10 +19,6 @@
 #include "tickTimer.h"
 
 
-SJA1105TypeDef SJA1105_DEVICE_TYPE;
-SJA1105ConfigStatus SJA1105_CONFIG_STA;
-
-
 
 /*
 @brief
@@ -51,7 +47,6 @@ int main(void)
 	Ethernet_Init();
 
 	SJA1105_Init();
-	SJA1105_ConfigStatusChecking(&SJA1105_DEVICE_TYPE, &SJA1105_CONFIG_STA);
 
 	PHY_TJA1101_Init();
 	PHY_DP83822_Init();
@@ -66,7 +61,7 @@ int main(void)
 
 		if (CommUpdateEvent)
 		{
-//			McanComm_TransmitProcess();
+			McanComm_TransmitProcess();
 
 			Ethernet_TransmitFramesTest();
 

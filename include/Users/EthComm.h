@@ -69,7 +69,6 @@ typedef struct
 
 
 
-
 void Ethernet_Init(void);
 
 void Ethernet_ClrRXBIrqFlag(uint8 u8CtrlIdx);

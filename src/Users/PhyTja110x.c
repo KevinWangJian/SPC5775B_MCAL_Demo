@@ -1,12 +1,11 @@
 /*
  * PhyTja110x.c
  *
- *  Created on: 2019��10��22��
+ *  Created on: 2019
  *      Author: admin
  */
 
 #include "PhyTja110x.h"
-#include "tickTimer.h"
 #include "NXP_TJA1100_Defines.h"
 #include "NXP_TJA1100_Functions.h"
 #include "Eth.h"
@@ -23,7 +22,7 @@ PHY_TJA1101_ATTRIBUTE_t TJA1101_AttributeInfo;
 @para   cnt, delay count value.
 @return None.
 */
-void nopDelay(uint32_t cnt)
+static void nopDelay(uint32_t cnt)
 {
 	while (cnt--){;}
 }
@@ -43,7 +42,7 @@ NXP_TJA1100_Error_Code_t SMI_Send(Byte* data, Byte phyAddr, Byte* mask, NXP_TJA1
 	uint16_t writeVal;
 	uint8_t regAddr;
 	uint8_t dummyCount;
-	NXP_TJA1100_Error_Code_t result = NXP_TJA1100_ERROR_WRITE_FAIL;
+	NXP_TJA1100_Error_Code_t result;
 
 	if (NXP_TJA1100_WRITE == type)
 	{
@@ -51,16 +50,18 @@ NXP_TJA1100_Error_Code_t SMI_Send(Byte* data, Byte phyAddr, Byte* mask, NXP_TJA1
 		writeVal  = (((uint16_t)data[1] << 8) + data[2]);
 		writeVal &= (((uint16_t)mask[1] << 8) + mask[2]);
 
-		dummyCount = 0;
-
 		if (Eth_WriteMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)regAddr, (uint16)writeVal) != ETH_OK)
 		{
+			dummyCount = 0;
+			/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 			while (dummyCount < 5U)dummyCount++;
 
 			result = NXP_TJA1100_ERROR_WRITE_FAIL;
 		}
 		else
 		{
+			dummyCount = 0;
+			/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 			while (dummyCount < 5U)dummyCount++;
 
 			result = NXP_TJA1100_SUCCESS;
@@ -69,8 +70,6 @@ NXP_TJA1100_Error_Code_t SMI_Send(Byte* data, Byte phyAddr, Byte* mask, NXP_TJA1
 	else if (NXP_TJA1100_READ == type)
 	{
 		regAddr = data[0];									/* PHY Register Address. */
-
-		dummyCount = 0;
 
 		if (Eth_ReadMii((uint8)CTRL_INDEX, (uint8)phyAddr, (uint8)regAddr, (uint16 *)&regVal) == ETH_OK)
 		{
@@ -81,6 +80,8 @@ NXP_TJA1100_Error_Code_t SMI_Send(Byte* data, Byte phyAddr, Byte* mask, NXP_TJA1
 		}
 		else
 		{
+			dummyCount = 0;
+			/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 			while (dummyCount < 5U)dummyCount++;
 
 			result = NXP_TJA1100_ERROR_WRITE_FAIL;
@@ -89,7 +90,7 @@ NXP_TJA1100_Error_Code_t SMI_Send(Byte* data, Byte phyAddr, Byte* mask, NXP_TJA1
 	else
 	{
 		dummyCount = 0;
-
+		/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 		while (dummyCount < 5U)dummyCount++;
 
 		result = NXP_TJA1100_ERROR_WRITE_FAIL;
@@ -122,7 +123,6 @@ int PHY_TJA1101_Init(void)
 	PHY_TJA1101_RESET_LOW();
 	nopDelay(500000);
 	PHY_TJA1101_RESET_HIGH();
-	nopDelay(100000);
 
 	TJA1101_AttributeInfo.PhySpeed = TJA1101_100Mbps;
 	TJA1101_AttributeInfo.PhyMode  = TJA1101_Configure_As_Slaver;
@@ -158,15 +158,15 @@ int PHY_TJA1101_Init(void)
 		Tja110xBcr.TJA1100_SS_LSB = TJA1101_SS_LSB_1;
 		Tja110xBcr.TJA1100_SS_MSB = TJA1101_SS_MSB_0;
 	}
-
+	/* Perform a reset. */
 	if (TJA110x_setBasicControl(&Tja110xBcr, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
 	{
 		TJA1101_AttributeInfo.InitStatus = TJA1101_Init_Failed;
 		return (0);
 	}
 
+	/* Wait reset sequence completely. */
 	delayCount = 0;
-	/* Wait reset complete. */
 	while ((Tja110xBcr.TJA1100_RST == TJA1101_RST_PHY_RESET) && (delayCount < 100000000U))
 	{
 		if (TJA110x_getBasicControl(&Tja110xBcr, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
@@ -183,15 +183,15 @@ int PHY_TJA1101_Init(void)
 		return (0);
 	}
 
-	/* Get TJA1101 PHY id1 and id2 register value. */
+	/* Read TJA1101 PHY id1 and id2 register value. */
 	if (TJA110x_getPHYIdentifier1(&Tja110xId1, PHY_TJA1101_ADDRESS) == NXP_TJA1100_SUCCESS)
 	{
 		TJA1101_AttributeInfo.PhyIdInfo.ID1 = (uint16)Tja110xId1.TJA1100_PHY_ID1;
 
 		if (TJA110x_getPHYIdentifier2(&Tja110xId2, PHY_TJA1101_ADDRESS) == NXP_TJA1100_SUCCESS)
 		{
-			TJA1101_AttributeInfo.PhyIdInfo.ID2 = (uint16)Tja110xId2.TJA1100_PHY_ID2;
-			TJA1101_AttributeInfo.PhyIdInfo.TYPE_NO = (uint16)Tja110xId2.TJA1100_TYPE;
+			TJA1101_AttributeInfo.PhyIdInfo.ID2       = (uint16)Tja110xId2.TJA1100_PHY_ID2;
+			TJA1101_AttributeInfo.PhyIdInfo.TYPE_NO   = (uint16)Tja110xId2.TJA1100_TYPE;
 			TJA1101_AttributeInfo.PhyIdInfo.VISION_NO = (uint16)Tja110xId2.TJA1100_REV;
 		}
 		else
@@ -216,6 +216,7 @@ int PHY_TJA1101_Init(void)
 	Tja110xEcr.TJA1101_LM   = TJA1101_LM_INTERNAL_LOOPBACK;		/* Attention:BCR register(0x00) LOOPBACK bit must be set to 1. */
 	Tja110xEcr.TJA1101_CFEN = TJA1101_CFEN_CONFIGURATION_REGISTER_ACCESS_ENABLED;
 	Tja110xEcr.TJA1101_WR   = TJA1101_WR_NO_WAKEUP_SIGNAL_TO_BE_SENT;
+
 	if (TJA110x_setExtendedControl(&Tja110xEcr, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
 	{
 		TJA1101_AttributeInfo.InitStatus = TJA1101_Init_Failed;
@@ -231,16 +232,17 @@ int PHY_TJA1101_Init(void)
 
 	if (TJA1101_AttributeInfo.PhyMode == TJA1101_Configure_As_Master)
 	{
-		Tja110xCfg1Reg.TJA1101_MS   	= TJA1101_MS_PHY_CONFIGURED_AS_MASTER;
+		Tja110xCfg1Reg.TJA1101_MS = TJA1101_MS_PHY_CONFIGURED_AS_MASTER;
 	}
 	else
 	{
-		Tja110xCfg1Reg.TJA1101_MS   	= TJA1101_MS_PHY_CONFIGURED_AS_SLAVE;
+		Tja110xCfg1Reg.TJA1101_MS = TJA1101_MS_PHY_CONFIGURED_AS_SLAVE;
 	}
 	Tja110xCfg1Reg.TJA1101_REACT_RE_WU 	= TJA1101_REACT_REMOTE_WAKEUP;
 	Tja110xCfg1Reg.TJA1101_REACT_LO_WU 	= TJA1101_REACT_LOCAL_WAKEUP;
 	Tja110xCfg1Reg.TJA1101_MIIM 		= TJA1101_MIIM_MII_MODE_ENABLED;
 	Tja110xCfg1Reg.TJA1101_APD  		= TJA1101_APD_AUTONOMOUS_POWER_DOWN_DISABLED;
+
 	/* Re-write CONFIG_1 register. */
 	if (TJA110x_setConfiguration1(&Tja110xCfg1Reg, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
 	{
@@ -265,6 +267,7 @@ int PHY_TJA1101_Init(void)
 	Tja110xCommonCfgReg.TJA1101_AUTO_OP  = AUTONOMOUS_OPERATION;
 	Tja110xCommonCfgReg.TJA1101_CLK_MODE = CLK_25MHZ_XTAL_NOCLK_AT_CLKINOUT;
 	Tja110xCommonCfgReg.TJA1101_LDO_MODE = INTERNAL_1V8_LDO_ENABLED;
+
 	/* Rewrite COMMON CONFIG register. */
 	if (TJA110x_setCommonConfiguration(&Tja110xCommonCfgReg, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
 	{
@@ -281,7 +284,6 @@ int PHY_TJA1101_Init(void)
 	}
 
 	delayCount = 0;
-
 	/* Wait TJA1101 PLL locked and stable. */
 	do
 	{
@@ -302,19 +304,20 @@ int PHY_TJA1101_Init(void)
 	}
 
 	TJA1101_AttributeInfo.InitStatus = TJA1101_Init_Success;
+
 	return (1);
 }
 
 /*
-@brief
-@details
-@para
-@return
+@brief Polling current TJA1101 PHY link status,speed information and other properties.
+@details This func should be called by user's APP program to polling TJA1101 PHY status periodically.
+@para None.
+@return 0, Failed; 1; Successfully;
 */
 int PHY_TJA1101_GetCurrentStatus(void)
 {
 	int result = 0;
-	uint8_t dummyCnt = 0;
+	uint8_t dummyCnt;
 	TJA110x_Communication_Status_Reg_t CommStat;
 	TJA110x_External_Status_Reg_t PhyExtStat;
 
@@ -322,8 +325,9 @@ int PHY_TJA1101_GetCurrentStatus(void)
 	{
 		if (TJA110x_getCommunicationStatus(&CommStat, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
 		{
-			/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
-			while (dummyCnt < 5U)dummyCnt++;
+			TJA1101_AttributeInfo.LinkStatus  = TJA1101_Linkup_Failed;
+			TJA1101_AttributeInfo.PhySQILevel = SQI_WRS_CLASS_A;
+			TJA1101_AttributeInfo.PhyState	  = TJA1101_Iddle;
 
 			result = 0;
 		}
@@ -335,6 +339,7 @@ int PHY_TJA1101_GetCurrentStatus(void)
 
 			if (TJA110x_getExternalStatus(&PhyExtStat, PHY_TJA1101_ADDRESS) != NXP_TJA1100_SUCCESS)
 			{
+				dummyCnt = 0;
 				/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
 				while (dummyCnt < 5U)dummyCnt++;
 
@@ -342,9 +347,6 @@ int PHY_TJA1101_GetCurrentStatus(void)
 			}
 			else
 			{
-				/* Execute several empty operation to enable system can set breakpoint here when in debug mode. */
-				while (dummyCnt < 5U)dummyCnt++;
-
 				TJA1101_AttributeInfo.PhyShortCircuitStatus = (PHY_TJA1101_SHORT_CIRCUIT_t)PhyExtStat.TJA1101_SDS;
 				TJA1101_AttributeInfo.PhyOpenCircuitStatus  = (PHY_TJA1101_OPEN_CIRCUIT_t)PhyExtStat.TJA1101_ODS;
 
@@ -370,7 +372,7 @@ int PHY_TJA1101_SendEthernetFrame(void)
 	const Eth_DataType txMacFrame[LENGTH_FRAME] = {
         											0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,			/*Destination Address*/
 													0x66,0x55,0x44,0x33,0x22,0x11,			/*Source Address(config in tresos)*/
-													0x08,0x06,					  			/*Frametype_ARP*/
+													0x08,0x06,					  			/*Frametype:ARP*/
 													0x00,0x01,0x08,0x00,0x06,0x04,0x00,0x01,/*Payload*/
 													0x66,0x55,0x44,0x33,0x22,0x11,			/*Payload*/
 													0xc0,0xa8,0x0a,0x0a,					/*Payload*/

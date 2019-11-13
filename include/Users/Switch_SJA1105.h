@@ -21,28 +21,28 @@ extern "C" {
 #include "Dio.h"
 
 
-#define  DRIVER_USE_MCAL	(1U)
+#define  DRIVER_USE_MCAL						(1U)
 
-#define  SWITCH_SJA1105_RESET_LOW()		Dio_WriteChannel(DioConf_DioChannel_SJA1105_RESET, STD_LOW)
-#define  SWITCH_SJA1105_RESET_HIGH()	Dio_WriteChannel(DioConf_DioChannel_SJA1105_RESET, STD_HIGH)
+#define  SWITCH_SJA1105_RESET_LOW()				Dio_WriteChannel(DioConf_DioChannel_SJA1105_RESET, STD_LOW)
+#define  SWITCH_SJA1105_RESET_HIGH()			Dio_WriteChannel(DioConf_DioChannel_SJA1105_RESET, STD_HIGH)
 
 
 /* Switch core device id definition. */
-#define SJA1105PEL_CORE_EVICE_ID	(0xAF00030EU)
-#define SJA1105QEL_CORE_DEVICE_ID	(0xAE00030EU)
-#define SJA1105REL_CORE_DEVICE_ID	(0xAF00030EU)
-#define SJA1105SEL_CORE_DEVICE_ID	(0xAE00030EU)
+#define SJA1105PEL_CORE_EVICE_ID				(0xAF00030EU)
+#define SJA1105QEL_CORE_DEVICE_ID				(0xAE00030EU)
+#define SJA1105REL_CORE_DEVICE_ID				(0xAF00030EU)
+#define SJA1105SEL_CORE_DEVICE_ID				(0xAE00030EU)
 
 /* Switch PROD_ID register PART_NR definition. */
-#define SJA1105PEL_PROD_ID_PARTNR	(0x9A84U)
-#define SJA1105QEL_PROD_ID_PARTNR	(0x9A85U)
-#define SJA1105REL_PROD_ID_PARTNR	(0x9A86U)
-#define SJA1105SEL_PROD_ID_PARTNR	(0x9A87U)
+#define SJA1105PEL_PROD_ID_PARTNR				(0x9A84U)
+#define SJA1105QEL_PROD_ID_PARTNR				(0x9A85U)
+#define SJA1105REL_PROD_ID_PARTNR				(0x9A86U)
+#define SJA1105SEL_PROD_ID_PARTNR				(0x9A87U)
 
 
 #define DEVICE_ID_REG							(0x000000U)
 
-#define DEVICE_CONFIGFLAG_REG					(0x000001u)
+#define DEVICE_CONFIGFLAG_REG					(0x000001U)
 #define DEVICE_CONFIGFLAG_REG_CONFIGS_MASK		((uint32_t)1 << 31)
 #define DEVICE_CONFIGFLAG_REG_CRCCHKL_MASK		((uint32_t)1 << 30)
 #define DEVICE_CONFIGFLAG_REG_IDS_MASK			((uint32_t)1 << 29)
@@ -57,15 +57,15 @@ extern "C" {
 #define UNIT_DISABLE_REG_FOR_RGU				(0x1007FDU)
 
 
-#define CFG_PAD_MII0_TX_REG						(0x100800u)
-#define CFG_PAD_MII0_RX_REG						(0x100801u)
+#define CFG_PAD_MII0_TX_REG						(0x100800U)
+#define CFG_PAD_MII0_RX_REG						(0x100801U)
 
-#define IDIV_0_C_REG							(0x10000Bu)
-#define IDIV_1_C_REG							(0x10000Cu)
+#define IDIV_0_C_REG							(0x10000BU)
+#define IDIV_1_C_REG							(0x10000CU)
 
 
-#define DEVICE_PROD_ID_REG						(0x100BC3u)
-#define DEVICE_PROD_ID_REG_PART_NR_MASK			((uint32_t)0xFFFF << 4)
+#define DEVICE_PROD_ID_REG						(0x100BC3U)
+#define DEVICE_PROD_ID_REG_PART_NR_MASK			((uint32_t)0xFFFFU << 4)
 
 
 typedef enum
@@ -84,12 +84,8 @@ typedef enum
 }SJA1105ConfigStatus;
 
 
-
-int SJA1105_WriteData(const uint32_t regAddr, const uint8_t* pWtData, const uint16_t u8WtDataLen);
-int SJA1105_ReadData(const uint32_t regAddr, uint8_t* pRdData, const uint16_t u8RdDataLen);
 int SJA1105_ResetChip(void);
-void SJA1105_Init(void);
-int SJA1105_ConfigStatusChecking(SJA1105TypeDef* pDevType, SJA1105ConfigStatus* pDevConfigSta);
+int SJA1105_Init(void);
 
 
 #ifdef __cplusplus

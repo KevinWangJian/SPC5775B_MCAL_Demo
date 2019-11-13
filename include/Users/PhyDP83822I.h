@@ -24,13 +24,15 @@ extern "C" {
 
 #define USE_MCAL											(1U)
 
-#define ETH_PHY_CHIP_RESET_ENABLE							(1U)
-#define ETH_100BASE_TX_AUTO_NEGOTIATION_ENABLE				(1U)
+#define ETH_100BASETX_TRANSMIT_TEST_ENABLE					(1U)
 
+#define ETH_PHY_CHIP_RESET_ENABLE							(1U)
+
+#define ETH_DP83822_PHY_CHIP_NUM							(2U)
 
 /* DP83822HF Device PHY address */
-#define DP83822HF_PHY_1_ADDRESS								(0x01)
-#define DP83822HF_PHY_2_ADDRESS								(0x02)
+#define DP83822HF_PHY_1_ADDRESS								(0x01U)
+#define DP83822HF_PHY_2_ADDRESS								(0x02U)
 
 #define PHY_DP83822HF_RESET_1_LOW()							Dio_WriteChannel(DioConf_DioChannel_DP83822HF_1_RESET, STD_LOW)
 #define PHY_DP83822HF_RESET_1_HIGH()						Dio_WriteChannel(DioConf_DioChannel_DP83822HF_1_RESET, STD_HIGH)
@@ -266,8 +268,7 @@ typedef struct
 	PhyMIILinkState 		MiiLinkStatus;
 }PHY_DP83822_ProTypeDef;
 
-
-extern PHY_DP83822_ProTypeDef PHY_DP83822HF_Prop[2];
+extern PHY_DP83822_ProTypeDef PHY_DP83822HF_Prop[ETH_DP83822_PHY_CHIP_NUM];
 
 
 int PHY_DP83822_Init(void);
