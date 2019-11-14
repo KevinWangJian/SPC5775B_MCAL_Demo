@@ -7,13 +7,13 @@
 /*#    @details     Interrupt Vector Table.															  */
 /*#																									  */
 /*#    Project      : AUTOSAR 4.0 MCAL																  */
-#    Platform     : PA
-#    Peripheral   : 
-#    Dependencies : Base Det Dem Port Dio Mcu Rte Wdg WdgIf CanIf LinIf FrIf EcuM
-#
-#    Autosar Version       : 4.0.3
-#    Autosar Revision      : ASR_REL_4_0_REV_0003
-#    Autosar Conf. Variant :
+/*#    Platform     : PA																			  */
+/*#    Peripheral   : 																				  */
+/*#    Dependencies : Base Det Dem Port Dio Mcu Rte Wdg WdgIf CanIf LinIf FrIf EcuM					  */
+/*#																									  */
+/*#    Autosar Version       : 4.0.3																  */
+/*#    Autosar Revision      : ASR_REL_4_0_REV_0003													  */
+/*#    Autosar Conf. Variant :																		  */
 #    Software Version      : 2.0.1
 #    Build Version         : MPC57xxP_sMCAL_2_0_1_RTM_ASR_REL_4_0_REV_0003_20171020
 #
@@ -105,25 +105,28 @@
 # ADC related
 #    .globl Adc_Eqadc_EqadcACFifo0Empty
 #    .globl Adc_Eqadc_EqadcARFifo0Full
-#	.globl Adc_Eqadc_EqadcBCFifo0Empty
-#	.globl Adc_Eqadc_EqadcBRFifo0Full
+#	 .globl Adc_Eqadc_EqadcBCFifo0Empty
+#	 .globl Adc_Eqadc_EqadcBRFifo0Full
 	
 # FlexCAN related
-#	.globl Can_IsrFCA_MB_01
-#	.globl Can_IsrFCA_MB_02
+	.globl Can_IsrFCA_MB_00
+	.globl Can_IsrFCA_MB_01
+	.globl Can_IsrFCA_MB_02
+	.globl Can_IsrFCA_MB_06
+	.globl Can_IsrFCA_MB_07
+	.globl Can_IsrFCA_MB_08
 
+	.globl Can_IsrFCB_MB_03
+	.globl Can_IsrFCB_MB_09
 	
-#	.globl Can_IsrFCB_MB_01
-#	.globl Can_IsrFCB_MB_07
+	.globl Can_IsrFCC_MB_04
+	.globl Can_IsrFCC_MB_10
 	
-#	.globl Can_IsrFCC_MB_01
-#	.globl Can_IsrFCC_MB_07
+	.globl Can_IsrFCD_MB_05
+	.globl Can_IsrFCD_MB_11
 	
-#	.globl Can_IsrFCD_MB_00
-#	.globl Can_IsrFCD_MB_03
-	
+# M_CAN0 and M_CAN1 related
 	.globl Can_IsrCombined_IL0
-
 
 # PWM related
 #    .globl EMIOS_0_CH_0_ISR
@@ -605,13 +608,13 @@ IRQ154:
     e_b .         #interrupt 154
     .align ALIGN_SIZE
 IRQ155:
-    e_b .         #interrupt 155
+    e_b Can_IsrFCA_MB_00         #interrupt 155
     .align ALIGN_SIZE
 IRQ156:
-    e_b .         #interrupt 156
+    e_b Can_IsrFCA_MB_01         #interrupt 156
     .align ALIGN_SIZE
 IRQ157:
-    e_b .         #interrupt 157
+    e_b Can_IsrFCA_MB_02         #interrupt 157
     .align ALIGN_SIZE
 IRQ158:
     e_b .         #interrupt 158
@@ -623,13 +626,13 @@ IRQ160:
     e_b .         #interrupt 160
     .align ALIGN_SIZE
 IRQ161:
-    e_b .         #interrupt 161
+    e_b Can_IsrFCA_MB_06         #interrupt 161
     .align ALIGN_SIZE
 IRQ162:
-    e_b .         #interrupt 162
+    e_b Can_IsrFCA_MB_07         #interrupt 162
     .align ALIGN_SIZE
 IRQ163:
-    e_b .         #interrupt 163
+    e_b Can_IsrFCA_MB_08         #interrupt 163
     .align ALIGN_SIZE
 IRQ164:
     e_b .         #interrupt 164
@@ -680,7 +683,7 @@ IRQ179:
     e_b .         #interrupt 179
     .align ALIGN_SIZE
 IRQ180:
-    e_b .         #interrupt 180
+    e_b Can_IsrFCC_MB_04         #interrupt 180
     .align ALIGN_SIZE
 IRQ181:
     e_b .         #interrupt 181
@@ -698,7 +701,7 @@ IRQ185:
     e_b .         #interrupt 185
     .align ALIGN_SIZE
 IRQ186:
-    e_b .         #interrupt 186
+    e_b Can_IsrFCC_MB_10         #interrupt 186
     .align ALIGN_SIZE
 IRQ187:
     e_b .         #interrupt 187
@@ -998,7 +1001,7 @@ IRQ285:
 	e_b .           #interrupt 285
     .align ALIGN_SIZE
 IRQ286:
-	e_b .           #interrupt 286
+	e_b Can_IsrFCB_MB_03           #interrupt 286
     .align ALIGN_SIZE
 IRQ287:
 	e_b .           #interrupt 287
@@ -1016,7 +1019,7 @@ IRQ291:
 	e_b .           #interrupt 291
     .align ALIGN_SIZE
 IRQ292:
-	e_b .           #interrupt 292
+	e_b Can_IsrFCB_MB_09           #interrupt 292
     .align ALIGN_SIZE
 IRQ293:
 	e_b .           #interrupt 293
@@ -1088,7 +1091,7 @@ IRQ315:
 	e_b .           #interrupt 315
     .align ALIGN_SIZE
 IRQ316:
-	e_b .           #interrupt 316
+	e_b Can_IsrFCD_MB_05           #interrupt 316
     .align ALIGN_SIZE
 IRQ317:
 	e_b .           #interrupt 317
@@ -1106,7 +1109,7 @@ IRQ321:
 	e_b .           #interrupt 321
     .align ALIGN_SIZE
 IRQ322:
-	e_b .           #interrupt 322
+	e_b Can_IsrFCD_MB_11           #interrupt 322
     .align ALIGN_SIZE
 IRQ323:
 	e_b .           #interrupt 323

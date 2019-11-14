@@ -12,6 +12,14 @@
 extern "C" {
 #endif
 
+#include "Mcal.h"
+#include "typedefs.h"
+#include "Std_Types.h"
+#include "Can.h"
+
+
+
+void FlexCAN_Init(void);
 
 
 #ifdef __cplusplus
