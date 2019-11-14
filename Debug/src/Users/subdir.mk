@@ -4,6 +4,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../src/Users/CanComm.c \
 ../src/Users/CanIf_Usr.c \
 ../src/Users/EthComm.c \
 ../src/Users/IntCtrl.c \
@@ -15,6 +16,7 @@ C_SRCS += \
 ../src/Users/tickTimer.c 
 
 OBJS += \
+./src/Users/CanComm.o \
 ./src/Users/CanIf_Usr.o \
 ./src/Users/EthComm.o \
 ./src/Users/IntCtrl.o \
@@ -26,6 +28,7 @@ OBJS += \
 ./src/Users/tickTimer.o 
 
 C_DEPS += \
+./src/Users/CanComm.d \
 ./src/Users/CanIf_Usr.d \
 ./src/Users/EthComm.d \
 ./src/Users/IntCtrl.d \
