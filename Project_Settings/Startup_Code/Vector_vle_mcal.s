@@ -1,12 +1,12 @@
-#===================================================================================================
-#
-#    @file        Vector_vle_mcal.s
-#    @version     2.0.1
-#
-#    @brief       AUTOSAR - Sample_app Interrupt Vector Table..
-#    @details     Interrupt Vector Table.
-#
-#    Project      : AUTOSAR 4.0 MCAL
+/*#===================================================================================================*/
+/*#																									  */
+/*#    @file        Vector_vle_mcal.s 																  */
+/*#    @version     2.0.1 																			  */
+/*#																									  */
+/*#    @brief       AUTOSAR - Sample_app Interrupt Vector Table..									  */
+/*#    @details     Interrupt Vector Table.															  */
+/*#																									  */
+/*#    Project      : AUTOSAR 4.0 MCAL																  */
 #    Platform     : PA
 #    Peripheral   : 
 #    Dependencies : Base Det Dem Port Dio Mcu Rte Wdg WdgIf CanIf LinIf FrIf EcuM
@@ -23,21 +23,21 @@
 #    This file contains sample code only. It is not part of the production code deliverables.
 #
 #===================================================================================================
-##===================================================================================================
+#===================================================================================================
 # Note: The user interrupt service routines must create entry and exit code
 # (either with assembly code or with __interrupt keyword). If not the code
 # will not exit interrupts properly.
 
-     #Set the compiler using generated file by BEART
+/*     #Set the compiler using generated file by BEART												   */
     .set COMPILER_GHS,  0
     .set COMPILER_DIAB, 1
     .set COMPILER_CW,   2
 
     .set COMPILER_USED, COMPILER_DIAB
 
-#===================================================================================================
-# Compiler selection
-#===================================================================================================
+/*#=================================================================================================== */
+/*# Compiler selection																				   */
+/*#=================================================================================================== */
     .if COMPILER_USED == COMPILER_GHS
         .set C_GHS,  1         # 0/1 - off/on
         .set C_DIAB, 0         # 0/1 - off/on
@@ -60,11 +60,11 @@
     .endif
 
 
-#===================================================================================================
-    # put remaining code in this file into .isrvectbl section,
-    # .isrvectbl section must be aligned on 0x1000 boundary in linker command
-    # file since the upper 20 bits of .isrvectbl address are used to init IVPR
-#===================================================================================================
+/*#===================================================================================================  */
+/*    # put remaining code in this file into .isrvectbl section,										*/
+/*    # .isrvectbl section must be aligned on 0x1000 boundary in linker command							*/
+/*    # file since the upper 20 bits of .isrvectbl address are used to init IVPR						*/
+/*#===================================================================================================	*/
      .if C_GHS == 1
         .vle
         .section ".isrvectbl","avx"

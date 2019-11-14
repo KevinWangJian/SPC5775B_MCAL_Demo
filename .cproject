@@ -49,6 +49,7 @@
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/src/MCAL/Module/Eth/Inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/src/MCAL/Module/EthIf/Inc&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/src/MCAL/Module/Spi/Inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/src/MCAL/Module/Can/Inc&quot;"/>
 								</option>
 								<option id="com.windriver.cdt.diab.option.compiler.defines.891496264" name="Defines (-D)" superClass="com.windriver.cdt.diab.option.compiler.defines" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="START_FROM_FLASH"/>

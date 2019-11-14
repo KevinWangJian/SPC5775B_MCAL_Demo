@@ -18,6 +18,7 @@ SUBDIRS := \
 Project_Settings/Linker_Files \
 Project_Settings/Startup_Code \
 src/MCAL/Gen/Src \
+src/MCAL/Module/Can/Src \
 src/MCAL/Module/Dem/Src \
 src/MCAL/Module/Det/Src \
 src/MCAL/Module/Dio/Src \

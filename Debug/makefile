@@ -21,6 +21,7 @@ RM := rm -rf
 -include src/MCAL/Module/Dio/Src/subdir.mk
 -include src/MCAL/Module/Det/Src/subdir.mk
 -include src/MCAL/Module/Dem/Src/subdir.mk
+-include src/MCAL/Module/Can/Src/subdir.mk
 -include src/MCAL/Gen/Src/subdir.mk
 -include src/subdir.mk
 -include Project_Settings/Startup_Code/subdir.mk
