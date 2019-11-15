@@ -785,7 +785,7 @@ extern "C"{
                    /* @violates @ref Can_Irq_c_REF_8 Violates MISRA 2004 Required Rule 14.9 , the if (and else) (expression) were not followed by a compound statement. */
                    /* @violates @ref Can_Irq_c_REF_10 Violates MISRA 2004 Required Rule 8.10, external ... could be made static */
                    /* @violates @ref Can_Irq_c_REF_9 Violates MISRA 2004 Rule 12.1, due to the macro CAN_BIT_ASSIGN */
-                   CAN_MB_ISRS(A, MB_06, 6U, 6U)
+				   CAN_MB_ISRS(A, MB_06, 6U, 6U)
                    /* @violates @ref Can_Irq_c_REF_5  Violates MISRA 2004 Required Rule 11.1, cast from unsigned long to pointer. */    
                    /* @violates @ref Can_Irq_c_REF_4 Violates MISRA 2004 Required Rule 17.4, pointer arithmetic other than array indexing used */
                    /* @violates @ref Can_Irq_c_REF_6 Violates MISRA 2004 Required Rule 10.1 , prohibited Implicit Conversion: Non-constant argument to function, Implicit conversion of integer to smaller type */    

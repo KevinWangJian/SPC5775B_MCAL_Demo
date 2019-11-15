@@ -154,16 +154,14 @@ extern "C"{
 
 #define CanConf_CanHardwareObject_Can_Network_CANNODE_1_Rx_Std_MailBox_1  0U /* RECEIVE object of Can Controller ID = 0 */
 #define CanConf_CanHardwareObject_Can_Network_CANNODE_1_Rx_Std_MailBox_2  1U /* RECEIVE object of Can Controller ID = 0 */
-#define CanConf_CanHardwareObject_Can_Network_CANNODE_1_Rx_Ext_MailBox_3  2U /* RECEIVE object of Can Controller ID = 0 */
-#define CanConf_CanHardwareObject_Can_Network_CANNODE_2_Rx_Std_MailBox_1  3U /* RECEIVE object of Can Controller ID = 1 */
-#define CanConf_CanHardwareObject_Can_Network_CANNODE_3_Rx_Std_MailBox_1  4U /* RECEIVE object of Can Controller ID = 2 */
-#define CanConf_CanHardwareObject_Can_Network_CANNODE_4_Rx_Std_MailBox_1  5U /* RECEIVE object of Can Controller ID = 3 */
-#define CanConf_CanHardwareObject_Can_Network_CANNODE_1_Tx_Std_MailBox_1  6U /* TRANSMIT object of Can Controller ID = 0 */
-#define CanConf_CanHardwareObject_Can_Network_CANNODE_1_Tx_Std_MailBox_2  7U /* TRANSMIT object of Can Controller ID = 0 */
-#define CanConf_CanHardwareObject_Can_Network_CANNODE_1_Tx_Std_MailBox_3  8U /* TRANSMIT object of Can Controller ID = 0 */
-#define CanConf_CanHardwareObject_Can_Network_CANNODE_2_Tx_Std_MailBox_1  9U /* TRANSMIT object of Can Controller ID = 1 */
-#define CanConf_CanHardwareObject_Can_Network_CANNODE_3_Tx_Std_MailBox_1  10U /* TRANSMIT object of Can Controller ID = 2 */
-#define CanConf_CanHardwareObject_Can_Network_CANNODE_4_Tx_Std_MailBox_1  11U /* TRANSMIT object of Can Controller ID = 3 */
+#define CanConf_CanHardwareObject_Can_Network_CANNODE_2_Rx_Std_MailBox_1  2U /* RECEIVE object of Can Controller ID = 1 */
+#define CanConf_CanHardwareObject_Can_Network_CANNODE_3_Rx_Std_MailBox_1  3U /* RECEIVE object of Can Controller ID = 2 */
+#define CanConf_CanHardwareObject_Can_Network_CANNODE_4_Rx_Std_MailBox_1  4U /* RECEIVE object of Can Controller ID = 3 */
+#define CanConf_CanHardwareObject_Can_Network_CANNODE_1_Tx_Std_MailBox_1  5U /* TRANSMIT object of Can Controller ID = 0 */
+#define CanConf_CanHardwareObject_Can_Network_CANNODE_1_Tx_Std_MailBox_2  6U /* TRANSMIT object of Can Controller ID = 0 */
+#define CanConf_CanHardwareObject_Can_Network_CANNODE_2_Tx_Std_MailBox_1  7U /* TRANSMIT object of Can Controller ID = 1 */
+#define CanConf_CanHardwareObject_Can_Network_CANNODE_3_Tx_Std_MailBox_1  8U /* TRANSMIT object of Can Controller ID = 2 */
+#define CanConf_CanHardwareObject_Can_Network_CANNODE_4_Tx_Std_MailBox_1  9U /* TRANSMIT object of Can Controller ID = 3 */
 
 /*
 * @brief          Symbolic names for CanObjectId
@@ -172,16 +170,14 @@ extern "C"{
 */
 #define Can_Network_CANNODE_1_Rx_Std_MailBox_1  0U /* RECEIVE object of Can Controller ID = 0 */
 #define Can_Network_CANNODE_1_Rx_Std_MailBox_2  1U /* RECEIVE object of Can Controller ID = 0 */
-#define Can_Network_CANNODE_1_Rx_Ext_MailBox_3  2U /* RECEIVE object of Can Controller ID = 0 */
-#define Can_Network_CANNODE_2_Rx_Std_MailBox_1  3U /* RECEIVE object of Can Controller ID = 1 */
-#define Can_Network_CANNODE_3_Rx_Std_MailBox_1  4U /* RECEIVE object of Can Controller ID = 2 */
-#define Can_Network_CANNODE_4_Rx_Std_MailBox_1  5U /* RECEIVE object of Can Controller ID = 3 */
-#define Can_Network_CANNODE_1_Tx_Std_MailBox_1  6U /* TRANSMIT object of Can Controller ID = 0 */
-#define Can_Network_CANNODE_1_Tx_Std_MailBox_2  7U /* TRANSMIT object of Can Controller ID = 0 */
-#define Can_Network_CANNODE_1_Tx_Std_MailBox_3  8U /* TRANSMIT object of Can Controller ID = 0 */
-#define Can_Network_CANNODE_2_Tx_Std_MailBox_1  9U /* TRANSMIT object of Can Controller ID = 1 */
-#define Can_Network_CANNODE_3_Tx_Std_MailBox_1  10U /* TRANSMIT object of Can Controller ID = 2 */
-#define Can_Network_CANNODE_4_Tx_Std_MailBox_1  11U /* TRANSMIT object of Can Controller ID = 3 */
+#define Can_Network_CANNODE_2_Rx_Std_MailBox_1  2U /* RECEIVE object of Can Controller ID = 1 */
+#define Can_Network_CANNODE_3_Rx_Std_MailBox_1  3U /* RECEIVE object of Can Controller ID = 2 */
+#define Can_Network_CANNODE_4_Rx_Std_MailBox_1  4U /* RECEIVE object of Can Controller ID = 3 */
+#define Can_Network_CANNODE_1_Tx_Std_MailBox_1  5U /* TRANSMIT object of Can Controller ID = 0 */
+#define Can_Network_CANNODE_1_Tx_Std_MailBox_2  6U /* TRANSMIT object of Can Controller ID = 0 */
+#define Can_Network_CANNODE_2_Tx_Std_MailBox_1  7U /* TRANSMIT object of Can Controller ID = 1 */
+#define Can_Network_CANNODE_3_Tx_Std_MailBox_1  8U /* TRANSMIT object of Can Controller ID = 2 */
+#define Can_Network_CANNODE_4_Tx_Std_MailBox_1  9U /* TRANSMIT object of Can Controller ID = 3 */
 
 
 #define CAN_LPDU_NOTIFICATION_ENABLE  (STD_OFF)
@@ -194,7 +190,7 @@ extern "C"{
 If no extended identifiers are used then the IDs and MASKs can be stored in uint16 rather than uint32.
 *
 */
-#define CAN_EXTENDEDID (STD_ON)
+#define CAN_EXTENDEDID (STD_OFF)
 /*
 * @brief          Switches the Can_SetBaudrate API ON or OFF.
 * @details        Configuration of Can_SetBaudrate(Controller, BaudRateConfigID):This service shall set the baud rate configuration of the CAN controller. Depending
@@ -302,7 +298,7 @@ The specification only allows up to 256 can hardware objects. The driver support
 * @details        Maximum number of Message Buffers configured.
 *
 */
-#define CAN_MAXMBCOUNT_0  12U
+#define CAN_MAXMBCOUNT_0  10U
 
 /*
 * @brief          Maximum possible Message Buffers per controller specific to this platform.
@@ -319,7 +315,7 @@ The specification only allows up to 256 can hardware objects. The driver support
 * @details        Maximum number of Message Buffers configured.
 *
 */
-#define CAN_MAXMB_CONFIGURED 6U
+#define CAN_MAXMB_CONFIGURED 4U
 
 /*
 * @brief          Maximum possible controllers per specific derivative.
@@ -687,7 +683,7 @@ extern CONST(Can_ConfigType, CAN_CONST) Can_ConfigSet_PC;
 /*
 @brief    Macro used to define the maximum of Can object IDs configured  .
 */
-#define CAN_MAX_OBJECT_ID ((uint32)12U)
+#define CAN_MAX_OBJECT_ID ((uint32)10U)
 
 #define CAN_CONTROLLER_REFERENCE_COUNTER 4
 

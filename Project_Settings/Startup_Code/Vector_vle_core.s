@@ -1,43 +1,43 @@
-#/*==================================================================================================
-#
-#*   @file    Vector_vle_core.s
-#*   @version 1.0.1
-#*
-#*   @brief   AUTOSAR Sample_app - Startup file for PowerPC VLE.
-#*   @details Startup file for PowerPC VLE.
-#*            This file contains sample code only. It is not part of the production code deliverables
-#*   @addtogroup BUILD_ENV
-#*   @{
-#*/
-#/*==================================================================================================
-#*   Project              : AUTOSAR 4.0 MCAL
-#*   Platform             : PA
-#*   Peripheral           : 
-#*   Dependencies         : Base Det Dem Port Dio Mcu Rte Wdg WdgIf CanIf LinIf FrIf EcuM
-#*
-#*   Autosar Version      : 4.0.3
-#*   Autosar Revision     : ASR_REL_4_0_REV_0003
-#*   Autosar Conf.Variant :
-#*   SW Version           : 1.0.1
-#*   Build Version        : MPC5777C_MCAL_1_0_0_RTM_ASR_REL_4_0_REV_0003_20160807
-#*
-#*   (c) Copyright 2006-2016 Freescale Semiconductor Inc and STMicroelectronics
-#*   All Rights Reserved.
-#==================================================================================================*/
-#/*==================================================================================================
-##==================================================================================================*/
-# Note: The user interrupt service routines must create entry and exit code
-# (either with assembly code or with __interrupt keyword). If not the code
-# will not exit interrupts properly.
+/*================================================================================================= */
+/*																									*/
+/*   @file    Vector_vle_core.s																		*/
+/*   @version 1.0.1																					*/
+/*																									*/
+/*   @brief   AUTOSAR Sample_app - Startup file for PowerPC VLE.									*/
+/*   @details Startup file for PowerPC VLE.															*/
+/*            This file contains sample code only. It is not part of the production code deliverables	*/
+/*   @addtogroup BUILD_ENV																			*/
+/*   @{																								*/
+/*																									*/
+/*==================================================================================================*/
+/*   Project              : AUTOSAR 4.0 MCAL														*/
+/*   Platform             : PA																		*/
+/*   Peripheral           : 																		*/
+/*   Dependencies         : Base Det Dem Port Dio Mcu Rte Wdg WdgIf CanIf LinIf FrIf EcuM			*/
+/*																									*/
+/*   Autosar Version      : 4.0.3																	*/
+/*   Autosar Revision     : ASR_REL_4_0_REV_0003													*/
+/*   Autosar Conf.Variant :																			*/
+/*   SW Version           : 1.0.1																	*/
+/*   Build Version        : MPC5777C_MCAL_1_0_0_RTM_ASR_REL_4_0_REV_0003_20160807					*/
+/*																									*/
+/*   (c) Copyright 2006-2016 Freescale Semiconductor Inc and STMicroelectronics						*/
+/*   All Rights Reserved.																			*/
+/*==================================================================================================*/
+/*==================================================================================================*/
+/*==================================================================================================*/
+/*Note: The user interrupt service routines must create entry and exit code							*/
+/*(either with assembly code or with __interrupt keyword). If not the code							*/
+/* will not exit interrupts properly.																*/
  
-     #Set the compiler using generated file by BEART
+/*  Set the compiler using generated file by BEART													*/
     .set COMPILER_GHS,  0
     .set COMPILER_DIAB, 1
     .set COMPILER_CW,   2
     
     .set COMPILER_USED, COMPILER_DIAB
     
-    # Go back to the original variables
+/*    # Go back to the original variables															*/
     .if COMPILER_USED == COMPILER_GHS
         .set C_GHS,  1         # 0/1 - off/on 
         .set C_DIAB, 0         # 0/1 - off/on 
@@ -59,11 +59,11 @@
     .endif
     .endif
 
-    # set reset configuration half word
+/*    # set reset configuration half word															*/
     .set    RCW, 0x015A015A
 
-    # put reset configuration halfword and application start address into .rcw
-    # section
+/*    # put reset configuration halfword and application start address into .rcw					*/
+/*    # section																						*/
     .if C_CW == 1
          .extern __start
          .section .rcw,rodata
@@ -74,9 +74,9 @@
          .long RCW, _start
     .endif
 
-    # put remaining code in this file into .isrvectbl section,  
-    # .isrvectbl section must be aligned on 0x1000 boundary in linker command
-    # file since the upper 20 bits of .isrvectbl address are used to init IVPR
+/*    # put remaining code in this file into .isrvectbl section,  									*/
+/*    # .isrvectbl section must be aligned on 0x1000 boundary in linker command						*/
+/*    # file since the upper 20 bits of .isrvectbl address are used to init IVPR					*/
      .if C_GHS == 1
         .vle
         .section ".isrvectbl_core","avx"
@@ -90,9 +90,9 @@
         .section .isrvectbl_cw_core, text_vle
      .endif
 
-#=================================================
-# define symbols as global to allow easier debugging
-#=================================================
+/*#=================================================												*/
+/*# define symbols as global to allow easier debugging												*/
+/*#=================================================												*/
     .globl IVOR0_Handler
 	.globl IVOR1_Handler
 	.globl IVOR2_Handler
@@ -115,9 +115,9 @@
 	.globl SystemCall_Handler
     .globl CoreVectorTable
     
-#================================================= 
-#               Core vector TABLE
-#================================================= 
+/*#================================================= 												*/
+/*#               Core vector TABLE																	*/
+/*#================================================= 												*/
 CoreVectorTable:
  .align SIZE 
 IVOR0_Handler:      

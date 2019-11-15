@@ -14,19 +14,19 @@
 /*#    Autosar Version       : 4.0.3																  */
 /*#    Autosar Revision      : ASR_REL_4_0_REV_0003													  */
 /*#    Autosar Conf. Variant :																		  */
-#    Software Version      : 2.0.1
-#    Build Version         : MPC57xxP_sMCAL_2_0_1_RTM_ASR_REL_4_0_REV_0003_20171020
-#
-#    (c) Copyright 2006-2017 NXP Semiconductor
-#    All Rights Reserved.
-#
-#    This file contains sample code only. It is not part of the production code deliverables.
-#
-#===================================================================================================
-#===================================================================================================
-# Note: The user interrupt service routines must create entry and exit code
-# (either with assembly code or with __interrupt keyword). If not the code
-# will not exit interrupts properly.
+/*#    Software Version      : 2.0.1																  */
+/*#    Build Version         : MPC57xxP_sMCAL_2_0_1_RTM_ASR_REL_4_0_REV_0003_20171020				  */
+/*#																									  */
+/*#    (c) Copyright 2006-2017 NXP Semiconductor													  */
+/*#    All Rights Reserved.																			  */
+/*#																									  */
+/*#    This file contains sample code only. It is not part of the production code deliverables.		  */
+/*#																									  */
+/*#===================================================================================================*/
+/*#===================================================================================================*/
+/*# Note: The user interrupt service routines must create entry and exit code						  */
+/*# (either with assembly code or with __interrupt keyword). If not the code						  */
+/*# will not exit interrupts properly.																  */
 
 /*     #Set the compiler using generated file by BEART												   */
     .set COMPILER_GHS,  0
@@ -84,62 +84,59 @@
 
 
 
-#=================================================
-# User specific global symbol - interrupt handler routines
-#=================================================
+/*#=================================================													*/
+/*# User specific global symbol - interrupt handler routines											*/
+/*#=================================================													*/
     .globl IntcVectorTableHw
-#    .globl ESCI_SCI_F_Isr
-# Lin related
-#    .globl Lin_eSCI_Isr_ESCI_1
+/*    .globl ESCI_SCI_F_Isr 				*/
+/* Lin related								*/
+/*    .globl Lin_eSCI_Isr_ESCI_1			*/
 
-# Gpt related
+/* Gpt related								*/
     .globl Gpt_PIT_0_TIMER_0_ISR
-#    .globl Gpt_PIT_0_TIMER_1_ISR
 
-# Spi related
-#    .globl Spi_Dspi_IsrTCF_DSPI_A
+/* Spi related								*/
+/*    .globl Spi_Dspi_IsrTCF_DSPI_A			*/
 
-# Wdg related
-#    .globl Wdg_Swt0_Isr
+/* Wdg related								*/
+/*    .globl Wdg_Swt0_Isr					*/
 
-# ADC related
-#    .globl Adc_Eqadc_EqadcACFifo0Empty
-#    .globl Adc_Eqadc_EqadcARFifo0Full
-#	 .globl Adc_Eqadc_EqadcBCFifo0Empty
-#	 .globl Adc_Eqadc_EqadcBRFifo0Full
+/* ADC related								*/
+/*   .globl Adc_Eqadc_EqadcACFifo0Empty		*/
+/*   .globl Adc_Eqadc_EqadcARFifo0Full		*/
+/*	 .globl Adc_Eqadc_EqadcBCFifo0Empty		*/
+/*	 .globl Adc_Eqadc_EqadcBRFifo0Full		*/
 	
-# FlexCAN related
+/* FlexCAN related							*/
 	.globl Can_IsrFCA_MB_00
 	.globl Can_IsrFCA_MB_01
 	.globl Can_IsrFCA_MB_02
-	.globl Can_IsrFCA_MB_06
-	.globl Can_IsrFCA_MB_07
-	.globl Can_IsrFCA_MB_08
+	.globl Can_IsrFCA_MB_03
 
-	.globl Can_IsrFCB_MB_03
-	.globl Can_IsrFCB_MB_09
+	.globl Can_IsrFCB_MB_00
+	.globl Can_IsrFCB_MB_01
 	
-	.globl Can_IsrFCC_MB_04
-	.globl Can_IsrFCC_MB_10
+	.globl Can_IsrFCC_MB_00
+	.globl Can_IsrFCC_MB_01
 	
-	.globl Can_IsrFCD_MB_05
-	.globl Can_IsrFCD_MB_11
+	.globl Can_IsrFCD_MB_00
+	.globl Can_IsrFCD_MB_01
 	
-# M_CAN0 and M_CAN1 related
+/* M_CAN0 and M_CAN1 related				*/
 	.globl Can_IsrCombined_IL0
 
-# PWM related
-#    .globl EMIOS_0_CH_0_ISR
+/* PWM related								*/
+/*    .globl EMIOS_0_CH_0_ISR				*/
 
-# ICU related
-#    .globl EMIOS_0_CH_23_ISR
+/* ICU related								*/
+/*    .globl EMIOS_0_CH_23_ISR				*/
 
-# ETH related
+/* ETH related								*/
     .globl Eth_TxIrqHdlr_0
     .globl Eth_RxIrqHdlr_0
 
 
-# IntcVectorTableHw
+/* IntcVectorTableHw						*/
 IntcVectorTableHw:
     .align ALIGN_SIZE
 IRQ0:
@@ -617,7 +614,7 @@ IRQ157:
     e_b Can_IsrFCA_MB_02         #interrupt 157
     .align ALIGN_SIZE
 IRQ158:
-    e_b .         #interrupt 158
+    e_b Can_IsrFCA_MB_03         #interrupt 158
     .align ALIGN_SIZE
 IRQ159:
     e_b .         #interrupt 159
@@ -626,13 +623,13 @@ IRQ160:
     e_b .         #interrupt 160
     .align ALIGN_SIZE
 IRQ161:
-    e_b Can_IsrFCA_MB_06         #interrupt 161
+    e_b .         #interrupt 161
     .align ALIGN_SIZE
 IRQ162:
-    e_b Can_IsrFCA_MB_07         #interrupt 162
+    e_b .         #interrupt 162
     .align ALIGN_SIZE
 IRQ163:
-    e_b Can_IsrFCA_MB_08         #interrupt 163
+    e_b .         #interrupt 163
     .align ALIGN_SIZE
 IRQ164:
     e_b .         #interrupt 164
@@ -671,10 +668,10 @@ IRQ175:
     e_b .         #interrupt 175
     .align ALIGN_SIZE
 IRQ176:
-    e_b .         #interrupt 176
+    e_b Can_IsrFCC_MB_00         #interrupt 176
     .align ALIGN_SIZE
 IRQ177:
-    e_b .         #interrupt 177
+    e_b Can_IsrFCC_MB_01         #interrupt 177
     .align ALIGN_SIZE
 IRQ178:
     e_b .         #interrupt 178
@@ -683,7 +680,7 @@ IRQ179:
     e_b .         #interrupt 179
     .align ALIGN_SIZE
 IRQ180:
-    e_b Can_IsrFCC_MB_04         #interrupt 180
+    e_b .         #interrupt 180
     .align ALIGN_SIZE
 IRQ181:
     e_b .         #interrupt 181
@@ -701,7 +698,7 @@ IRQ185:
     e_b .         #interrupt 185
     .align ALIGN_SIZE
 IRQ186:
-    e_b Can_IsrFCC_MB_10         #interrupt 186
+    e_b .         #interrupt 186
     .align ALIGN_SIZE
 IRQ187:
     e_b .         #interrupt 187
@@ -992,16 +989,16 @@ IRQ282:
 	e_b .           #interrupt 282
     .align ALIGN_SIZE
 IRQ283:
-	e_b .           #interrupt 283
+	e_b Can_IsrFCB_MB_00           #interrupt 283
     .align ALIGN_SIZE
 IRQ284:
-	e_b .           #interrupt 284
+	e_b Can_IsrFCB_MB_01           #interrupt 284
     .align ALIGN_SIZE
 IRQ285:
 	e_b .           #interrupt 285
     .align ALIGN_SIZE
 IRQ286:
-	e_b Can_IsrFCB_MB_03           #interrupt 286
+	e_b .           #interrupt 286
     .align ALIGN_SIZE
 IRQ287:
 	e_b .           #interrupt 287
@@ -1019,7 +1016,7 @@ IRQ291:
 	e_b .           #interrupt 291
     .align ALIGN_SIZE
 IRQ292:
-	e_b Can_IsrFCB_MB_09           #interrupt 292
+	e_b .           #interrupt 292
     .align ALIGN_SIZE
 IRQ293:
 	e_b .           #interrupt 293
@@ -1076,10 +1073,10 @@ IRQ310:
 	e_b .           #interrupt 310
     .align ALIGN_SIZE
 IRQ311:
-	e_b .           #interrupt 311
+	e_b Can_IsrFCD_MB_00           #interrupt 311
     .align ALIGN_SIZE
 IRQ312:
-	e_b .           #interrupt 312
+	e_b Can_IsrFCD_MB_01           #interrupt 312
     .align ALIGN_SIZE
 IRQ313:
 	e_b .           #interrupt 313
@@ -1091,7 +1088,7 @@ IRQ315:
 	e_b .           #interrupt 315
     .align ALIGN_SIZE
 IRQ316:
-	e_b Can_IsrFCD_MB_05           #interrupt 316
+	e_b .           #interrupt 316
     .align ALIGN_SIZE
 IRQ317:
 	e_b .           #interrupt 317
@@ -1109,7 +1106,7 @@ IRQ321:
 	e_b .           #interrupt 321
     .align ALIGN_SIZE
 IRQ322:
-	e_b Can_IsrFCD_MB_11           #interrupt 322
+	e_b .           #interrupt 322
     .align ALIGN_SIZE
 IRQ323:
 	e_b .           #interrupt 323

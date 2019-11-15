@@ -17,7 +17,7 @@
 #include "PhyDP83822I.h"
 #include "Switch_SJA1105.h"
 #include "tickTimer.h"
-
+#include "CanComm.h"
 
 
 /*
@@ -44,6 +44,8 @@ int main(void)
 	McanComm_Init();
 	McanComm_RxBufferInit();
 
+	FlexCAN_Init();
+
 	Ethernet_Init();
 
 	SJA1105_Init();
@@ -62,6 +64,8 @@ int main(void)
 		if (CommUpdateEvent)
 		{
 			McanComm_TransmitProcess();
+
+			FlexCAN_SendMessage();
 
 			Ethernet_TransmitFramesTest();
 

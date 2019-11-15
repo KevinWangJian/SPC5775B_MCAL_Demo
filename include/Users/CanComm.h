@@ -21,6 +21,8 @@ extern "C" {
 
 void FlexCAN_Init(void);
 
+void FlexCAN_SendMessage(void);
+
 
 #ifdef __cplusplus
 }
