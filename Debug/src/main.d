@@ -53,13 +53,14 @@ src/main.o: ../src/main.c C:/WindRiver/diab/5.9.4.0/include/lpragma.h \
   D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet_20191113/SPC5775B_ETHERNET_Z7_0/src/MCAL/Module/Port/Inc/Port_Igf_Types.h \
   D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet_20191113/SPC5775B_ETHERNET_Z7_0/include/Users/IntCtrl.h \
   D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet_20191113/SPC5775B_ETHERNET_Z7_0/include/Users/McanComm.h \
-  C:/WindRiver/diab/5.9.4.0/include/stdio.h \
+  C:/WindRiver/diab/5.9.4.0/include/cnew/stdio.h \
+  C:/WindRiver/diab/5.9.4.0/include/cnew/yvals.h \
+  C:/WindRiver/diab/5.9.4.0/include/diab/va_list.h \
+  C:/WindRiver/diab/5.9.4.0/include/diab/stddef.h \
   C:/WindRiver/diab/5.9.4.0/include/xmacros.h \
   C:/WindRiver/diab/5.9.4.0/include/diab/xmacros.h \
-  C:/WindRiver/diab/5.9.4.0/include/diab/va_list.h \
   C:/WindRiver/diab/5.9.4.0/include/stdarg.h \
   C:/WindRiver/diab/5.9.4.0/include/diab/stdarg.h \
-  C:/WindRiver/diab/5.9.4.0/include/diab/va_list.h \
   D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet_20191113/SPC5775B_ETHERNET_Z7_0/src/MCAL/Module/MCan/Inc/Can_43_MCAN.h \
   D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet_20191113/SPC5775B_ETHERNET_Z7_0/include/Base/ComStack_Types.h \
   D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet_20191113/SPC5775B_ETHERNET_Z7_0/include/Base/ComStack_Cfg.h \

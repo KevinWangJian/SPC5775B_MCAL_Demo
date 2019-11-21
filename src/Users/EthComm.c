@@ -6,6 +6,7 @@
  */
 
 #include <string.h>
+#include "Eth.h"
 #include "EthComm.h"
 #include "StdRegMacros.h"
 #include "Eth_Cfg.h"
@@ -16,7 +17,7 @@
 #include "tickTimer.h"
 
 
-static EthernetRxFrameBuffer_t EthRxFrameBuffer = {0};
+static EthernetRxFrameBuffer_t EthRxFrameBuffer = {.ReadPtr = 0, .WritePtr = 0};
 
 
 Eth_DataType txMacFrame[1014] = {

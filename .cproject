@@ -29,7 +29,7 @@
 								</option>
 								<inputType id="com.windriver.cdt.diab.inputType.assembler.s.92086233" superClass="com.windriver.cdt.diab.inputType.assembler.s"/>
 							</tool>
-							<tool command="dcc -c -c99" id="com.windriver.cdt.diab.tool.compiler.c.352336386" name="Diab C Compiler" superClass="com.windriver.cdt.diab.tool.compiler.c">
+							<tool command="dcc -c -Xdialect-c99" id="com.windriver.cdt.diab.tool.compiler.c.352336386" name="Diab C Compiler" superClass="com.windriver.cdt.diab.tool.compiler.c">
 								<option defaultValue="com.windriver.cdt.diab.enumValue.compiler.debugSymbols.g3" id="com.windriver.cdt.diab.option.compiler.debugSymbols.42258143" name="Generate Symbolic Debugger Information" superClass="com.windriver.cdt.diab.option.compiler.debugSymbols" useByScannerDiscovery="false" valueType="enumerated"/>
 								<option id="com.windriver.cdt.diab.option.compiler.includePath.438931822" name="Include Path (-I)" superClass="com.windriver.cdt.diab.option.compiler.includePath" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/include&quot;"/>

@@ -1,10 +1,9 @@
 src/Users/Switch_SJA1105.o: ../src/Users/Switch_SJA1105.c \
   C:/WindRiver/diab/5.9.4.0/include/lpragma.h \
   C:/WindRiver/diab/5.9.4.0/include/diab/lpragma.h \
-  C:/WindRiver/diab/5.9.4.0/include/stdlib.h \
-  C:/WindRiver/diab/5.9.4.0/include/xmacros.h \
-  C:/WindRiver/diab/5.9.4.0/include/diab/xmacros.h \
-  C:/WindRiver/diab/5.9.4.0/include/string.h \
+  C:/WindRiver/diab/5.9.4.0/include/cnew/stdlib.h \
+  C:/WindRiver/diab/5.9.4.0/include/cnew/yvals.h \
+  C:/WindRiver/diab/5.9.4.0/include/cnew/string.h \
   D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet_20191113/SPC5775B_ETHERNET_Z7_0/include/Users/Switch_SJA1105.h \
   D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet_20191113/SPC5775B_ETHERNET_Z7_0/include/Base/Mcal.h \
   D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet_20191113/SPC5775B_ETHERNET_Z7_0/include/Base/Compiler.h \

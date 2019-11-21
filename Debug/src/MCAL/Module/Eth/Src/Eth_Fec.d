@@ -21,7 +21,6 @@ src/MCAL/Module/Eth/Src/Eth_Fec.o: \
   D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet_20191113/SPC5775B_ETHERNET_Z7_0/src/MCAL/Module/Eth/Inc/Eth_Fec.h \
   D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet_20191113/SPC5775B_ETHERNET_Z7_0/include/Base/StdRegMacros.h \
   D:/DuPower/SRC/Ethernet/MCAL_Version/SPC5775B_Ethernet_20191113/SPC5775B_ETHERNET_Z7_0/src/MCAL/Module/EthIf/Inc/EthIf_Cbk.h \
-  C:/WindRiver/diab/5.9.4.0/include/string.h \
-  C:/WindRiver/diab/5.9.4.0/include/xmacros.h \
-  C:/WindRiver/diab/5.9.4.0/include/diab/xmacros.h
+  C:/WindRiver/diab/5.9.4.0/include/cnew/string.h \
+  C:/WindRiver/diab/5.9.4.0/include/cnew/yvals.h
 

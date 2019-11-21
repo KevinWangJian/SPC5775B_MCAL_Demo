@@ -28,10 +28,8 @@
 */
 int main(void)
 {
-	Std_ReturnType ret;
-
 	Mcu_Init(&McuConfigPB_0);
-	ret = Mcu_InitClock(McuConf_McuClockSettingConfig_McuClockSettingConfig);
+	Mcu_InitClock(McuConf_McuClockSettingConfig_McuClockSettingConfig);
 	while (Mcu_GetPllStatus() != MCU_PLL_LOCKED){;}
 	Mcu_DistributePllClock();
 
