@@ -247,7 +247,6 @@ int Ethernet_SendFrameData(const Eth_DataType* txDataBuf, uint16 txLength)
 	uint16 i;
 	uint8 targetMacAddr[6], bufIdx = 0;
 	Std_ReturnType ret;
-	BufReq_ReturnType ethRet;
 	Eth_FrameType frameType;
 
 	if ((txDataBuf != NULL) && (txLength > OFFSET_PAYLOAD))
