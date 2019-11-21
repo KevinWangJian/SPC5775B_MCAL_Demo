@@ -16,7 +16,7 @@
 				<configuration artifactExtension="elf" artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="com.windriver.cdt.diab.configuration.exe.debug.1931027875" name="Debug" parent="com.windriver.cdt.diab.configuration.exe.debug" postbuildStep="ddump -R -o SPC5775B_ETHERNET.s19 SPC5775B_ETHERNET_Z7_0.elf">
 					<folderInfo id="com.windriver.cdt.diab.configuration.exe.debug.1931027875." name="/" resourcePath="">
 						<toolChain id="com.windriver.cdt.diab.toolChain.exe.debug.814342400" name="Wind River Diab" superClass="com.windriver.cdt.diab.toolChain.exe.debug">
-							<option id="com.windriver.cdt.diab.option.version.1538752983" name="Version" superClass="com.windriver.cdt.diab.option.version" useByScannerDiscovery="false" value="diab-5.9.4.8" valueType="string"/>
+							<option id="com.windriver.cdt.diab.option.version.1538752983" name="Version" superClass="com.windriver.cdt.diab.option.version" useByScannerDiscovery="false" value="diab-5.9.4.0" valueType="string"/>
 							<option id="com.windriver.cdt.diab.option.target.1026959220" name="Target" superClass="com.windriver.cdt.diab.option.target" useByScannerDiscovery="false" value="PPCE200Z759N3VES" valueType="string"/>
 							<targetPlatform binaryParser="org.eclipse.cdt.core.ELF" id="com.windriver.cdt.diab.targetPlatform.743550108" isAbstract="false" superClass="com.windriver.cdt.diab.targetPlatform"/>
 							<builder buildPath="${workspace_loc:/SPC5775B_ETHERNET_Z7_0}/Debug" id="com.windriver.cdt.diab.builder.790977191" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="com.windriver.cdt.diab.builder"/>
@@ -29,7 +29,7 @@
 								</option>
 								<inputType id="com.windriver.cdt.diab.inputType.assembler.s.92086233" superClass="com.windriver.cdt.diab.inputType.assembler.s"/>
 							</tool>
-							<tool id="com.windriver.cdt.diab.tool.compiler.c.352336386" name="Diab C Compiler" superClass="com.windriver.cdt.diab.tool.compiler.c">
+							<tool command="dcc -c -c99" id="com.windriver.cdt.diab.tool.compiler.c.352336386" name="Diab C Compiler" superClass="com.windriver.cdt.diab.tool.compiler.c">
 								<option defaultValue="com.windriver.cdt.diab.enumValue.compiler.debugSymbols.g3" id="com.windriver.cdt.diab.option.compiler.debugSymbols.42258143" name="Generate Symbolic Debugger Information" superClass="com.windriver.cdt.diab.option.compiler.debugSymbols" useByScannerDiscovery="false" valueType="enumerated"/>
 								<option id="com.windriver.cdt.diab.option.compiler.includePath.438931822" name="Include Path (-I)" superClass="com.windriver.cdt.diab.option.compiler.includePath" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/include&quot;"/>
