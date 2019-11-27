@@ -293,7 +293,7 @@ void McanComm_TransmitProcess(void)
 	txmessage.frameStat = ValidCanFrame;
 	txmessage.Id = 0x101;
 	txmessage.dlc = 8;
-	txmessage.data[0] = 0x11;
+	txmessage.data[0] = 0x5A;
 	txmessage.data[1] = 0x22;
 	txmessage.data[2] = 0x33;
 	txmessage.data[3] = 0x44;
